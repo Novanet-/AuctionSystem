@@ -20,6 +20,16 @@ import javax.swing.JButton;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.JTree;
+import javax.swing.BoxLayout;
 
 public class Client
 {
@@ -28,6 +38,7 @@ public class Client
 	private JTextField txtUsername;
 	private JTextField txtPassword;
 
+
 	/**
 	 * Launch the application.
 	 */
@@ -35,6 +46,7 @@ public class Client
 	{
 		EventQueue.invokeLater(new Runnable()
 		{
+
 			public void run()
 			{
 				try
@@ -50,6 +62,7 @@ public class Client
 		});
 	}
 
+
 	/**
 	 * Create the application.
 	 */
@@ -58,17 +71,18 @@ public class Client
 		initialize();
 	}
 
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize()
 	{
 		frmClient = new JFrame();
-		frmClient.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				Client.class.getResource("/javax/swing/plaf/basic/icons/JavaCup16.png")));
+		frmClient.getContentPane().setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		frmClient.setIconImage(Toolkit.getDefaultToolkit().getImage(Client.class.getResource("/javax/swing/plaf/basic/icons/JavaCup16.png")));
 		frmClient.setTitle("Auction Client");
 		frmClient.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		frmClient.setBounds(100, 100, 267, 181);
+		frmClient.setBounds(100, 100, 550, 450);
 		frmClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ResizingCardLayout lytCard = new ResizingCardLayout();
 		frmClient.getContentPane().setLayout(lytCard);
@@ -131,6 +145,7 @@ public class Client
 		JButton btnSwitchPanelsLogin = new JButton("Switch Panels");
 		btnSwitchPanelsLogin.addActionListener(new ActionListener()
 		{
+
 			public void actionPerformed(ActionEvent arg0)
 			{
 				lytCard.next(frmClient.getContentPane());
@@ -147,51 +162,64 @@ public class Client
 		JPanel pnlMain = new JPanel();
 		frmClient.getContentPane().add(pnlMain, "name_13954130542009");
 		GridBagLayout gbl_pnlMain = new GridBagLayout();
-		gbl_pnlMain.columnWidths = new int[] {30, 30, 30};
-		gbl_pnlMain.rowHeights = new int[] {30, 0, 30, 0, 30};
-		gbl_pnlMain.columnWeights = new double[]
-		{ 0.0, 1.0, 0.0 };
-		gbl_pnlMain.rowWeights = new double[]
-		{ 0.0, 0.0, 1.0, 0.0, 0.0 };
+		gbl_pnlMain.columnWidths = new int[] {0, 30, 30};
+		gbl_pnlMain.rowHeights = new int[] {30, 30};
+		gbl_pnlMain.columnWeights = new double[]{1.0, 1.0, 0.0};
+		gbl_pnlMain.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0};
 		pnlMain.setLayout(gbl_pnlMain);
-								
-										JLabel lblClientTitle = new JLabel("Client");
-										lblClientTitle.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-										GridBagConstraints gbc_lblClientTitle = new GridBagConstraints();
-										gbc_lblClientTitle.weighty = 1.0;
-										gbc_lblClientTitle.weightx = 1.0;
-										gbc_lblClientTitle.insets = new Insets(0, 0, 5, 5);
-										gbc_lblClientTitle.gridx = 1;
-										gbc_lblClientTitle.gridy = 1;
-										pnlMain.add(lblClientTitle, gbc_lblClientTitle);
-								
-										JButton btnSwitchPanelsMain = new JButton("Switch Panels");
-										btnSwitchPanelsMain.addActionListener(new ActionListener()
-										{
-											public void actionPerformed(ActionEvent arg0)
-											{
-												lytCard.next(frmClient.getContentPane());
-												frmClient.pack();
-											}
-										});
-										GridBagConstraints gbc_btnSwitchPanelsMain = new GridBagConstraints();
-										gbc_btnSwitchPanelsMain.insets = new Insets(0, 0, 5, 5);
-										gbc_btnSwitchPanelsMain.gridx = 1;
-										gbc_btnSwitchPanelsMain.gridy = 3;
-										pnlMain.add(btnSwitchPanelsMain, gbc_btnSwitchPanelsMain);
+										
+												JLabel lblItemsForAuction = new JLabel("Items for Auction");
+												lblItemsForAuction.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+												GridBagConstraints gbc_lblItemsForAuction = new GridBagConstraints();
+												gbc_lblItemsForAuction.insets = new Insets(0, 50, 5, 5);
+												gbc_lblItemsForAuction.gridx = 0;
+												gbc_lblItemsForAuction.gridy = 1;
+												pnlMain.add(lblItemsForAuction, gbc_lblItemsForAuction);
+												lblItemsForAuction.setLabelFor(lstAuctionItems);
+										
+										JList list = new JList();
+										list.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+										GridBagConstraints gbc_list = new GridBagConstraints();
+										gbc_list.gridheight = 3;
+										gbc_list.insets = new Insets(0, 50, 25, 5);
+										gbc_list.fill = GridBagConstraints.BOTH;
+										gbc_list.gridx = 0;
+										gbc_list.gridy = 2;
+										pnlMain.add(list, gbc_list);
+										
+												JButton btnSwitchPanelsMain = new JButton("Switch Panels");
+												btnSwitchPanelsMain.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+												btnSwitchPanelsMain.addActionListener(new ActionListener()
+												{
 
-		frmClient.pack();
+													public void actionPerformed(ActionEvent arg0)
+													{
+														lytCard.next(frmClient.getContentPane());
+														frmClient.pack();
+													}
+												});
+												GridBagConstraints gbc_btnSwitchPanelsMain = new GridBagConstraints();
+												gbc_btnSwitchPanelsMain.anchor = GridBagConstraints.NORTH;
+												gbc_btnSwitchPanelsMain.insets = new Insets(0, 0, 5, 5);
+												gbc_btnSwitchPanelsMain.gridx = 1;
+												gbc_btnSwitchPanelsMain.gridy = 2;
+												pnlMain.add(btnSwitchPanelsMain, gbc_btnSwitchPanelsMain);
+
+		// frmClient.pack();
 	}
+
 
 	public static class ResizingCardLayout extends CardLayout
 	{
 
 		private static final long serialVersionUID = -7578838449014921005L;
 
+
 		public ResizingCardLayout()
 		{
 			super();
 		}
+
 
 		@Override
 		public Dimension preferredLayoutSize(Container parent)
@@ -203,13 +231,14 @@ public class Client
 				Insets insets = parent.getInsets();
 				Dimension pref = current.getPreferredSize();
 				pref.width += insets.left + insets.right;
-//				pref.width *= 1.5;
+				// pref.width *= 1.5;
 				pref.height += insets.top + insets.bottom;
-//				pref.height *= 1.5;
+				// pref.height *= 1.5;
 				return pref;
 			}
 			return super.preferredLayoutSize(parent);
 		}
+
 
 		public Component findCurrentComponent(Container parent)
 		{
