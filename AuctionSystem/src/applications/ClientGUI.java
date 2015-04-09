@@ -334,6 +334,16 @@ public class ClientGUI
 		
 		JMenuBar mnuMenuBar = new JMenuBar();
 		frmClient.setJMenuBar(mnuMenuBar);
+		
+		
+		/*
+		 * Ask server for number of auctions in history, set item.counter to this value
+		 * Ask server for number of users in history, set user.counter to this value
+		 * 
+		 * 
+		 * 
+		 */
+		
 
 //		frmClient.pack();
 	}

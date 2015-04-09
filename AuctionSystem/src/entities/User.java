@@ -1,11 +1,15 @@
 package entities;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public class User
 {
 	private int userId;
 	private String firstName;
 	private String surname;
 	private String password;
+	
+	private static AtomicLong counter = new AtomicLong(0);
 
 	public int getUserId()
 	{

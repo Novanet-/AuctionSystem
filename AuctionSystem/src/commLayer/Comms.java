@@ -18,7 +18,8 @@ import applications.ServerGUI;
 public class Comms
 {
 
-	Thread commsThread;
+	ClientThread clientThread;
+	ServerThread serverThread;
 
 
 	/**
@@ -27,18 +28,19 @@ public class Comms
 	public Comms(ClientThread clientThread)
 	{
 		super();
-		this.commsThread = clientThread;
+		this.clientThread = clientThread;
 	}
 
-	
+
 	/**
 	 * @param serverThread
 	 */
 	public Comms(ServerThread serverThread)
 	{
 		super();
-		this.commsThread = serverThread;
+		this.serverThread = serverThread;
 	}
+
 
 	public boolean sendMessage(Object message)
 	{
@@ -80,6 +82,11 @@ public class Comms
 	}
 
 
+	/**
+	 * Initialises the server, creating a server socket and a client sucket bound to this, and input and output streams
+	 * for this client socket
+	 * Then listens for any incoming data
+	 */
 	public void initServerSocket()
 	{
 
@@ -91,6 +98,9 @@ public class Comms
 				ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());)
 		{
 			Object inputObject;
+
+			// Listens for any data received from the client, if data has been sent, then receive the data and process
+			// it based on what type of data it is
 			while (true)
 			{
 				try

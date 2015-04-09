@@ -26,22 +26,6 @@ public final class Hasher
 	}
 
 
-	public static byte[] getItemHash(String itemString) throws NoSuchAlgorithmException, UnsupportedEncodingException
-	{
-		MessageDigest digest = MessageDigest.getInstance("MD5");
-		digest.reset();
-		byte[] input = digest.digest(itemString.getBytes("UTF-8"));
-		return input;
-	}
-
-	public static byte[] getUserHash(Item itemString) throws NoSuchAlgorithmException, UnsupportedEncodingException
-	{
-		MessageDigest digest = MessageDigest.getInstance("MD5");
-		digest.reset();
-		// byte[] input = digest.digest(user.getBytes("UTF-8"));
-//		return input;
-		return null;
-	}
 	
 	public static int convertByteArrayToInt(byte[] bytes) {
 	     return ByteBuffer.wrap(bytes).getInt();

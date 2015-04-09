@@ -14,7 +14,7 @@ import utilities.Money;
 public class Item
 {
 
-	private BigInteger itemId;
+	private long itemId;
 	private String name;
 	private String description;
 	private Category category;
@@ -51,32 +51,19 @@ public class Item
 		this.endTime = endTime;
 		this.reservePrice = reservePrice;
 		this.bids = bids;
-		try
-		{
-			itemId = new BigInteger(1, Hasher.getItemHash(this.toString()));
-		}
-		catch (NoSuchAlgorithmException | UnsupportedEncodingException e)
-		{
-			e.printStackTrace();
-		}
+		itemId = nextId();
+
 	}
 
 
-	@Override
-	public String toString()
-	{
-		return (name + description + category.toString() + String.valueOf(userId) + String.valueOf(startTime) + String.valueOf(endTime)
-				+ reservePrice.toString() + bids.toString());
-	}
 
-
-	public BigInteger getItemId()
+	public long getItemId()
 	{
 		return itemId;
 	}
 
 
-	public void setItemId(BigInteger itemId)
+	public void setItemId(long itemId)
 	{
 		this.itemId = itemId;
 	}
@@ -175,6 +162,12 @@ public class Item
 	public void setBids(ArrayList<Bid> bids)
 	{
 		this.bids = bids;
+	}
+
+
+	public static void setCounter(AtomicLong counter)
+	{
+		Item.counter = counter;
 	}
 
 
