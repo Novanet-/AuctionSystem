@@ -1,12 +1,12 @@
 package utilities;
 
-public enum CategoryEnum
+public enum Category
 {
 	CLOTHING("Clothing"), FURNITURE("Furniture"), ART("Art"), BOOKS("Books"), COINS("Coins"), POTTERY("Pottery");
 
 	private final String name;
 
-	private CategoryEnum(String s)
+	private Category(String s)
 	{
 		name = s;
 	}

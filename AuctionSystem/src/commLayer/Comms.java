@@ -1,40 +1,58 @@
 package commLayer;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import applications.Client;
-import applications.Server;
+import entities.Item;
+import entities.User;
+import applications.ClientGUI;
+import applications.ServerGUI;
 
 public class Comms
 {
 
-	public boolean sendMessage(Client sender, Server receiever)
+	Thread commsThread;
+
+
+	/**
+	 * @param clientThread
+	 */
+	public Comms(ClientThread clientThread)
+	{
+		super();
+		this.commsThread = clientThread;
+	}
+
+	
+	/**
+	 * @param serverThread
+	 */
+	public Comms(ServerThread serverThread)
+	{
+		super();
+		this.commsThread = serverThread;
+	}
+
+	public boolean sendMessage(Object message)
 	{
 		return false;
 	}
 
-	public boolean sendMessage(Server sender, Client receiever)
+
+	public boolean recieveMessage(Object message)
 	{
 		return false;
 	}
 
-	public boolean recieveMessage(Client sender, Server receiever)
-	{
-		return false;
-	}
 
-	public boolean recieveMessage(Server sender, Client receiever)
-	{
-		return false;
-	}
-
-	public void initClientSocket()
+	public static void initClientSocket()
 	{
 
 		try (Socket echoSocket = new Socket("127.0.0.1", 62666);
@@ -61,6 +79,7 @@ public class Comms
 		}
 	}
 
+
 	public void initServerSocket()
 	{
 
@@ -68,13 +87,21 @@ public class Comms
 
 		try (ServerSocket serverSocket = new ServerSocket(62666);
 				Socket clientSocket = serverSocket.accept();
-				PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-				BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));)
+				DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+				ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());)
 		{
-			String inputLine;
-			while ((inputLine = in.readLine()) != null)
+			Object inputObject;
+			while (true)
 			{
-				out.println(inputLine);
+				try
+				{
+					if ((inputObject = in.readObject()) != null)
+						recieveMessage(inputObject);
+				}
+				catch (ClassNotFoundException e)
+				{
+					e.printStackTrace();
+				}
 			}
 		}
 		catch (IOException e)
@@ -83,5 +110,4 @@ public class Comms
 			System.out.println(e.getMessage());
 		}
 	}
-
 }
