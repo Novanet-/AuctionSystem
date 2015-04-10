@@ -6,17 +6,23 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerThread
+public class ServerThread extends Thread
 {
 
 	ServerSocket serverSocket;
 	Socket clientSocket;
 	DataOutputStream out;
 	ObjectInputStream in;
+	Comms comms;
 
 
 	public ServerThread(Comms comms)
 	{
+		this.comms = comms;
+	}
+	
+	@Override
+	public void run() {
 		int portNumber = 6266;
 
 		try
@@ -45,5 +51,5 @@ public class ServerThread
 		{
 			e1.printStackTrace();
 		}
-	}
+    }
 }

@@ -57,6 +57,11 @@ public class ClientGUI
 	private JTextField textField;
 	private JTextField textField_1;
 	private final ButtonGroup btngrpFilters = new ButtonGroup();
+	private JTextField txtName;
+	private JTextField txtDescription;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_2;
 
 
 	/**
@@ -111,14 +116,14 @@ public class ClientGUI
 		frmClient.setIconImage(Toolkit.getDefaultToolkit().getImage(ClientGUI.class.getResource("/javax/swing/plaf/basic/icons/JavaCup16.png")));
 		frmClient.setTitle("Auction ClientGUI");
 		frmClient.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		frmClient.setBounds(100, 100, 516, 397);
+		frmClient.setBounds(100, 100, 510, 471);
 		frmClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ResizingCardLayout lytCard = new ResizingCardLayout();
 		frmClient.getContentPane().setLayout(lytCard);
 
 		JPanel pnlLogin = new JPanel();
 		pnlLogin.setToolTipText("Login Screen");
-		frmClient.getContentPane().add(pnlLogin, "name_13954175131700");
+		frmClient.getContentPane().add(pnlLogin, "pnlLogin");
 		GridBagLayout gbl_pnlLogin = new GridBagLayout();
 		gbl_pnlLogin.columnWidths = new int[]
 		{ 30, 30, 30 };
@@ -177,7 +182,7 @@ public class ClientGUI
 
 			public void actionPerformed(ActionEvent arg0)
 			{
-				lytCard.next(frmClient.getContentPane());
+				lytCard.show(frmClient.getContentPane(), "pnlMain");
 				frmClient.pack();
 			}
 		});
@@ -191,7 +196,7 @@ public class ClientGUI
 
 		JPanel pnlMain = new JPanel();
 		pnlMain.setPreferredSize(new Dimension(550, 450));
-		frmClient.getContentPane().add(pnlMain, "name_13954130542009");
+		frmClient.getContentPane().add(pnlMain, "pnlMain");
 		pnlMain.setLayout(new BoxLayout(pnlMain, BoxLayout.X_AXIS));
 
 		JPanel pnlItemList = new JPanel();
@@ -232,6 +237,12 @@ public class ClientGUI
 		lblItemsForAuction.setLabelFor(lstAuctionItems);
 
 		JButton btnSubmitItem = new JButton("btnSubmitItem");
+		btnSubmitItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lytCard.show(frmClient.getContentPane(), "pnlSubmitItem");
+				frmClient.pack();
+			}
+		});
 		GridBagConstraints gbc_btnSubmitItem = new GridBagConstraints();
 		gbc_btnSubmitItem.insets = new Insets(0, 0, 5, 0);
 		gbc_btnSubmitItem.anchor = GridBagConstraints.NORTH;
@@ -324,13 +335,134 @@ public class ClientGUI
 		pnlFilters.add(comboBox, gbc_comboBox);
 		
 		JPanel pnlSubmitItem = new JPanel();
-		frmClient.getContentPane().add(pnlSubmitItem, "name_20844679967660");
+		frmClient.getContentPane().add(pnlSubmitItem, "pnlSubmitItem");
 		GridBagLayout gbl_pnlSubmitItem = new GridBagLayout();
-		gbl_pnlSubmitItem.columnWidths = new int[]{0};
-		gbl_pnlSubmitItem.rowHeights = new int[]{0};
-		gbl_pnlSubmitItem.columnWeights = new double[]{Double.MIN_VALUE};
-		gbl_pnlSubmitItem.rowWeights = new double[]{Double.MIN_VALUE};
+		gbl_pnlSubmitItem.columnWidths = new int[] {0, 0};
+		gbl_pnlSubmitItem.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_pnlSubmitItem.columnWeights = new double[]{0.0, 1.0};
+		gbl_pnlSubmitItem.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlSubmitItem.setLayout(gbl_pnlSubmitItem);
+		
+		JLabel lblSubmitAnItem = new JLabel("Submit an Item");
+		lblSubmitAnItem.setFont(new Font("Tahoma", Font.BOLD, 18));
+		GridBagConstraints gbc_lblSubmitAnItem = new GridBagConstraints();
+		gbc_lblSubmitAnItem.anchor = GridBagConstraints.WEST;
+		gbc_lblSubmitAnItem.insets = new Insets(15, 0, 15, 0);
+		gbc_lblSubmitAnItem.gridx = 1;
+		gbc_lblSubmitAnItem.gridy = 2;
+		pnlSubmitItem.add(lblSubmitAnItem, gbc_lblSubmitAnItem);
+		
+		JLabel lblName = new JLabel("Name");
+		GridBagConstraints gbc_lblName = new GridBagConstraints();
+		gbc_lblName.insets = new Insets(0, 10, 5, 5);
+		gbc_lblName.anchor = GridBagConstraints.EAST;
+		gbc_lblName.gridx = 0;
+		gbc_lblName.gridy = 3;
+		pnlSubmitItem.add(lblName, gbc_lblName);
+		
+		txtName = new JTextField();
+		txtName.setFont(UIManager.getFont("TextField.font"));
+		GridBagConstraints gbc_txtName = new GridBagConstraints();
+		gbc_txtName.fill = GridBagConstraints.BOTH;
+		gbc_txtName.insets = new Insets(0, 0, 5, 0);
+		gbc_txtName.gridx = 1;
+		gbc_txtName.gridy = 3;
+		pnlSubmitItem.add(txtName, gbc_txtName);
+		txtName.setColumns(10);
+		
+		JLabel lblDescription = new JLabel("Description");
+		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
+		gbc_lblDescription.insets = new Insets(0, 5, 5, 5);
+		gbc_lblDescription.anchor = GridBagConstraints.EAST;
+		gbc_lblDescription.gridx = 0;
+		gbc_lblDescription.gridy = 5;
+		pnlSubmitItem.add(lblDescription, gbc_lblDescription);
+		
+		txtDescription = new JTextField();
+		txtDescription.setFont(UIManager.getFont("TextField.font"));
+		GridBagConstraints gbc_txtDescription = new GridBagConstraints();
+		gbc_txtDescription.insets = new Insets(0, 0, 5, 0);
+		gbc_txtDescription.fill = GridBagConstraints.BOTH;
+		gbc_txtDescription.gridx = 1;
+		gbc_txtDescription.gridy = 5;
+		pnlSubmitItem.add(txtDescription, gbc_txtDescription);
+		txtDescription.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Category");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(0, 5, 5, 5);
+		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_1.gridx = 0;
+		gbc_lblNewLabel_1.gridy = 7;
+		pnlSubmitItem.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
+		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
+		gbc_comboBox_1.gridx = 1;
+		gbc_comboBox_1.gridy = 7;
+		pnlSubmitItem.add(comboBox_1, gbc_comboBox_1);
+		
+		JLabel lblNewLabel_2 = new JLabel("Start Date/Time");
+		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+		gbc_lblNewLabel_2.insets = new Insets(0, 5, 5, 5);
+		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_2.gridx = 0;
+		gbc_lblNewLabel_2.gridy = 9;
+		pnlSubmitItem.add(lblNewLabel_2, gbc_lblNewLabel_2);
+		
+		textField_3 = new JTextField();
+		textField_3.setFont(UIManager.getFont("TextField.font"));
+		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
+		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_3.gridx = 1;
+		gbc_textField_3.gridy = 9;
+		pnlSubmitItem.add(textField_3, gbc_textField_3);
+		textField_3.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("End Date/Time");
+		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+		gbc_lblNewLabel_3.insets = new Insets(0, 5, 5, 5);
+		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_3.gridx = 0;
+		gbc_lblNewLabel_3.gridy = 11;
+		pnlSubmitItem.add(lblNewLabel_3, gbc_lblNewLabel_3);
+		
+		textField_4 = new JTextField();
+		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
+		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_4.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_4.gridx = 1;
+		gbc_textField_4.gridy = 11;
+		pnlSubmitItem.add(textField_4, gbc_textField_4);
+		textField_4.setColumns(10);
+		
+		JLabel lblReservePricepoundspennies = new JLabel("Reserve price (Pounds.pennies)");
+		GridBagConstraints gbc_lblReservePricepoundspennies = new GridBagConstraints();
+		gbc_lblReservePricepoundspennies.insets = new Insets(0, 5, 5, 5);
+		gbc_lblReservePricepoundspennies.anchor = GridBagConstraints.EAST;
+		gbc_lblReservePricepoundspennies.gridx = 0;
+		gbc_lblReservePricepoundspennies.gridy = 13;
+		pnlSubmitItem.add(lblReservePricepoundspennies, gbc_lblReservePricepoundspennies);
+		
+		textField_2 = new JTextField();
+		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
+		gbc_textField_2.insets = new Insets(0, 0, 5, 0);
+		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_2.gridx = 1;
+		gbc_textField_2.gridy = 13;
+		pnlSubmitItem.add(textField_2, gbc_textField_2);
+		textField_2.setColumns(10);
+		
+		JButton btnNewButton_4 = new JButton("New button");
+		GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
+		gbc_btnNewButton_4.insets = new Insets(0, 0, 25, 0);
+		gbc_btnNewButton_4.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_btnNewButton_4.gridx = 1;
+		gbc_btnNewButton_4.gridy = 15;
+		pnlSubmitItem.add(btnNewButton_4, gbc_btnNewButton_4);
 		
 		JMenuBar mnuMenuBar = new JMenuBar();
 		frmClient.setJMenuBar(mnuMenuBar);

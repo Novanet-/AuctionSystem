@@ -1,9 +1,12 @@
 package commLayer;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ClientThread extends Thread
@@ -12,9 +15,18 @@ public class ClientThread extends Thread
 	Socket echoSocket;
 	PrintWriter out;
 	BufferedReader in;
+	Comms comms;
 
 
 	public ClientThread(Comms comms)
+	{
+		this.comms = comms;
+		this.start();
+	}
+
+
+	@Override
+	public void run()
 	{
 		try
 		{
@@ -25,7 +37,7 @@ public class ClientThread extends Thread
 			while (true)
 			{
 				if ((userInput = in.readLine()) != null)
-				out.println(userInput);
+					out.println(userInput);
 				System.out.println("echo: " + in.readLine());
 			}
 		}
@@ -34,6 +46,5 @@ public class ClientThread extends Thread
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 }
