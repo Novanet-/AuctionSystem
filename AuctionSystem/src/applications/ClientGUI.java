@@ -70,6 +70,8 @@ public class ClientGUI
 	private JTextField txtDescription;
 	private JTextField txtReservePrice;
 	private JComboBox cmbCategory;
+	private JSpinner spnStartDateTime;
+	private JSpinner spnEndDateTime;
 
 
 	/**
@@ -425,15 +427,15 @@ public class ClientGUI
 		gbc_lblStartDateTime.gridx = 0;
 		gbc_lblStartDateTime.gridy = 9;
 		pnlSubmitItem.add(lblStartDateTime, gbc_lblStartDateTime);
-		
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerDateModel(new Date(1428706800000L), new Date(1428706800000L), null, Calendar.DAY_OF_YEAR));
-		GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.anchor = GridBagConstraints.WEST;
-		gbc_spinner.insets = new Insets(0, 0, 5, 0);
-		gbc_spinner.gridx = 1;
-		gbc_spinner.gridy = 9;
-		pnlSubmitItem.add(spinner, gbc_spinner);
+
+		spnStartDateTime = new JSpinner();
+		spnStartDateTime.setModel(new SpinnerDateModel(new Date(1428706800000L), new Date(1428706800000L), null, Calendar.DAY_OF_YEAR));
+		GridBagConstraints gbc_spnStartDateTime = new GridBagConstraints();
+		gbc_spnStartDateTime.anchor = GridBagConstraints.WEST;
+		gbc_spnStartDateTime.insets = new Insets(0, 0, 5, 0);
+		gbc_spnStartDateTime.gridx = 1;
+		gbc_spnStartDateTime.gridy = 9;
+		pnlSubmitItem.add(spnStartDateTime, gbc_spnStartDateTime);
 
 		JLabel lblEndDateTime = new JLabel("End Date/Time");
 		GridBagConstraints gbc_lblEndDateTime = new GridBagConstraints();
@@ -442,15 +444,15 @@ public class ClientGUI
 		gbc_lblEndDateTime.gridx = 0;
 		gbc_lblEndDateTime.gridy = 11;
 		pnlSubmitItem.add(lblEndDateTime, gbc_lblEndDateTime);
-		
-		JSpinner spinner_1 = new JSpinner();
-		spinner_1.setModel(new SpinnerDateModel(new Date(1428706800000L), new Date(1428706800000L), null, Calendar.DAY_OF_YEAR));
-		GridBagConstraints gbc_spinner_1 = new GridBagConstraints();
-		gbc_spinner_1.anchor = GridBagConstraints.WEST;
-		gbc_spinner_1.insets = new Insets(0, 0, 5, 0);
-		gbc_spinner_1.gridx = 1;
-		gbc_spinner_1.gridy = 11;
-		pnlSubmitItem.add(spinner_1, gbc_spinner_1);
+
+		spnEndDateTime = new JSpinner();
+		spnEndDateTime.setModel(new SpinnerDateModel(new Date(1428706800000L), new Date(1428706800000L), null, Calendar.DAY_OF_YEAR));
+		GridBagConstraints gbc_spnEndDateTime = new GridBagConstraints();
+		gbc_spnEndDateTime.anchor = GridBagConstraints.WEST;
+		gbc_spnEndDateTime.insets = new Insets(0, 0, 5, 0);
+		gbc_spnEndDateTime.gridx = 1;
+		gbc_spnEndDateTime.gridy = 11;
+		pnlSubmitItem.add(spnEndDateTime, gbc_spnEndDateTime);
 
 		JLabel lblReservePrice = new JLabel("Reserve price (Pounds.pennies)");
 		GridBagConstraints gbc_lblReservePrice = new GridBagConstraints();
@@ -547,8 +549,8 @@ public class ClientGUI
 			newItem.setName(txtName.getText());
 			newItem.setDescription(txtDescription.getText());
 			newItem.setCategory(Category.valueOf(cmbCategory.getSelectedItem().toString()));
-			newItem.setStartTime(Integer.valueOf(txtStartDateTime.getText()));
-			newItem.setEndTime(Integer.valueOf(txtEndDateTime.getText()));
+			newItem.setStartTime(((int) spnStartDateTime.getModel().getValue()));
+			newItem.setEndTime((int) spnEndDateTime.getModel().getValue());
 			newItem.setReservePrice(new Money(Currency.getInstance("GBP"), Long.parseLong(txtReservePrice.getText())));
 		}
 
