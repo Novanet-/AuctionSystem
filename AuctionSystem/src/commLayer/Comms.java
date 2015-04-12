@@ -15,6 +15,11 @@ import entities.User;
 import applications.ClientGUI;
 import applications.ServerGUI;
 
+
+/**
+ * Created using Java 8
+ *
+ */
 public class Comms
 {
 

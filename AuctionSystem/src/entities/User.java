@@ -2,6 +2,10 @@ package entities;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Created using Java 8
+ *
+ */
 public class User
 {
 	private int userId;

@@ -2,6 +2,10 @@ package utilities;
 
 import java.util.Currency;
 
+/**
+ * Created using Java 8
+ *
+ */
 public class Money
 {
 

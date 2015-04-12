@@ -25,6 +25,10 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.Currency;
 
+/**
+ * Created using Java 8
+ *
+ */
 public class ServerGUI
 {
 

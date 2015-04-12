@@ -2,6 +2,10 @@ package entities;
 
 import java.util.Currency;
 
+/**
+ * Created using Java 8
+ *
+ */
 public class Bid
 {
 	private int userId;

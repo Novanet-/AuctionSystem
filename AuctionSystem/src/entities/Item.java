@@ -11,6 +11,11 @@ import commLayer.Hasher;
 import utilities.Category;
 import utilities.Money;
 
+
+/**
+ * Created using Java 8
+ *
+ */
 public class Item
 {
 

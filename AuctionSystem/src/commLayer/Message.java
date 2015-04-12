@@ -1,5 +1,9 @@
 package commLayer;
 
+/**
+ * Created using Java 8
+ *
+ */
 public class Message<T>
 {
 

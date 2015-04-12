@@ -9,6 +9,10 @@ import java.security.Security;
 import entities.Item;
 import entities.User;
 
+/**
+ * Created using Java 8
+ *
+ */
 public final class Hasher
 {
 

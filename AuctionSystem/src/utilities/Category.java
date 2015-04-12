@@ -1,5 +1,9 @@
 package utilities;
 
+/**
+ * Created using Java 8
+ *
+ */
 public enum Category
 {
 	CLOTHING("Clothing"), FURNITURE("Furniture"), ART("Art"), BOOKS("Books"), COINS("Coins"), POTTERY("Pottery");
