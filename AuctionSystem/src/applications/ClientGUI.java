@@ -40,6 +40,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Currency;
 
 import javax.swing.AbstractListModel;
@@ -49,13 +54,21 @@ import javax.swing.ButtonGroup;
 import javax.swing.JScrollPane;
 import javax.swing.JMenuBar;
 
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 import utilities.Category;
 import utilities.Money;
 import entities.Item;
+
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+
 import java.util.Date;
 import java.util.Calendar;
+
+import javax.swing.DefaultComboBoxModel;
+
+import commLayer.ClientThread;
+import commLayer.Comms;
 
 /**
  * Created using Java 8
@@ -74,8 +87,13 @@ public class ClientGUI
 	private JTextField txtDescription;
 	private JTextField txtReservePrice;
 	private JComboBox cmbCategory;
-	private JSpinner spnStartDateTime;
-	private JSpinner spnEndDateTime;
+	private JSpinner spnStartDate;
+	private JSpinner spnEndDate;
+	private JSpinner spnStartTime;
+	private JSpinner spnEndTime;
+	
+	private ClientThread clientThread;
+	private Comms clientComms;
 
 
 	/**
@@ -124,7 +142,10 @@ public class ClientGUI
 		{
 			e.printStackTrace();
 		}
-
+		clientComms = new Comms(clientThread);
+		clientComms.initClientSocket();
+		
+		
 		frmClient = new JFrame();
 		frmClient.getContentPane().setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		frmClient.setIconImage(Toolkit.getDefaultToolkit().getImage(ClientGUI.class.getResource("/javax/swing/plaf/basic/icons/JavaCup16.png")));
@@ -353,12 +374,11 @@ public class ClientGUI
 		JPanel pnlSubmitItem = new JPanel();
 		frmClient.getContentPane().add(pnlSubmitItem, "pnlSubmitItem");
 		GridBagLayout gbl_pnlSubmitItem = new GridBagLayout();
-		gbl_pnlSubmitItem.columnWidths = new int[]
-		{ 0, 0 };
+		gbl_pnlSubmitItem.columnWidths = new int[] {0, 0, 0, 0, 30};
 		gbl_pnlSubmitItem.rowHeights = new int[]
 		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_pnlSubmitItem.columnWeights = new double[]
-		{ 0.0, 1.0 };
+		{ 0.0, 1.0, 1.0, 1.0 };
 		gbl_pnlSubmitItem.rowWeights = new double[]
 		{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		pnlSubmitItem.setLayout(gbl_pnlSubmitItem);
@@ -367,7 +387,7 @@ public class ClientGUI
 		lblSubmitAnItem.setFont(new Font("Tahoma", Font.BOLD, 18));
 		GridBagConstraints gbc_lblSubmitAnItem = new GridBagConstraints();
 		gbc_lblSubmitAnItem.anchor = GridBagConstraints.WEST;
-		gbc_lblSubmitAnItem.insets = new Insets(15, 0, 15, 0);
+		gbc_lblSubmitAnItem.insets = new Insets(15, 0, 15, 5);
 		gbc_lblSubmitAnItem.gridx = 1;
 		gbc_lblSubmitAnItem.gridy = 2;
 		pnlSubmitItem.add(lblSubmitAnItem, gbc_lblSubmitAnItem);
@@ -384,7 +404,7 @@ public class ClientGUI
 		txtName.setFont(UIManager.getFont("TextField.font"));
 		GridBagConstraints gbc_txtName = new GridBagConstraints();
 		gbc_txtName.fill = GridBagConstraints.BOTH;
-		gbc_txtName.insets = new Insets(0, 0, 5, 0);
+		gbc_txtName.insets = new Insets(0, 0, 5, 5);
 		gbc_txtName.gridx = 1;
 		gbc_txtName.gridy = 3;
 		pnlSubmitItem.add(txtName, gbc_txtName);
@@ -401,7 +421,7 @@ public class ClientGUI
 		txtDescription = new JTextField();
 		txtDescription.setFont(UIManager.getFont("TextField.font"));
 		GridBagConstraints gbc_txtDescription = new GridBagConstraints();
-		gbc_txtDescription.insets = new Insets(0, 0, 5, 0);
+		gbc_txtDescription.insets = new Insets(0, 0, 5, 5);
 		gbc_txtDescription.fill = GridBagConstraints.BOTH;
 		gbc_txtDescription.gridx = 1;
 		gbc_txtDescription.gridy = 5;
@@ -417,46 +437,85 @@ public class ClientGUI
 		pnlSubmitItem.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
 		cmbCategory = new JComboBox();
+		cmbCategory.setModel(new DefaultComboBoxModel(Category.values()));
 		GridBagConstraints gbc_cmbCategory = new GridBagConstraints();
 		gbc_cmbCategory.fill = GridBagConstraints.HORIZONTAL;
-		gbc_cmbCategory.insets = new Insets(0, 0, 5, 0);
+		gbc_cmbCategory.insets = new Insets(0, 0, 5, 5);
 		gbc_cmbCategory.gridx = 1;
 		gbc_cmbCategory.gridy = 7;
 		pnlSubmitItem.add(cmbCategory, gbc_cmbCategory);
 
-		JLabel lblStartDateTime = new JLabel("Start Date/Time");
-		GridBagConstraints gbc_lblStartDateTime = new GridBagConstraints();
-		gbc_lblStartDateTime.insets = new Insets(0, 5, 5, 5);
-		gbc_lblStartDateTime.anchor = GridBagConstraints.EAST;
-		gbc_lblStartDateTime.gridx = 0;
-		gbc_lblStartDateTime.gridy = 9;
-		pnlSubmitItem.add(lblStartDateTime, gbc_lblStartDateTime);
+		JLabel lblStartDate = new JLabel("Start Date");
+		GridBagConstraints gbc_lblStartDate = new GridBagConstraints();
+		gbc_lblStartDate.insets = new Insets(0, 5, 5, 5);
+		gbc_lblStartDate.anchor = GridBagConstraints.EAST;
+		gbc_lblStartDate.gridx = 0;
+		gbc_lblStartDate.gridy = 9;
+		pnlSubmitItem.add(lblStartDate, gbc_lblStartDate);
 
-		spnStartDateTime = new JSpinner();
-		spnStartDateTime.setModel(new SpinnerDateModel(new Date(1428706800000L), new Date(1428706800000L), null, Calendar.DAY_OF_YEAR));
-		GridBagConstraints gbc_spnStartDateTime = new GridBagConstraints();
-		gbc_spnStartDateTime.anchor = GridBagConstraints.WEST;
-		gbc_spnStartDateTime.insets = new Insets(0, 0, 5, 0);
-		gbc_spnStartDateTime.gridx = 1;
-		gbc_spnStartDateTime.gridy = 9;
-		pnlSubmitItem.add(spnStartDateTime, gbc_spnStartDateTime);
+		spnStartDate = new JSpinner();
+		spnStartDate.setModel(new SpinnerDateModel(new Date(1428706800000L), new Date(1428706800000L), null, Calendar.DAY_OF_YEAR));
+		spnStartDate.setEditor(new JSpinner.DateEditor(spnStartDate, "dd-MM-yyyy"));
+		GridBagConstraints gbc_spnStartDate = new GridBagConstraints();
+		gbc_spnStartDate.anchor = GridBagConstraints.WEST;
+		gbc_spnStartDate.insets = new Insets(0, 0, 5, 5);
+		gbc_spnStartDate.gridx = 1;
+		gbc_spnStartDate.gridy = 9;
+		pnlSubmitItem.add(spnStartDate, gbc_spnStartDate);
+		
+		JLabel lblStartTime = new JLabel("Start Time");
+		GridBagConstraints gbc_lblStartTime = new GridBagConstraints();
+		gbc_lblStartTime.anchor = GridBagConstraints.EAST;
+		gbc_lblStartTime.insets = new Insets(0, 0, 5, 5);
+		gbc_lblStartTime.gridx = 2;
+		gbc_lblStartTime.gridy = 9;
+		pnlSubmitItem.add(lblStartTime, gbc_lblStartTime);
+		
+		spnStartTime = new JSpinner();
+		spnStartTime.setModel(new SpinnerDateModel(new Date(1428966000000L), null, null, Calendar.HOUR_OF_DAY));
+		spnStartTime.setEditor(new JSpinner.DateEditor(spnStartTime, "hh:mm"));
+		GridBagConstraints gbc_spnStartTime = new GridBagConstraints();
+		gbc_spnStartTime.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spnStartTime.insets = new Insets(0, 0, 5, 0);
+		gbc_spnStartTime.gridx = 3;
+		gbc_spnStartTime.gridy = 9;
+		pnlSubmitItem.add(spnStartTime, gbc_spnStartTime);
 
-		JLabel lblEndDateTime = new JLabel("End Date/Time");
-		GridBagConstraints gbc_lblEndDateTime = new GridBagConstraints();
-		gbc_lblEndDateTime.insets = new Insets(0, 5, 5, 5);
-		gbc_lblEndDateTime.anchor = GridBagConstraints.EAST;
-		gbc_lblEndDateTime.gridx = 0;
-		gbc_lblEndDateTime.gridy = 11;
-		pnlSubmitItem.add(lblEndDateTime, gbc_lblEndDateTime);
+		JLabel lblEndDate = new JLabel("End Date");
+		GridBagConstraints gbc_lblEndDate = new GridBagConstraints();
+		gbc_lblEndDate.insets = new Insets(0, 5, 5, 5);
+		gbc_lblEndDate.anchor = GridBagConstraints.EAST;
+		gbc_lblEndDate.gridx = 0;
+		gbc_lblEndDate.gridy = 11;
+		pnlSubmitItem.add(lblEndDate, gbc_lblEndDate);
 
-		spnEndDateTime = new JSpinner();
-		spnEndDateTime.setModel(new SpinnerDateModel(new Date(1428706800000L), new Date(1428706800000L), null, Calendar.DAY_OF_YEAR));
-		GridBagConstraints gbc_spnEndDateTime = new GridBagConstraints();
-		gbc_spnEndDateTime.anchor = GridBagConstraints.WEST;
-		gbc_spnEndDateTime.insets = new Insets(0, 0, 5, 0);
-		gbc_spnEndDateTime.gridx = 1;
-		gbc_spnEndDateTime.gridy = 11;
-		pnlSubmitItem.add(spnEndDateTime, gbc_spnEndDateTime);
+		spnEndDate = new JSpinner();
+		spnEndDate.setModel(new SpinnerDateModel(new Date(1428706800000L), new Date(1428706800000L), null, Calendar.DAY_OF_YEAR));
+		spnEndDate.setEditor(new JSpinner.DateEditor(spnEndDate, "dd-MM-yyyy"));
+		GridBagConstraints gbc_spnEndDate = new GridBagConstraints();
+		gbc_spnEndDate.anchor = GridBagConstraints.WEST;
+		gbc_spnEndDate.insets = new Insets(0, 0, 5, 5);
+		gbc_spnEndDate.gridx = 1;
+		gbc_spnEndDate.gridy = 11;
+		pnlSubmitItem.add(spnEndDate, gbc_spnEndDate);
+		
+		JLabel lblEndTime = new JLabel("End Time");
+		GridBagConstraints gbc_lblEndTime = new GridBagConstraints();
+		gbc_lblEndTime.anchor = GridBagConstraints.EAST;
+		gbc_lblEndTime.insets = new Insets(0, 0, 5, 5);
+		gbc_lblEndTime.gridx = 2;
+		gbc_lblEndTime.gridy = 11;
+		pnlSubmitItem.add(lblEndTime, gbc_lblEndTime);
+		
+		spnEndTime = new JSpinner();
+		spnEndTime.setModel(new SpinnerDateModel(new Date(1428966000000L), null, null, Calendar.HOUR_OF_DAY));
+		spnEndTime.setEditor(new JSpinner.DateEditor(spnEndTime, "hh:mm"));
+		GridBagConstraints gbc_spnEndTime = new GridBagConstraints();
+		gbc_spnEndTime.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spnEndTime.insets = new Insets(0, 0, 5, 0);
+		gbc_spnEndTime.gridx = 3;
+		gbc_spnEndTime.gridy = 11;
+		pnlSubmitItem.add(spnEndTime, gbc_spnEndTime);
 
 		JLabel lblReservePrice = new JLabel("Reserve price (Pounds.pennies)");
 		GridBagConstraints gbc_lblReservePrice = new GridBagConstraints();
@@ -468,7 +527,7 @@ public class ClientGUI
 
 		txtReservePrice = new JTextField();
 		GridBagConstraints gbc_txtReservePrice = new GridBagConstraints();
-		gbc_txtReservePrice.insets = new Insets(0, 0, 5, 0);
+		gbc_txtReservePrice.insets = new Insets(0, 0, 5, 5);
 		gbc_txtReservePrice.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtReservePrice.gridx = 1;
 		gbc_txtReservePrice.gridy = 13;
@@ -476,9 +535,10 @@ public class ClientGUI
 		txtReservePrice.setColumns(10);
 
 		JButton btnSubmitItem = new JButton("Submit Item");
+		btnSubmitItem.addActionListener(new SubmitItemAction());
 		btnSubmitItem.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_btnSubmitItem = new GridBagConstraints();
-		gbc_btnSubmitItem.insets = new Insets(0, 0, 30, 0);
+		gbc_btnSubmitItem.insets = new Insets(0, 0, 30, 5);
 		gbc_btnSubmitItem.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_btnSubmitItem.gridx = 1;
 		gbc_btnSubmitItem.gridy = 15;
@@ -550,12 +610,33 @@ public class ClientGUI
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
+			newItem = new Item(null, null, null, 0, null, null, null, null);
+			
+			Date rawStartDate, rawEndDate, rawStartTime, rawEndTime;
+			LocalDate startDate, endDate;
+			LocalTime startTime, endTime;
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+
 			newItem.setName(txtName.getText());
 			newItem.setDescription(txtDescription.getText());
 			newItem.setCategory(Category.valueOf(cmbCategory.getSelectedItem().toString()));
-			newItem.setStartTime(((int) spnStartDateTime.getModel().getValue()));
-			newItem.setEndTime((int) spnEndDateTime.getModel().getValue());
-			newItem.setReservePrice(new Money(Currency.getInstance("GBP"), Long.parseLong(txtReservePrice.getText())));
+
+			rawStartDate = (Date) spnStartDate.getValue();
+			rawStartTime = (Date) spnStartTime.getValue();
+			rawEndDate = (Date) spnEndDate.getValue();
+			rawEndTime = (Date) spnEndTime.getValue();		
+			
+			startDate = rawStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			endDate = rawEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			startTime = rawStartTime.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+			endTime = rawEndTime.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+			
+			newItem.setStartTime(LocalDateTime.of(startDate, startTime));
+			newItem.setEndTime(LocalDateTime.of(endDate, endTime));
+			newItem.setReservePrice(new Money(Currency.getInstance("GBP"), Double.parseDouble(txtReservePrice.getText())));
+			
+			System.out.println(newItem.getName() + newItem.getDescription() + newItem.getCategory().toString() + newItem.getStartTime().toString() + newItem.getEndTime().toString() + newItem.getReservePrice().getAmount());
+			clientComms.sendMessage(newItem);
 		}
 
 	}

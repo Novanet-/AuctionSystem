@@ -12,6 +12,8 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
 
+import commLayer.Comms;
+import commLayer.ServerThread;
 import utilities.Category;
 import utilities.Money;
 import entities.Bid;
@@ -22,6 +24,8 @@ import java.awt.Insets;
 import java.awt.Font;
 import java.security.Provider;
 import java.security.Security;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Currency;
 
@@ -33,6 +37,9 @@ public class ServerGUI
 {
 
 	private JFrame frame;
+	
+	private ServerThread serverThread;
+	private Comms serverComms;
 
 
 	/**
@@ -40,9 +47,10 @@ public class ServerGUI
 	 */
 	public static void main(String[] args)
 	{
-		Item item = new Item("A", "B", Category.ART, 2, 3, 4, new Money(Currency.getInstance("GBP"), 50.50), new ArrayList<Bid>());
+		Item item = new Item("A", "B", Category.ART, 2, LocalDateTime.of(2015, Month.JANUARY, 1, 0, 0), LocalDateTime.of(2015, Month.DECEMBER, 31, 23, 59), new Money(Currency.getInstance("GBP"), 50.50), new ArrayList<Bid>());
 		System.out.println(item.toString());
 		System.out.println(item.getItemId());
+		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " " + item.getStartTime().toString() + " " + item.getEndTime().toString() + " " + item.getReservePrice().getAmount());
 		EventQueue.invokeLater(new Runnable()
 		{
 
@@ -84,6 +92,9 @@ public class ServerGUI
 		{
 			e.printStackTrace();
 		}
+		
+		serverComms = new Comms(serverThread);
+		serverComms.initServerSocket();
 		
 		frame = new JFrame();
 		frame.setFont(new Font("Segoe UI", Font.PLAIN, 12));

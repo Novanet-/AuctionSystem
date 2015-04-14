@@ -3,6 +3,7 @@ package entities;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,14 +26,20 @@ public class Item
 	private Category category;
 
 	private int userId;
-	private int startTime, endTime;
+	private LocalDateTime startTime, endTime;
 
 	private Money reservePrice;
 	private ArrayList<Bid> bids;
 
 	private static AtomicLong counter = new AtomicLong(0);
 
-
+	
+	public Item()
+	{
+		super();
+	}
+	
+	
 	/**
 	 * @param itemId
 	 * @param name
@@ -44,7 +51,7 @@ public class Item
 	 * @param reservePrice
 	 * @param bids
 	 */
-	public Item(String name, String description, Category category, int userId, int startTime, int endTime, Money reservePrice,
+	public Item(String name, String description, Category category, int userId, LocalDateTime startTime, LocalDateTime endTime, Money reservePrice,
 			ArrayList<Bid> bids)
 	{
 		super();
@@ -122,25 +129,25 @@ public class Item
 	}
 
 
-	public int getStartTime()
+	public LocalDateTime getStartTime()
 	{
 		return startTime;
 	}
 
 
-	public void setStartTime(int startTime)
+	public void setStartTime(LocalDateTime startTime)
 	{
 		this.startTime = startTime;
 	}
 
 
-	public int getEndTime()
+	public LocalDateTime getEndTime()
 	{
 		return endTime;
 	}
 
 
-	public void setEndTime(int endTime)
+	public void setEndTime(LocalDateTime endTime)
 	{
 		this.endTime = endTime;
 	}
