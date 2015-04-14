@@ -3,6 +3,7 @@ package commLayer;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -15,7 +16,7 @@ public class ServerThread extends Thread
 
 	ServerSocket serverSocket;
 	Socket clientSocket;
-	DataOutputStream out;
+	ObjectOutputStream out;
 	ObjectInputStream in;
 	Comms comms;
 
@@ -27,22 +28,26 @@ public class ServerThread extends Thread
 	
 	@Override
 	public void run() {
-		int portNumber = 6266;
+		int portNumber = 62666;
 
 		try
 		{
-			serverSocket = new ServerSocket(62666);
+			System.out.println("Initialsing server socket");
+			serverSocket = new ServerSocket(portNumber);
 			clientSocket = serverSocket.accept();
-			out = new DataOutputStream(clientSocket.getOutputStream());
+			out = new ObjectOutputStream(clientSocket.getOutputStream());
 			in = new ObjectInputStream(clientSocket.getInputStream());
 			{
-				Object inputObject;
+				Message inputMessage;
 				while (true)
 				{
 					try
 					{
-						if ((inputObject = in.readObject()) != null)
-							comms.recieveMessage(inputObject);
+						if ((inputMessage = (Message) in.readObject()) != null)
+						{
+							comms.recieveMessage(inputMessage);
+							out.writeObject(new Message(MessageType.NOTIFICATION, "Item recieved"));
+						}
 					}
 					catch (ClassNotFoundException e)
 					{
@@ -56,4 +61,18 @@ public class ServerThread extends Thread
 			e1.printStackTrace();
 		}
     }
+	
+	public boolean sendToOutputStream(Message message)
+	{
+		try
+		{
+			out.writeObject(message);
+			return true;
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

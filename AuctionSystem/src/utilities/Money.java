@@ -1,14 +1,16 @@
 package utilities;
 
+import java.io.Serializable;
 import java.util.Currency;
 
 /**
  * Created using Java 8
  *
  */
-public class Money
+public class Money implements Serializable
 {
-
+	private static final long serialVersionUID = -6458682124885030639L;
+	
 	private Currency currencyType;
 	private double amount;
 

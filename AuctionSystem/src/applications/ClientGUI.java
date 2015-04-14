@@ -69,6 +69,8 @@ import javax.swing.DefaultComboBoxModel;
 
 import commLayer.ClientThread;
 import commLayer.Comms;
+import commLayer.Message;
+import commLayer.MessageType;
 
 /**
  * Created using Java 8
@@ -142,7 +144,7 @@ public class ClientGUI
 		{
 			e.printStackTrace();
 		}
-		clientComms = new Comms(clientThread);
+		clientComms = new Comms(this, clientThread);
 		clientComms.initClientSocket();
 		
 		
@@ -635,8 +637,8 @@ public class ClientGUI
 			newItem.setEndTime(LocalDateTime.of(endDate, endTime));
 			newItem.setReservePrice(new Money(Currency.getInstance("GBP"), Double.parseDouble(txtReservePrice.getText())));
 			
-			System.out.println(newItem.getName() + newItem.getDescription() + newItem.getCategory().toString() + newItem.getStartTime().toString() + newItem.getEndTime().toString() + newItem.getReservePrice().getAmount());
-			clientComms.sendMessage(newItem);
+			System.out.println(newItem.getName() + " " + newItem.getDescription() + " " + newItem.getCategory().toString() + " " + newItem.getStartTime().toString() + " " + newItem.getEndTime().toString() + " " + newItem.getReservePrice().getAmount());
+			clientComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, newItem));
 		}
 
 	}

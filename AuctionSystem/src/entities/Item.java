@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
@@ -17,9 +18,10 @@ import utilities.Money;
  * Created using Java 8
  *
  */
-public class Item
+public class Item implements Serializable
 {
-
+	private static final long serialVersionUID = -4247500001194895879L;
+	
 	private long itemId;
 	private String name;
 	private String description;

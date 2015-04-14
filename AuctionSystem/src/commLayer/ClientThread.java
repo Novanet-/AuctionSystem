@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -16,16 +17,15 @@ import java.net.Socket;
 public class ClientThread extends Thread
 {
 
-	Socket echoSocket;
-	PrintWriter out;
-	BufferedReader in;
+	Socket clientSocket;
+	ObjectOutputStream out;
+	ObjectInputStream in, userIn;
 	Comms comms;
 
 
 	public ClientThread(Comms comms)
 	{
 		this.comms = comms;
-		this.start();
 	}
 
 
@@ -34,21 +34,34 @@ public class ClientThread extends Thread
 	{
 		try
 		{
-			echoSocket = new Socket("127.0.0.1", 62666);
-			out = new PrintWriter(echoSocket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-			Object userInput;
+			System.out.println("Initialsing client socket");
+			clientSocket = new Socket("127.0.0.1", 62666);
+			out = new ObjectOutputStream(clientSocket.getOutputStream());
+			in = new ObjectInputStream(clientSocket.getInputStream());
+			Message input;
 			while (true)
 			{
-				if ((userInput = in.readLine()) != null)
-					out.println(userInput);
-				System.out.println("echo: " + in.readLine());
+				if ((input = (Message) in.readObject()) != null)
+					comms.recieveMessage(input);
 			}
+		}
+		catch (IOException | ClassNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean sendToOutputStream(Message message)
+	{
+		try
+		{
+			out.writeObject(message);
+			return true;
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 	}
 }

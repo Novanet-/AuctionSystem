@@ -18,6 +18,7 @@ import utilities.Category;
 import utilities.Money;
 import entities.Bid;
 import entities.Item;
+import entities.User;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -28,6 +29,9 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Currency;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Created using Java 8
@@ -37,6 +41,9 @@ public class ServerGUI
 {
 
 	private JFrame frame;
+	
+	private ArrayList<Item> auctionList;
+	private ArrayList<User> userList;
 	
 	private ServerThread serverThread;
 	private Comms serverComms;
@@ -93,8 +100,11 @@ public class ServerGUI
 			e.printStackTrace();
 		}
 		
-		serverComms = new Comms(serverThread);
+		serverComms = new Comms(this, serverThread);
 		serverComms.initServerSocket();
+		
+		auctionList = new ArrayList<Item>();
+		userList = new ArrayList<User>();
 		
 		frame = new JFrame();
 		frame.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -113,6 +123,21 @@ public class ServerGUI
 		gbl_pnlOuter.rowWeights = new double[]
 		{ 0.0, 0.0, 0.0 };
 		pnlOuter.setLayout(gbl_pnlOuter);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for (Item i: auctionList)
+				{
+					System.out.println(i.getItemId() + " " + i.getName() + " " + i.getDescription() + " " + i.getCategory().toString() + " " + i.getStartTime().toString() + " " + i.getEndTime().toString() + " " + i.getReservePrice().getAmount());
+				}
+			}
+		});
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 0;
+		gbc_btnNewButton.gridy = 0;
+		pnlOuter.add(btnNewButton, gbc_btnNewButton);
 
 		JLabel lblServer = new JLabel("ServerGUI");
 		lblServer.setFont(new Font("Segoe UI", Font.PLAIN, 18));
@@ -123,6 +148,17 @@ public class ServerGUI
 		gbc_lblServer.gridx = 1;
 		gbc_lblServer.gridy = 1;
 		pnlOuter.add(lblServer, gbc_lblServer);
+	}
+	
+	public boolean addAuctionToSystem(Item item)
+	{
+		return auctionList.add(item);
+	}
+
+
+	public boolean addUserToSystem(User user)
+	{
+		return userList.add(user);
 	}
 
 }
