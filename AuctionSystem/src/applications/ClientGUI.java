@@ -48,6 +48,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Currency;
 
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.ListSelectionModel;
@@ -64,6 +65,7 @@ import entities.Item;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -81,6 +83,8 @@ import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+
+import com.sun.org.apache.bcel.internal.generic.LSTORE;
 
 /**
  * Created using Java 8
@@ -108,6 +112,10 @@ public class ClientGUI
 	private Comms clientComms;
 
 	private boolean listItemSelected;
+
+	private ArrayList<Item> auctionCache;
+	private JList<String> lstAuctionItems;
+	private DefaultListModel<String> auctionModel;
 
 
 	/**
@@ -160,6 +168,8 @@ public class ClientGUI
 		clientComms.initClientSocket();
 
 		listItemSelected = false;
+
+		auctionCache = new ArrayList<Item>();
 
 		frmClient = new JFrame();
 		frmClient.getContentPane().setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -271,18 +281,11 @@ public class ClientGUI
 		pnlItemList.add(scrlAuctionList, gbc_scrlAuctionList);
 
 		JPopupMenu popAuctionList = new JPopupMenu();
-//		popAuctionList.add(new JMenuItem("Bid on Item"));
+		// popAuctionList.add(new JMenuItem("Bid on Item"));
 
-		JList<String> lstAuctionItems = new JList<String>();
-		lstAuctionItems.setModel(new AbstractListModel() {
-			String[] values = new String[] {"1", "2", "3", "4", "5"};
-			public int getSize() {
-				return values.length;
-			}
-			public Object getElementAt(int index) {
-				return values[index];
-			}
-		});
+		lstAuctionItems = new JList<String>();
+		auctionModel = new DefaultListModel<String>();
+		lstAuctionItems.setModel(auctionModel);
 		lstAuctionItems.addListSelectionListener(new ListSelectionListener()
 		{
 
@@ -382,9 +385,12 @@ public class ClientGUI
 		pnlFilters.setLayout(gbl_pnlFilters);
 
 		JButton btnViewAll = new JButton("View All Auctions");
-		btnViewAll.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				clientComms.sendMessage(new Message (MessageType.ITEM_REQUEST, "ALL_OPEN"));
+		btnViewAll.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+				clientComms.sendMessage(new Message(MessageType.ITEM_REQUEST, "ALL_OPEN"));
 			}
 		});
 		btngrpFilters.add(btnViewAll);
@@ -464,11 +470,11 @@ public class ClientGUI
 		gbl_pnlSubmitItem.columnWidths = new int[]
 		{ 0, 0, 0, 0, 30 };
 		gbl_pnlSubmitItem.rowHeights = new int[]
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_pnlSubmitItem.columnWeights = new double[]
 		{ 0.0, 1.0, 1.0, 1.0 };
 		gbl_pnlSubmitItem.rowWeights = new double[]
-		{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		pnlSubmitItem.setLayout(gbl_pnlSubmitItem);
 
 		JLabel lblSubmitAnItem = new JLabel("Submit an Item");
@@ -564,7 +570,7 @@ public class ClientGUI
 		spnStartTime.setEditor(new JSpinner.DateEditor(spnStartTime, "hh:mm"));
 		GridBagConstraints gbc_spnStartTime = new GridBagConstraints();
 		gbc_spnStartTime.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spnStartTime.insets = new Insets(0, 0, 5, 0);
+		gbc_spnStartTime.insets = new Insets(0, 0, 5, 5);
 		gbc_spnStartTime.gridx = 3;
 		gbc_spnStartTime.gridy = 9;
 		pnlSubmitItem.add(spnStartTime, gbc_spnStartTime);
@@ -600,7 +606,7 @@ public class ClientGUI
 		spnEndTime.setEditor(new JSpinner.DateEditor(spnEndTime, "hh:mm"));
 		GridBagConstraints gbc_spnEndTime = new GridBagConstraints();
 		gbc_spnEndTime.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spnEndTime.insets = new Insets(0, 0, 5, 0);
+		gbc_spnEndTime.insets = new Insets(0, 0, 5, 5);
 		gbc_spnEndTime.gridx = 3;
 		gbc_spnEndTime.gridy = 11;
 		pnlSubmitItem.add(spnEndTime, gbc_spnEndTime);
@@ -632,6 +638,22 @@ public class ClientGUI
 		gbc_btnSubmitItem.gridy = 15;
 		pnlSubmitItem.add(btnSubmitItem, gbc_btnSubmitItem);
 
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+				lytCard.show(frmClient.getContentPane(), "pnlMain");
+				frmClient.pack();
+			}
+		});
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 1;
+		gbc_btnNewButton.gridy = 16;
+		pnlSubmitItem.add(btnNewButton, gbc_btnNewButton);
+
 		JMenuBar mnuMenuBar = new JMenuBar();
 		frmClient.setJMenuBar(mnuMenuBar);
 
@@ -641,6 +663,23 @@ public class ClientGUI
 		 */
 
 		// frmClient.pack();
+	}
+
+
+	public boolean addAuctionToCache(Item item)
+	{
+		return auctionCache.add(item);
+	}
+
+
+	public boolean refreshAuctionList()
+	{
+		auctionModel.clear();
+		for (Item item : auctionCache)
+		{
+			auctionModel.addElement(item.getName());
+		}
+		return (auctionModel.size() == auctionCache.size());
 	}
 
 

@@ -73,6 +73,7 @@ public class Comms
 
 	public boolean recieveMessage(Message message)
 	{
+		boolean recieveSuccesful = false;
 		System.out.println("recieve message");
 		if (commType == 'c')
 		{
@@ -80,20 +81,22 @@ public class Comms
 			switch (message.getHeader())
 			{
 			case ITEM_DELIVERY:
-				//Add to item cache
-				//Display item cache
-				return true;				
+				recieveSuccesful = client.addAuctionToCache((Item) message.getPayload());
+				recieveSuccesful = client.refreshAuctionList();		
+				break;
 			case PROPERTY_DELIVERY:
-				//Use the property received for required function
-				return true;				
+				//Use the property received for required function		
+				break;
 			case USER_DELIVERY:
 				//Use requested users details
-				return true;
+				break;
 			case NOTIFICATION:
 				System.out.println(message.getPayload().toString());
+				break;
 			default:
-				return false;
+				break;
 			}
+			return recieveSuccesful;
 		}
 		else if (commType == 's')
 		{
@@ -101,41 +104,37 @@ public class Comms
 			switch (message.getHeader())
 			{
 			case ITEM_DELIVERY:
-				return server.addAuctionToSystem((Item) message.getPayload());
-				
+				recieveSuccesful =  server.addAuctionToSystem((Item) message.getPayload());
+				break;
 			case ITEM_REQUEST:
 				//Filter auctionList to specified item
 				//Send specified item
 				if (message.getPayload() == "ALL_OPEN")
 				{
-					server.fetchItems("ALL_OPEN");
-				}
-				
-				return true;
-				
+					recieveSuccesful = server.fetchItems("ALL_OPEN");
+				}				
+				break;				
 			case USER_DELIVERY:
-				return server.addUserToSystem((User) message.getPayload());
-				
+				recieveSuccesful = server.addUserToSystem((User) message.getPayload());
+				break;
 			case USER_REQUEST:
 				//Filter userList to specified item
 				//Send specified item
-				return true;
-				
+				break;				
 			case PROPERTY_DELIVERY:
 				//Change specified property
-				return true;
-				
+				break;
 			case PROPERTY_REQUEST:
 				//Fetch the specified property and send it
-				return true;
-				
+				break;
 			default:
-				return false;
+				break;
 			}
+			return recieveSuccesful;
 		}
 		else
 		{
-			return false;
+			return recieveSuccesful;
 		}
 	}
 

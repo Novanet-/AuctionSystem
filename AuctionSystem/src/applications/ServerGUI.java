@@ -174,8 +174,9 @@ public class ServerGUI
 	}
 
 
-	public void fetchItems(String itemFilter)
+	public boolean fetchItems(String itemFilter)
 	{
+		boolean openAuctionFound = false;
 		if (itemFilter == "ALL_OPEN")
 			for (Item item : auctionList)
 			{
@@ -183,8 +184,10 @@ public class ServerGUI
 				if ((item.getStartTime().isBefore(currentDateTime)) && (item.getEndTime().isAfter(currentDateTime)))
 				{
 					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, item));
-				}
+					openAuctionFound = true;
+				}					
 			}
+		return openAuctionFound;
 
 	}
 }
