@@ -13,6 +13,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 
 import commLayer.Comms;
+import commLayer.Message;
+import commLayer.MessageType;
 import commLayer.ServerThread;
 import utilities.Category;
 import utilities.Money;
@@ -25,11 +27,14 @@ import java.awt.Insets;
 import java.awt.Font;
 import java.security.Provider;
 import java.security.Security;
+import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Currency;
+
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -41,10 +46,10 @@ public class ServerGUI
 {
 
 	private JFrame frame;
-	
+
 	private ArrayList<Item> auctionList;
 	private ArrayList<User> userList;
-	
+
 	private ServerThread serverThread;
 	private Comms serverComms;
 
@@ -54,10 +59,12 @@ public class ServerGUI
 	 */
 	public static void main(String[] args)
 	{
-		Item item = new Item("A", "B", Category.ART, 2, LocalDateTime.of(2015, Month.JANUARY, 1, 0, 0), LocalDateTime.of(2015, Month.DECEMBER, 31, 23, 59), new Money(Currency.getInstance("GBP"), 50.50), new ArrayList<Bid>());
+		Item item = new Item("A", "B", Category.ART, 2, LocalDateTime.of(2015, Month.JANUARY, 1, 0, 0), LocalDateTime.of(2015, Month.DECEMBER,
+				31, 23, 59), new Money(Currency.getInstance("GBP"), 50.50), new ArrayList<Bid>());
 		System.out.println(item.toString());
 		System.out.println(item.getItemId());
-		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " " + item.getStartTime().toString() + " " + item.getEndTime().toString() + " " + item.getReservePrice().getAmount());
+		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " "
+				+ item.getStartTime().toString() + " " + item.getEndTime().toString() + " " + item.getReservePrice().getAmount());
 		EventQueue.invokeLater(new Runnable()
 		{
 
@@ -99,13 +106,13 @@ public class ServerGUI
 		{
 			e.printStackTrace();
 		}
-		
+
 		serverComms = new Comms(this, serverThread);
 		serverComms.initServerSocket();
-		
+
 		auctionList = new ArrayList<Item>();
 		userList = new ArrayList<User>();
-		
+
 		frame = new JFrame();
 		frame.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		frame.setBounds(100, 100, 450, 300);
@@ -123,13 +130,17 @@ public class ServerGUI
 		gbl_pnlOuter.rowWeights = new double[]
 		{ 0.0, 0.0, 0.0 };
 		pnlOuter.setLayout(gbl_pnlOuter);
-		
+
 		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (Item i: auctionList)
+		btnNewButton.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+				for (Item i : auctionList)
 				{
-					System.out.println(i.getItemId() + " " + i.getName() + " " + i.getDescription() + " " + i.getCategory().toString() + " " + i.getStartTime().toString() + " " + i.getEndTime().toString() + " " + i.getReservePrice().getAmount());
+					System.out.println(i.getItemId() + " " + i.getName() + " " + i.getDescription() + " " + i.getCategory().toString() + " "
+							+ i.getStartTime().toString() + " " + i.getEndTime().toString() + " " + i.getReservePrice().getAmount());
 				}
 			}
 		});
@@ -149,7 +160,8 @@ public class ServerGUI
 		gbc_lblServer.gridy = 1;
 		pnlOuter.add(lblServer, gbc_lblServer);
 	}
-	
+
+
 	public boolean addAuctionToSystem(Item item)
 	{
 		return auctionList.add(item);
@@ -161,4 +173,18 @@ public class ServerGUI
 		return userList.add(user);
 	}
 
+
+	public void fetchItems(String itemFilter)
+	{
+		if (itemFilter == "ALL_OPEN")
+			for (Item item : auctionList)
+			{
+				LocalDateTime currentDateTime = LocalDateTime.now();
+				if ((item.getStartTime().isBefore(currentDateTime)) && (item.getEndTime().isAfter(currentDateTime)))
+				{
+					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, item));
+				}
+			}
+
+	}
 }

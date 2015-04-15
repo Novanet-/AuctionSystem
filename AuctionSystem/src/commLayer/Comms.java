@@ -106,6 +106,11 @@ public class Comms
 			case ITEM_REQUEST:
 				//Filter auctionList to specified item
 				//Send specified item
+				if (message.getPayload() == "ALL_OPEN")
+				{
+					server.fetchItems("ALL_OPEN");
+				}
+				
 				return true;
 				
 			case USER_DELIVERY:
