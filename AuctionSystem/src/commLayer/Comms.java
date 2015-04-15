@@ -53,10 +53,10 @@ public class Comms
 
 	public boolean sendMessage(Message message)
 	{
-		System.out.println("send message");
+		//System.out.println("send message");
 		if (commType == 'c')
 		{
-			System.out.println("client send");
+			//System.out.println("client send");
 			return clientThread.sendToOutputStream(message);
 		}
 		else if (commType == 's')
@@ -74,7 +74,7 @@ public class Comms
 	public boolean recieveMessage(Message message)
 	{
 		boolean recieveSuccesful = false;
-		System.out.println("recieve message");
+		//System.out.println("recieve message");
 		if (commType == 'c')
 		{
 			System.out.println("client recieve");
@@ -109,9 +109,9 @@ public class Comms
 			case ITEM_REQUEST:
 				//Filter auctionList to specified item
 				//Send specified item
-				if (message.getPayload() == "ALL_OPEN")
+				if (message.getPayload() == RequestType.ALL_OPEN_ITEMS)
 				{
-					recieveSuccesful = server.fetchItems("ALL_OPEN");
+					recieveSuccesful = server.fetchItems(RequestType.ALL_OPEN_ITEMS);
 				}				
 				break;				
 			case USER_DELIVERY:

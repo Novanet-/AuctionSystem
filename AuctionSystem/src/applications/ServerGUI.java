@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import commLayer.Comms;
 import commLayer.Message;
 import commLayer.MessageType;
+import commLayer.RequestType;
 import commLayer.ServerThread;
 import utilities.Category;
 import utilities.Money;
@@ -174,10 +175,10 @@ public class ServerGUI
 	}
 
 
-	public boolean fetchItems(String itemFilter)
+	public boolean fetchItems(RequestType requestType)
 	{
 		boolean openAuctionFound = false;
-		if (itemFilter == "ALL_OPEN")
+		if (requestType == RequestType.ALL_OPEN_ITEMS)
 			for (Item item : auctionList)
 			{
 				LocalDateTime currentDateTime = LocalDateTime.now();

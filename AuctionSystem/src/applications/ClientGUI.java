@@ -75,6 +75,7 @@ import commLayer.ClientThread;
 import commLayer.Comms;
 import commLayer.Message;
 import commLayer.MessageType;
+import commLayer.RequestType;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -390,7 +391,7 @@ public class ClientGUI
 
 			public void actionPerformed(ActionEvent e)
 			{
-				clientComms.sendMessage(new Message(MessageType.ITEM_REQUEST, "ALL_OPEN"));
+				clientComms.sendMessage(new Message(MessageType.ITEM_REQUEST, RequestType.ALL_OPEN_ITEMS));
 			}
 		});
 		btngrpFilters.add(btnViewAll);
