@@ -71,6 +71,7 @@ import java.util.Calendar;
 
 import javax.swing.DefaultComboBoxModel;
 
+import clientGUIComponents.LoginPanel;
 import commLayer.ClientThread;
 import commLayer.Comms;
 import commLayer.Message;
@@ -94,7 +95,7 @@ import com.sun.org.apache.bcel.internal.generic.LSTORE;
 public class ClientGUI
 {
 
-	private JFrame frmClient;
+	public JFrame frmClient;
 	private JTextField txtUsername;
 	private JTextField txtPassword;
 	private JTextField txtFilterByID;
@@ -117,6 +118,7 @@ public class ClientGUI
 	private ArrayList<Item> auctionCache;
 	private JList<String> lstAuctionItems;
 	private DefaultListModel<String> auctionModel;
+	private ResizingCardLayout lytCard;
 
 
 	/**
@@ -179,80 +181,81 @@ public class ClientGUI
 		frmClient.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		frmClient.setBounds(100, 100, 550, 650);
 		frmClient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ResizingCardLayout lytCard = new ResizingCardLayout();
+		lytCard = new ResizingCardLayout();
 		frmClient.getContentPane().setLayout(lytCard);
 
-		JPanel pnlLogin = new JPanel();
-		pnlLogin.setToolTipText("Login Screen");
+		JPanel pnlLogin = new LoginPanel(this);
 		frmClient.getContentPane().add(pnlLogin, "pnlLogin");
-		GridBagLayout gbl_pnlLogin = new GridBagLayout();
-		gbl_pnlLogin.columnWidths = new int[]
-		{ 30, 30, 30 };
-		gbl_pnlLogin.rowHeights = new int[]
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_pnlLogin.columnWeights = new double[]
-		{ 1.0, 1.0, 1.0 };
-		gbl_pnlLogin.rowWeights = new double[]
-		{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		pnlLogin.setLayout(gbl_pnlLogin);
+//		pnlLogin.setToolTipText("Login Screen");
+//		frmClient.getContentPane().add(pnlLogin, "pnlLogin");
+//		GridBagLayout gbl_pnlLogin = new GridBagLayout();
+//		gbl_pnlLogin.columnWidths = new int[]
+//		{ 30, 30, 30 };
+//		gbl_pnlLogin.rowHeights = new int[]
+//		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+//		gbl_pnlLogin.columnWeights = new double[]
+//		{ 1.0, 1.0, 1.0 };
+//		gbl_pnlLogin.rowWeights = new double[]
+//		{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+//		pnlLogin.setLayout(gbl_pnlLogin);
 
-		JLabel lblUsername = new JLabel("Username");
-		GridBagConstraints gbc_lblUsername = new GridBagConstraints();
-		gbc_lblUsername.anchor = GridBagConstraints.EAST;
-		gbc_lblUsername.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUsername.gridx = 0;
-		gbc_lblUsername.gridy = 2;
-		pnlLogin.add(lblUsername, gbc_lblUsername);
-
-		txtUsername = new JTextField();
-		GridBagConstraints gbc_txtUsername = new GridBagConstraints();
-		gbc_txtUsername.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtUsername.insets = new Insets(0, 0, 5, 5);
-		gbc_txtUsername.gridx = 1;
-		gbc_txtUsername.gridy = 2;
-		pnlLogin.add(txtUsername, gbc_txtUsername);
-		txtUsername.setColumns(10);
-
-		JLabel lblPassword = new JLabel("Password");
-		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
-		gbc_lblPassword.anchor = GridBagConstraints.EAST;
-		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPassword.gridx = 0;
-		gbc_lblPassword.gridy = 4;
-		pnlLogin.add(lblPassword, gbc_lblPassword);
-
-		txtPassword = new JTextField();
-		GridBagConstraints gbc_txtPassword = new GridBagConstraints();
-		gbc_txtPassword.insets = new Insets(0, 0, 5, 5);
-		gbc_txtPassword.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtPassword.gridx = 1;
-		gbc_txtPassword.gridy = 4;
-		pnlLogin.add(txtPassword, gbc_txtPassword);
-		txtPassword.setColumns(10);
-
-		JButton btnSubmitLogin = new JButton("Submit");
-		GridBagConstraints gbc_btnSubmitLogin = new GridBagConstraints();
-		gbc_btnSubmitLogin.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSubmitLogin.gridx = 1;
-		gbc_btnSubmitLogin.gridy = 6;
-		pnlLogin.add(btnSubmitLogin, gbc_btnSubmitLogin);
-
-		JButton btnSwitchPanelsLogin = new JButton("Switch Panels");
-		btnSwitchPanelsLogin.addActionListener(new ActionListener()
-		{
-
-			public void actionPerformed(ActionEvent arg0)
-			{
-				lytCard.show(frmClient.getContentPane(), "pnlMain");
-				frmClient.pack();
-			}
-		});
-		GridBagConstraints gbc_btnSwitchPanelsLogin = new GridBagConstraints();
-		gbc_btnSwitchPanelsLogin.anchor = GridBagConstraints.NORTH;
-		gbc_btnSwitchPanelsLogin.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSwitchPanelsLogin.gridx = 1;
-		gbc_btnSwitchPanelsLogin.gridy = 7;
-		pnlLogin.add(btnSwitchPanelsLogin, gbc_btnSwitchPanelsLogin);
+//		JLabel lblUsername = new JLabel("Username");
+//		GridBagConstraints gbc_lblUsername = new GridBagConstraints();
+//		gbc_lblUsername.anchor = GridBagConstraints.EAST;
+//		gbc_lblUsername.insets = new Insets(0, 0, 5, 5);
+//		gbc_lblUsername.gridx = 0;
+//		gbc_lblUsername.gridy = 2;
+//		pnlLogin.add(lblUsername, gbc_lblUsername);
+//
+//		txtUsername = new JTextField();
+//		GridBagConstraints gbc_txtUsername = new GridBagConstraints();
+//		gbc_txtUsername.fill = GridBagConstraints.HORIZONTAL;
+//		gbc_txtUsername.insets = new Insets(0, 0, 5, 5);
+//		gbc_txtUsername.gridx = 1;
+//		gbc_txtUsername.gridy = 2;
+//		pnlLogin.add(txtUsername, gbc_txtUsername);
+//		txtUsername.setColumns(10);
+//
+//		JLabel lblPassword = new JLabel("Password");
+//		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
+//		gbc_lblPassword.anchor = GridBagConstraints.EAST;
+//		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
+//		gbc_lblPassword.gridx = 0;
+//		gbc_lblPassword.gridy = 4;
+//		pnlLogin.add(lblPassword, gbc_lblPassword);
+//
+//		txtPassword = new JTextField();
+//		GridBagConstraints gbc_txtPassword = new GridBagConstraints();
+//		gbc_txtPassword.insets = new Insets(0, 0, 5, 5);
+//		gbc_txtPassword.fill = GridBagConstraints.HORIZONTAL;
+//		gbc_txtPassword.gridx = 1;
+//		gbc_txtPassword.gridy = 4;
+//		pnlLogin.add(txtPassword, gbc_txtPassword);
+//		txtPassword.setColumns(10);
+//
+//		JButton btnSubmitLogin = new JButton("Submit");
+//		GridBagConstraints gbc_btnSubmitLogin = new GridBagConstraints();
+//		gbc_btnSubmitLogin.insets = new Insets(0, 0, 5, 5);
+//		gbc_btnSubmitLogin.gridx = 1;
+//		gbc_btnSubmitLogin.gridy = 6;
+//		pnlLogin.add(btnSubmitLogin, gbc_btnSubmitLogin);
+//
+//		JButton btnSwitchPanelsLogin = new JButton("Switch Panels");
+//		btnSwitchPanelsLogin.addActionListener(new ActionListener()
+//		{
+//
+//			public void actionPerformed(ActionEvent arg0)
+//			{
+//				lytCard.show(frmClient.getContentPane(), "pnlMain");
+//				frmClient.pack();
+//			}
+//		});
+//		GridBagConstraints gbc_btnSwitchPanelsLogin = new GridBagConstraints();
+//		gbc_btnSwitchPanelsLogin.anchor = GridBagConstraints.NORTH;
+//		gbc_btnSwitchPanelsLogin.insets = new Insets(0, 0, 5, 5);
+//		gbc_btnSwitchPanelsLogin.gridx = 1;
+//		gbc_btnSwitchPanelsLogin.gridy = 7;
+//		pnlLogin.add(btnSwitchPanelsLogin, gbc_btnSwitchPanelsLogin);
 
 		JPanel pnlMain = new JPanel();
 		pnlMain.setPreferredSize(new Dimension(550, 450));
@@ -265,11 +268,11 @@ public class ClientGUI
 		gbl_pnlItemList.columnWidths = new int[]
 		{ 200 };
 		gbl_pnlItemList.rowHeights = new int[]
-		{ 30, 0, 0, 0, 0 };
+		{ 30, 0, 0, 0, 0, 0 };
 		gbl_pnlItemList.columnWeights = new double[]
 		{ 1.0 };
 		gbl_pnlItemList.rowWeights = new double[]
-		{ 0.0, 0.0, 1.0, 0.0, 1.0 };
+		{ 0.0, 1.0, 0.0, 0.0, 1.0, 0.0 };
 		pnlItemList.setLayout(gbl_pnlItemList);
 
 		JScrollPane scrlAuctionList = new JScrollPane();
@@ -332,7 +335,7 @@ public class ClientGUI
 
 		JLabel lblItemsForAuction = new JLabel("Items for Auction");
 		GridBagConstraints gbc_lblItemsForAuction = new GridBagConstraints();
-		gbc_lblItemsForAuction.insets = new Insets(5, 5, 5, 0);
+		gbc_lblItemsForAuction.insets = new Insets(5, 5, 5, 5);
 		gbc_lblItemsForAuction.gridx = 0;
 		gbc_lblItemsForAuction.gridy = 0;
 		pnlItemList.add(lblItemsForAuction, gbc_lblItemsForAuction);
@@ -345,23 +348,15 @@ public class ClientGUI
 
 			public void actionPerformed(ActionEvent arg0)
 			{
-				lytCard.show(frmClient.getContentPane(), "pnlSubmitItem");
-				frmClient.pack();
+				changeCard("pnlSubmitItem");
 			}
 		});
 		GridBagConstraints gbc_btnOpenSubmitForm = new GridBagConstraints();
 		gbc_btnOpenSubmitForm.insets = new Insets(0, 5, 5, 5);
-		gbc_btnOpenSubmitForm.anchor = GridBagConstraints.NORTH;
+		gbc_btnOpenSubmitForm.anchor = GridBagConstraints.SOUTH;
 		gbc_btnOpenSubmitForm.gridx = 0;
 		gbc_btnOpenSubmitForm.gridy = 2;
 		pnlItemList.add(btnOpenSubmitForm, gbc_btnOpenSubmitForm);
-
-		JButton btnBidOnItem = new JButton("Bid on Auction");
-		GridBagConstraints gbc_btnBidOnItem = new GridBagConstraints();
-		gbc_btnBidOnItem.insets = new Insets(0, 5, 5, 5);
-		gbc_btnBidOnItem.gridx = 0;
-		gbc_btnBidOnItem.gridy = 3;
-		pnlItemList.add(btnBidOnItem, gbc_btnBidOnItem);
 
 		JTextArea textArea = new JTextArea();
 		textArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -371,6 +366,14 @@ public class ClientGUI
 		gbc_textArea.gridx = 0;
 		gbc_textArea.gridy = 4;
 		pnlItemList.add(textArea, gbc_textArea);
+
+		JButton btnBidOnItem = new JButton("Bid on Auction");
+		GridBagConstraints gbc_btnBidOnItem = new GridBagConstraints();
+		gbc_btnBidOnItem.anchor = GridBagConstraints.SOUTH;
+		gbc_btnBidOnItem.insets = new Insets(0, 5, 5, 5);
+		gbc_btnBidOnItem.gridx = 0;
+		gbc_btnBidOnItem.gridy = 5;
+		pnlItemList.add(btnBidOnItem, gbc_btnBidOnItem);
 
 		JPanel pnlFilters = new JPanel();
 		pnlMain.add(pnlFilters);
@@ -645,8 +648,7 @@ public class ClientGUI
 
 			public void actionPerformed(ActionEvent e)
 			{
-				lytCard.show(frmClient.getContentPane(), "pnlMain");
-				frmClient.pack();
+				changeCard("pnlMain");
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -666,6 +668,11 @@ public class ClientGUI
 		// frmClient.pack();
 	}
 
+	public void changeCard(String destinationPanel)
+	{
+		lytCard.show(frmClient.getContentPane(), destinationPanel);
+		frmClient.pack();
+	}
 
 	public boolean addAuctionToCache(Item item)
 	{
