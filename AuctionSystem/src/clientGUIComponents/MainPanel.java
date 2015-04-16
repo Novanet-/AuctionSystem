@@ -29,13 +29,16 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import utilities.Category;
+import applications.ClientGUI;
+
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.RequestType;
-import applications.ClientGUI;
 
 public class MainPanel extends JPanel
 {
+
+	private static final long serialVersionUID = -1651115114692051343L;
 
 	private ClientGUI clientGUI;
 
@@ -57,10 +60,15 @@ public class MainPanel extends JPanel
 	}
 
 
+	/**
+	 * Initialises components of the panel and sets their constraints and listeners
+	 */
 	public void initialize()
 	{
 		this.setPreferredSize(new Dimension(550, 450));
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+
+		listItemSelected = false;
 
 		JPanel pnlItemList = new JPanel();
 		this.add(pnlItemList);

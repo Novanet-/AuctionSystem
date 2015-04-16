@@ -1,15 +1,10 @@
 package entities;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.concurrent.atomic.AtomicLong;
 
-import commLayer.Hasher;
 import utilities.Category;
 import utilities.Money;
 

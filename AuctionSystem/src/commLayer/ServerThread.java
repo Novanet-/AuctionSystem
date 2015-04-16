@@ -1,6 +1,5 @@
 package commLayer;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -25,43 +24,76 @@ public class ServerThread extends Thread
 	{
 		this.comms = comms;
 	}
-	
+
+
 	@Override
-	public void run() {
+	public void run()
+	{
 		int portNumber = 62666;
 
 		try
 		{
-			System.out.println("Initialsing server socket");
-			serverSocket = new ServerSocket(portNumber);
-			clientSocket = serverSocket.accept();
-			out = new ObjectOutputStream(clientSocket.getOutputStream());
-			in = new ObjectInputStream(clientSocket.getInputStream());
-			{
-				Message inputMessage;
-				while (true)
-				{
-					try
-					{
-						if ((inputMessage = (Message) in.readObject()) != null)
-						{
-							comms.recieveMessage(inputMessage);
-							out.writeObject(new Message(MessageType.NOTIFICATION, "Item recieved"));
-						}
-					}
-					catch (ClassNotFoundException e)
-					{
-						e.printStackTrace();
-					}
-				}
-			}
+			createServerSocket(portNumber);
+			listenForInput();
 		}
 		catch (IOException e1)
 		{
 			e1.printStackTrace();
 		}
-    }
-	
+	}
+
+
+	/**
+	 * Creates a server with a with a specified port number, with input and output streams
+	 * 
+	 * @param portNumber
+	 *            The specified port number
+	 * @throws IOException
+	 */
+	private void createServerSocket(int portNumber) throws IOException
+	{
+		System.out.println("Initialsing server socket");
+		serverSocket = new ServerSocket(portNumber);
+		clientSocket = serverSocket.accept();
+		out = new ObjectOutputStream(clientSocket.getOutputStream());
+		in = new ObjectInputStream(clientSocket.getInputStream());
+	}
+
+
+	/**
+	 * Waits for a message to come through on the input stream, when it does, forward it to the comms module to receive
+	 * it
+	 * 
+	 * @throws IOException
+	 */
+	private void listenForInput() throws IOException
+	{
+		Message inputMessage;
+		while (true)
+		{
+			try
+			{
+				if ((inputMessage = (Message) in.readObject()) != null)
+				{
+					comms.recieveMessage(inputMessage);
+					out.writeObject(new Message(MessageType.NOTIFICATION, "Item recieved"));
+				}
+			}
+			catch (ClassNotFoundException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+	/**
+	 * Sends a message to the output stream of the server
+	 * 
+	 * @param message
+	 *            The message to be sent
+	 * @return boolean - isMessageSendSuccesful
+	 */
 	public boolean sendToOutputStream(Message message)
 	{
 		try

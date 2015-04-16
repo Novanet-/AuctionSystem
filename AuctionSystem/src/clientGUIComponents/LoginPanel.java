@@ -32,6 +32,9 @@ public class LoginPanel extends JPanel
 	}
 
 
+	/**
+	 * Initialises components of the panel and sets their constraints and listeners
+	 */
 	public void initialize()
 	{
 		this.setToolTipText("Login Screen");
@@ -45,7 +48,7 @@ public class LoginPanel extends JPanel
 		gbl_pnlLogin.rowWeights = new double[]
 		{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		this.setLayout(gbl_pnlLogin);
-		
+
 		JLabel lblUsername = new JLabel("Username");
 		GridBagConstraints gbc_lblUsername = new GridBagConstraints();
 		gbc_lblUsername.anchor = GridBagConstraints.EAST;

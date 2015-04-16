@@ -1,43 +1,37 @@
 package applications;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-
-import javax.swing.JLabel;
-
-import commLayer.Comms;
-import commLayer.Message;
-import commLayer.MessageType;
-import commLayer.RequestType;
-import commLayer.ServerThread;
-import utilities.Category;
-import utilities.Money;
-import entities.Bid;
-import entities.Item;
-import entities.User;
-
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.security.Provider;
-import java.security.Security;
-import java.time.Clock;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Currency;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import utilities.Category;
+import utilities.Money;
+
+import commLayer.Comms;
+import commLayer.Message;
+import commLayer.MessageType;
+import commLayer.RequestType;
+import commLayer.ServerThread;
+
+import entities.Bid;
+import entities.Item;
+import entities.User;
 
 /**
  * Created using Java 8
@@ -163,30 +157,51 @@ public class ServerGUI
 	}
 
 
+	/**
+	 * Adds an auction to the system
+	 * 
+	 * @param item
+	 *            The auction to be added
+	 * @return boolean - isAuctionAddSuccesful
+	 */
 	public boolean addAuctionToSystem(Item item)
 	{
 		return auctionList.add(item);
 	}
 
 
+	/**
+	 * Adds a user to the system
+	 * 
+	 * @param user
+	 *            The user to be added
+	 * @return boolean - isUserAddSuccesful
+	 */
 	public boolean addUserToSystem(User user)
 	{
 		return userList.add(user);
 	}
 
 
-	public boolean fetchItems(RequestType requestType)
+	/**
+	 * Fetch all auctions that match the specified RequestType
+	 * 
+	 * @param requestType
+	 *            The filter used to find the required auctions
+	 * @return boolean - true if any matching auctions found
+	 */
+	public boolean fetchAuctions(RequestType requestType)
 	{
 		boolean openAuctionFound = false;
 		if (requestType == RequestType.ALL_OPEN_ITEMS)
-			for (Item item : auctionList)
+			for (Item auction : auctionList)
 			{
 				LocalDateTime currentDateTime = LocalDateTime.now();
-				if ((item.getStartTime().isBefore(currentDateTime)) && (item.getEndTime().isAfter(currentDateTime)))
+				if ((auction.getStartTime().isBefore(currentDateTime)) && (auction.getEndTime().isAfter(currentDateTime)))
 				{
-					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, item));
+					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
 					openAuctionFound = true;
-				}					
+				}
 			}
 		return openAuctionFound;
 

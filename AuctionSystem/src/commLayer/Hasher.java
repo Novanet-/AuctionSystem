@@ -4,10 +4,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.Security;
-
-import entities.Item;
-import entities.User;
 
 /**
  * Created using Java 8
