@@ -17,10 +17,10 @@ public class ServerThread extends Thread
 	Socket clientSocket;
 	ObjectOutputStream out;
 	ObjectInputStream in;
-	Comms comms;
+	AbstractComms comms;
 
 
-	public ServerThread(Comms comms)
+	public ServerThread(AbstractComms comms)
 	{
 		this.comms = comms;
 	}

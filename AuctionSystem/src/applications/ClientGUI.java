@@ -22,7 +22,7 @@ import clientGUIComponents.MainPanel;
 import clientGUIComponents.SubmitPanel;
 
 import commLayer.ClientThread;
-import commLayer.Comms;
+import commLayer.ClientComms;
 import commLayer.Message;
 
 import entities.Item;
@@ -37,11 +37,16 @@ public class ClientGUI
 	private JFrame frmClient;
 
 	private ClientThread clientThread;
-	private Comms clientComms;
+	private ClientComms clientComms;
 
 	private ArrayList<Item> auctionCache;
-	private DefaultListModel<String> auctionModel;
 	private ResizingCardLayout lytCard;
+
+	private LoginPanel pnlLogin;
+
+	private MainPanel pnlMain;
+
+	private SubmitPanel pnlSubmitItem;
 
 
 	/**
@@ -90,9 +95,7 @@ public class ClientGUI
 		{
 			e.printStackTrace();
 		}
-		clientComms = new Comms(this, clientThread);
-		clientComms.initClientSocket();
-
+		clientComms = new ClientComms(this, clientThread);
 
 		auctionCache = new ArrayList<Item>();
 
@@ -106,13 +109,13 @@ public class ClientGUI
 		lytCard = new ResizingCardLayout();
 		frmClient.getContentPane().setLayout(lytCard);
 
-		JPanel pnlLogin = new LoginPanel(this);
+		pnlLogin = new LoginPanel(this);
 		frmClient.getContentPane().add(pnlLogin, "pnlLogin");
 
-		JPanel pnlMain = new MainPanel(this);
+		pnlMain = new MainPanel(this);
 		frmClient.getContentPane().add(pnlMain, "pnlMain");
 
-		JPanel pnlSubmitItem = new SubmitPanel(this);
+		pnlSubmitItem = new SubmitPanel(this);
 		frmClient.getContentPane().add(pnlSubmitItem, "pnlSubmitItem");
 
 		JMenuBar mnuMenuBar = new JMenuBar();
@@ -173,12 +176,7 @@ public class ClientGUI
 	 */
 	public boolean refreshAuctionList()
 	{
-		auctionModel.clear();
-		for (Item item : auctionCache)
-		{
-			auctionModel.addElement(item.getName());
-		}
-		return (auctionModel.size() == auctionCache.size());
+		return pnlMain.refreshAuctionList(auctionCache);
 	}
 
 

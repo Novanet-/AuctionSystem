@@ -16,10 +16,10 @@ public class ClientThread extends Thread
 	Socket clientSocket;
 	ObjectOutputStream out;
 	ObjectInputStream in, userIn;
-	Comms comms;
+	AbstractComms comms;
 
 
-	public ClientThread(Comms comms)
+	public ClientThread(AbstractComms comms)
 	{
 		this.comms = comms;
 	}

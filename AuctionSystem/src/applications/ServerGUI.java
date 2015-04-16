@@ -22,13 +22,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import utilities.Category;
 import utilities.Money;
-
-import commLayer.Comms;
+import commLayer.ClientComms;
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.RequestType;
+import commLayer.ServerComms;
 import commLayer.ServerThread;
-
 import entities.Bid;
 import entities.Item;
 import entities.User;
@@ -46,7 +45,7 @@ public class ServerGUI
 	private ArrayList<User> userList;
 
 	private ServerThread serverThread;
-	private Comms serverComms;
+	private ServerComms serverComms;
 
 
 	/**
@@ -102,8 +101,7 @@ public class ServerGUI
 			e.printStackTrace();
 		}
 
-		serverComms = new Comms(this, serverThread);
-		serverComms.initServerSocket();
+		serverComms = new ServerComms(this, serverThread);
 
 		auctionList = new ArrayList<Item>();
 		userList = new ArrayList<User>();

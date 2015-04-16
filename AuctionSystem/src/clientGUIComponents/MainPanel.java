@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -30,10 +31,10 @@ import javax.swing.event.ListSelectionListener;
 
 import utilities.Category;
 import applications.ClientGUI;
-
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.RequestType;
+import entities.Item;
 
 public class MainPanel extends JPanel
 {
@@ -275,6 +276,22 @@ public class MainPanel extends JPanel
 		gbc_cmbFilterBycategory.gridx = 1;
 		gbc_cmbFilterBycategory.gridy = 4;
 		pnlFilters.add(cmbFilterBycategory, gbc_cmbFilterBycategory);
+	}
+
+
+	/**
+	 * Refreshes the list of auctions, clearing it and then re-adding elements from the auction cache to it
+	 * 
+	 * @return boolean - true if the auction list is the same size as the auction cache
+	 */
+	public boolean refreshAuctionList(ArrayList<Item> auctionCache)
+	{
+		auctionModel.clear();
+		for (Item item : auctionCache)
+		{
+			auctionModel.addElement(item.getName());
+		}
+		return (auctionModel.size() == auctionCache.size());
 	}
 
 }
