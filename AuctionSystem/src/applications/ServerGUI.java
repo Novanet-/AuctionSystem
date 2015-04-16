@@ -22,13 +22,13 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import utilities.Category;
 import utilities.Money;
-import commLayer.ClientComms;
+
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.RequestType;
 import commLayer.ServerComms;
 import commLayer.ServerThread;
-import entities.Bid;
+
 import entities.Item;
 import entities.User;
 
@@ -54,7 +54,7 @@ public class ServerGUI
 	public static void main(String[] args)
 	{
 		Item item = new Item("A", "B", Category.ART, 2, LocalDateTime.of(2015, Month.JANUARY, 1, 0, 0), LocalDateTime.of(2015, Month.DECEMBER,
-				31, 23, 59), new Money(Currency.getInstance("GBP"), 50.50), new ArrayList<Bid>());
+				31, 23, 59), new Money(Currency.getInstance("GBP"), 50.50));
 		System.out.println(item.toString());
 		System.out.println(item.getItemId());
 		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " "

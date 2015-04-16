@@ -7,10 +7,15 @@ import java.util.Currency;
  * Created using Java 8
  *
  */
+/**
+ * A class to represent a monetary value along with it's currency type
+ *
+ */
 public class Money implements Serializable
 {
+
 	private static final long serialVersionUID = -6458682124885030639L;
-	
+
 	private Currency currencyType;
 	private double amount;
 

@@ -1,9 +1,10 @@
 package commLayer;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import applications.ClientGUI;
-import applications.ServerGUI;
 import entities.Item;
-import entities.User;
 
 /**
  * Created using Java 8
@@ -46,18 +47,20 @@ public class ClientComms implements AbstractComms
 
 
 	/**
+	 * Forwards a message to the client thread
 	 * 
 	 * @see commLayer.AbstractComms#sendMessage(commLayer.Message)
 	 */
 	@Override
 	public boolean sendMessage(Message message)
 	{
-		System.out.println("client send");
+		System.out.println("Client Send at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 		return clientThread.sendToOutputStream(message);
 	}
 
 
 	/**
+	 * Receives a message forwarded from the client thread, processing it based on the message type
 	 * 
 	 * @see commLayer.AbstractComms#recieveMessage(commLayer.Message)
 	 */
@@ -65,7 +68,7 @@ public class ClientComms implements AbstractComms
 	public boolean recieveMessage(Message message)
 	{
 		boolean recieveSuccesful = false;
-		System.out.println("client recieve");
+		System.out.println("Client Recieve at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 		switch (message.getHeader())
 		{
 		case ITEM_DELIVERY:
@@ -79,7 +82,18 @@ public class ClientComms implements AbstractComms
 			// Use requested users details
 			break;
 		case NOTIFICATION:
-			System.out.println(message.getPayload().toString());
+			switch ((Notification) message.getPayload())
+			{
+			case ITEM_RECIEVED:
+				System.out.println("Item Recieved by server at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+				break;
+			case PROPERTY_RECIEVED:
+				break;
+			case USER_RECIEVED:
+				break;
+			default:
+				break;
+			}
 			break;
 		default:
 			break;

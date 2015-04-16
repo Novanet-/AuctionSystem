@@ -8,15 +8,21 @@ import java.io.Serializable;
  */
 public class Message implements Serializable
 {
+
 	private static final long serialVersionUID = -1402974963399342516L;
-	
+
 	private MessageType header;
 	private Object payload;
 
 
 	/**
+	 * Creates a new message, with a header identifying the message type and a payload containing the data of the
+	 * message
+	 * 
 	 * @param header
+	 *            The MessageType of the message
 	 * @param payload
+	 *            The data of the message
 	 */
 	public Message(MessageType header, Object payload)
 	{
@@ -26,33 +32,21 @@ public class Message implements Serializable
 	}
 
 
-	
+	/**
+	 * @return The MessageType of the message
+	 */
 	public MessageType getHeader()
 	{
 		return header;
 	}
 
 
-	
-	public void setHeader(MessageType header)
-	{
-		this.header = header;
-	}
-
-
-	
+	/**
+	 * @return The data of the message
+	 */
 	public Object getPayload()
 	{
 		return payload;
 	}
-
-
-	
-	public void setPayload(Object payload)
-	{
-		this.payload = payload;
-	}
-	
-	
 
 }

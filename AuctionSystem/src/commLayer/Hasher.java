@@ -1,7 +1,6 @@
 package commLayer;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -17,6 +16,15 @@ public final class Hasher
 	}
 
 
+	/**
+	 * Creates an MD5 hash of a given password
+	 * 
+	 * @param password
+	 *            The plaintext password to be encrypted
+	 * @return The hashed password
+	 * @throws NoSuchAlgorithmException
+	 * @throws UnsupportedEncodingException
+	 */
 	public static byte[] getPasswordHash(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException
 	{
 		MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -25,11 +33,4 @@ public final class Hasher
 		return input;
 	}
 
-
-	
-	public static int convertByteArrayToInt(byte[] bytes) {
-	     return ByteBuffer.wrap(bytes).getInt();
-	}
-	
-	
 }

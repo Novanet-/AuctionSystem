@@ -31,9 +31,11 @@ import javax.swing.event.ListSelectionListener;
 
 import utilities.Category;
 import applications.ClientGUI;
+
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.RequestType;
+
 import entities.Item;
 
 public class MainPanel extends JPanel

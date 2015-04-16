@@ -1,8 +1,8 @@
 package commLayer;
 
+import applications.ServerGUI;
 import entities.Item;
 import entities.User;
-import applications.ServerGUI;
 
 public class ServerComms implements AbstractComms
 {
@@ -27,12 +27,19 @@ public class ServerComms implements AbstractComms
 		initSocket();
 	}
 
+
+	/**
+	 * Initialises and starts the server thread
+	 * 
+	 * @see commLayer.AbstractComms#initSocket()
+	 */
 	@Override
 	public void initSocket()
 	{
 		serverThread = new ServerThread(this);
 		serverThread.start();
 	}
+
 
 	@Override
 	public boolean sendMessage(Message message)
@@ -50,7 +57,8 @@ public class ServerComms implements AbstractComms
 		switch (message.getHeader())
 		{
 		case ITEM_DELIVERY:
-			recieveSuccesful = server.addAuctionToSystem((Item) message.getPayload());
+			if (recieveSuccesful = server.addAuctionToSystem((Item) message.getPayload()))
+				sendMessage(new Message(MessageType.NOTIFICATION, Notification.ITEM_RECIEVED));
 			break;
 		case ITEM_REQUEST:
 			// Filter auctionList to specified item
@@ -78,6 +86,5 @@ public class ServerComms implements AbstractComms
 		}
 		return recieveSuccesful;
 	}
-
 
 }

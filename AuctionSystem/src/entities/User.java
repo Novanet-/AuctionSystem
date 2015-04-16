@@ -75,7 +75,7 @@ public class User implements Serializable
 
 
 	/**
-	 * Increments the counter used to determine the next unique id of a created Item
+	 * Increments the counter used to determine the next unique id of a created User
 	 * 
 	 * @return The incremented id
 	 */

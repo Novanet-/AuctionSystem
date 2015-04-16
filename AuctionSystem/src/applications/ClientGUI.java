@@ -10,10 +10,8 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -21,8 +19,8 @@ import clientGUIComponents.LoginPanel;
 import clientGUIComponents.MainPanel;
 import clientGUIComponents.SubmitPanel;
 
-import commLayer.ClientThread;
 import commLayer.ClientComms;
+import commLayer.ClientThread;
 import commLayer.Message;
 
 import entities.Item;

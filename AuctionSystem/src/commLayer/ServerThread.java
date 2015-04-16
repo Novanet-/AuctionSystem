@@ -76,7 +76,7 @@ public class ServerThread extends Thread
 				if ((inputMessage = (Message) in.readObject()) != null)
 				{
 					comms.recieveMessage(inputMessage);
-					out.writeObject(new Message(MessageType.NOTIFICATION, "Item recieved"));
+//					out.writeObject(new Message(MessageType.NOTIFICATION, "Item recieved"));
 				}
 			}
 			catch (ClassNotFoundException e)

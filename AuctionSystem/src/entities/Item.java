@@ -8,15 +8,19 @@ import java.util.concurrent.atomic.AtomicLong;
 import utilities.Category;
 import utilities.Money;
 
-
 /**
  * Created using Java 8
  *
  */
+/**
+ * A class to represent an auction stored in an auction system
+ *
+ */
 public class Item implements Serializable
 {
+
 	private static final long serialVersionUID = -4247500001194895879L;
-	
+
 	private long itemId;
 	private String name;
 	private String description;
@@ -30,26 +34,33 @@ public class Item implements Serializable
 
 	private static AtomicLong counter = new AtomicLong(0);
 
-	
+
 	public Item()
 	{
 		super();
 	}
-	
-	
+
+
 	/**
-	 * @param itemId
 	 * @param name
+	 *            The name of the item
 	 * @param description
+	 *            A description for the item
 	 * @param category
+	 *            The category to sell the item in
 	 * @param userId
+	 *            The userID of the auction creator
 	 * @param startTime
+	 *            The start time of the auction
 	 * @param endTime
+	 *            The end time of the auction
 	 * @param reservePrice
+	 *            The reserve price of the auction
 	 * @param bids
+	 *            A list of the bids on the auction
 	 */
-	public Item(String name, String description, Category category, int userId, LocalDateTime startTime, LocalDateTime endTime, Money reservePrice,
-			ArrayList<Bid> bids)
+	public Item(String name, String description, Category category, int userId, LocalDateTime startTime, LocalDateTime endTime,
+			Money reservePrice)
 	{
 		super();
 		this.name = name;
@@ -59,22 +70,15 @@ public class Item implements Serializable
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.reservePrice = reservePrice;
-		this.bids = bids;
+		this.bids = new ArrayList<Bid>();
 		itemId = nextId();
 
 	}
 
 
-
 	public long getItemId()
 	{
 		return itemId;
-	}
-
-
-	public void setItemId(long itemId)
-	{
-		this.itemId = itemId;
 	}
 
 
@@ -180,6 +184,11 @@ public class Item implements Serializable
 	}
 
 
+	/**
+	 * Increments the counter used to determine the next unique id of a created Item
+	 * 
+	 * @return The incremented id
+	 */
 	public static long nextId()
 	{
 		return counter.incrementAndGet();
