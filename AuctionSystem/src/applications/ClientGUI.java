@@ -165,6 +165,11 @@ public class ClientGUI
 	{
 		return auctionCache.add(item);
 	}
+	
+	public Item getAuctionFromCache(int index)
+	{
+		return auctionCache.get(index);
+	}
 
 
 	/**

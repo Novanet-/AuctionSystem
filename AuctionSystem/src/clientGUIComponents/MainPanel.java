@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -53,6 +54,8 @@ public class MainPanel extends JPanel
 	private DefaultListModel<String> auctionModel;
 
 	private boolean listItemSelected;
+
+	private JTextArea txtAuctionDetails;
 
 
 	public MainPanel(ClientGUI clientGUI)
@@ -101,17 +104,7 @@ public class MainPanel extends JPanel
 		lstAuctionItems = new JList<String>();
 		auctionModel = new DefaultListModel<String>();
 		lstAuctionItems.setModel(auctionModel);
-		lstAuctionItems.addListSelectionListener(new ListSelectionListener()
-		{
-
-			public void valueChanged(ListSelectionEvent e)
-			{
-				if (!lstAuctionItems.isSelectionEmpty())
-				{
-					listItemSelected = true;
-				}
-			}
-		});
+		lstAuctionItems.addListSelectionListener(new AuctionSelectedListener());
 
 		lstAuctionItems.addMouseListener(new MouseAdapter()
 		{
@@ -169,14 +162,14 @@ public class MainPanel extends JPanel
 		gbc_btnOpenSubmitForm.gridy = 2;
 		pnlItemList.add(btnOpenSubmitForm, gbc_btnOpenSubmitForm);
 
-		JTextArea textArea = new JTextArea();
-		textArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		GridBagConstraints gbc_textArea = new GridBagConstraints();
-		gbc_textArea.insets = new Insets(0, 5, 5, 5);
-		gbc_textArea.fill = GridBagConstraints.BOTH;
-		gbc_textArea.gridx = 0;
-		gbc_textArea.gridy = 4;
-		pnlItemList.add(textArea, gbc_textArea);
+		txtAuctionDetails = new JTextArea();
+		txtAuctionDetails.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		GridBagConstraints gbc_txtAuctionDetails = new GridBagConstraints();
+		gbc_txtAuctionDetails.insets = new Insets(0, 5, 5, 5);
+		gbc_txtAuctionDetails.fill = GridBagConstraints.BOTH;
+		gbc_txtAuctionDetails.gridx = 0;
+		gbc_txtAuctionDetails.gridy = 4;
+		pnlItemList.add(txtAuctionDetails, gbc_txtAuctionDetails);
 
 		JButton btnBidOnItem = new JButton("Bid on Auction");
 		GridBagConstraints gbc_btnBidOnItem = new GridBagConstraints();
@@ -294,6 +287,25 @@ public class MainPanel extends JPanel
 			auctionModel.addElement(item.getName());
 		}
 		return (auctionModel.size() == auctionCache.size());
+	}
+
+
+	private final class AuctionSelectedListener implements ListSelectionListener
+	{
+
+		public void valueChanged(ListSelectionEvent e)
+		{
+			if (!lstAuctionItems.isSelectionEmpty())
+			{
+				listItemSelected = true;
+				Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
+				txtAuctionDetails.setText("Item: " + selectedAuction.getName());
+				txtAuctionDetails.append("\n" + "Description: " + selectedAuction.getDescription());
+				txtAuctionDetails.append("\n" + "Category: " +selectedAuction.getCategory().toString());
+				txtAuctionDetails.append("\n" + "Start Time: " +selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
+				txtAuctionDetails.append("\n" +"End Time: " + selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
+			}
+		}
 	}
 
 }

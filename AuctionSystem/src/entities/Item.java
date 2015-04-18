@@ -2,7 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Stack;
 import java.util.concurrent.atomic.AtomicLong;
 
 import utilities.Category;
@@ -30,7 +30,7 @@ public class Item implements Serializable
 	private LocalDateTime startTime, endTime;
 
 	private Money reservePrice;
-	private ArrayList<Bid> bids;
+	private Stack<Bid> bids;
 
 	private static AtomicLong counter = new AtomicLong(0);
 
@@ -70,7 +70,7 @@ public class Item implements Serializable
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.reservePrice = reservePrice;
-		this.bids = new ArrayList<Bid>();
+		this.bids = new Stack<Bid>();
 		itemId = nextId();
 
 	}
@@ -166,15 +166,12 @@ public class Item implements Serializable
 	}
 
 
-	public ArrayList<Bid> getBids()
+
+
+	
+	public Stack<Bid> getBids()
 	{
 		return bids;
-	}
-
-
-	public void setBids(ArrayList<Bid> bids)
-	{
-		this.bids = bids;
 	}
 
 
