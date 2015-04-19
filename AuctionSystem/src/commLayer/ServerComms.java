@@ -3,6 +3,7 @@ package commLayer;
 import applications.ServerGUI;
 import entities.Item;
 import entities.User;
+import entities.Bid;
 
 public class ServerComms implements AbstractComms
 {
@@ -61,12 +62,15 @@ public class ServerComms implements AbstractComms
 				sendMessage(new Message(MessageType.NOTIFICATION, Notification.ITEM_RECIEVED));
 			break;
 		case ITEM_REQUEST:
-			// Filter auctionList to specified item
-			// Send specified item
 			if (message.getPayload() == RequestType.ALL_OPEN_ITEMS)
 			{
 				recieveSuccesful = server.fetchAuctions(RequestType.ALL_OPEN_ITEMS);
 			}
+			break;
+		case BID_DELIVERY:
+			recieveSuccesful = server.checkBidValid((Bid) message.getPayload());
+			break;
+		case BID_REQUEST:
 			break;
 		case USER_DELIVERY:
 			recieveSuccesful = server.addUserToSystem((User) message.getPayload());
@@ -74,6 +78,10 @@ public class ServerComms implements AbstractComms
 		case USER_REQUEST:
 			// Filter userList to specified item
 			// Send specified item
+			if (message.getPayload() == RequestType.ALL_USERS)
+			{
+				recieveSuccesful = server.fetchUsers(RequestType.ALL_USERS);
+			}
 			break;
 		case PROPERTY_DELIVERY:
 			// Change specified property
@@ -86,5 +94,4 @@ public class ServerComms implements AbstractComms
 		}
 		return recieveSuccesful;
 	}
-
 }

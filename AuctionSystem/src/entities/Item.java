@@ -35,10 +35,6 @@ public class Item implements Serializable
 	private static AtomicLong counter = new AtomicLong(0);
 
 
-	public Item()
-	{
-		super();
-	}
 
 
 	/**

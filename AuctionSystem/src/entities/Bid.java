@@ -1,6 +1,9 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.Currency;
+
+import utilities.Money;
 
 /**
  * Created using Java 8
@@ -11,47 +14,43 @@ import java.util.Currency;
  * and the value of the bid
  *
  */
-public class Bid
+public class Bid implements Serializable
 {
 
-	private int userId;
-	private int itemID;
-	private Currency amount;
+	private long userId;
+	private long itemId;
+	private Money amount;
 
 
-	public int getUserId()
+	/**
+	 * @param userId
+	 * @param itemID
+	 * @param amount
+	 */
+	public Bid(int userId, long itemID, Money amount)
+	{
+		super();
+		this.userId = userId;
+		this.itemId = itemID;
+		this.amount = amount;
+	}
+
+
+	public long getUserId()
 	{
 		return userId;
 	}
 
 
-	public void setUserId(int userId)
+	public long getItemID()
 	{
-		this.userId = userId;
+		return itemId;
 	}
 
 
-	public int getItemID()
-	{
-		return itemID;
-	}
-
-
-	public void setItemID(int itemID)
-	{
-		this.itemID = itemID;
-	}
-
-
-	public Currency getAmount()
+	public Money getAmount()
 	{
 		return amount;
-	}
-
-
-	public void setAmount(Currency amount)
-	{
-		this.amount = amount;
 	}
 
 }

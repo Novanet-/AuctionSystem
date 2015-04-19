@@ -22,13 +22,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import utilities.Category;
 import utilities.Money;
-
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.RequestType;
 import commLayer.ServerComms;
 import commLayer.ServerThread;
-
+import entities.Bid;
 import entities.Item;
 import entities.User;
 
@@ -203,5 +202,34 @@ public class ServerGUI
 			}
 		return openAuctionFound;
 
+	}
+
+
+	public boolean fetchUsers(RequestType allUsers)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	public boolean checkBidValid(Bid payload)
+	{
+		for (Item auction : auctionList)
+		{
+			if (auction.getItemId() == payload.getItemID())
+			{
+				if (auction.getBids().isEmpty())
+				{
+					auction.getBids().push(payload);
+					return true;
+				}
+				else if (payload.getAmount().getAmount() > auction.getBids().peek().getAmount().getAmount())
+				{
+					auction.getBids().push(payload);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

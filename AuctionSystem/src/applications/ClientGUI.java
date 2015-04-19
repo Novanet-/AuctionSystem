@@ -165,7 +165,23 @@ public class ClientGUI
 	{
 		return auctionCache.add(item);
 	}
-	
+
+
+	public boolean updateAuctionInCache(Item payload)
+	{
+		for (Item auction : auctionCache)
+		{
+			if (auction.getItemId() == payload.getItemId())
+			{
+				int auctionPosition = auctionCache.indexOf(auction);
+				auctionCache.set(auctionPosition, payload);
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 	public Item getAuctionFromCache(int index)
 	{
 		return auctionCache.get(index);

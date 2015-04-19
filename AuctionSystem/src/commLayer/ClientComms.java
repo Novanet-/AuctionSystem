@@ -75,6 +75,10 @@ public class ClientComms implements AbstractComms
 			recieveSuccesful = client.addAuctionToCache((Item) message.getPayload());
 			recieveSuccesful = client.refreshAuctionList();
 			break;
+		case BID_DELIVERY:
+			recieveSuccesful = client.updateAuctionInCache((Item) message.getPayload());
+			recieveSuccesful = client.refreshAuctionList();
+			break;
 		case PROPERTY_DELIVERY:
 			// Use the property received for required function
 			break;

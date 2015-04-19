@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Currency;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -31,13 +32,18 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import utilities.Category;
+import utilities.Money;
 import applications.ClientGUI;
-
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.RequestType;
-
+import entities.Bid;
 import entities.Item;
+
+import java.awt.FlowLayout;
+import java.awt.Component;
+
+import javax.swing.Box;
 
 public class MainPanel extends JPanel
 {
@@ -56,6 +62,7 @@ public class MainPanel extends JPanel
 	private boolean listItemSelected;
 
 	private JTextArea txtAuctionDetails;
+	private JTextField txtMakeBid;
 
 
 	public MainPanel(ClientGUI clientGUI)
@@ -82,11 +89,11 @@ public class MainPanel extends JPanel
 		gbl_pnlItemList.columnWidths = new int[]
 		{ 200 };
 		gbl_pnlItemList.rowHeights = new int[]
-		{ 30, 0, 0, 0, 0, 0 };
+		{ 30, 0, 0, 0, 0 };
 		gbl_pnlItemList.columnWeights = new double[]
 		{ 1.0 };
 		gbl_pnlItemList.rowWeights = new double[]
-		{ 0.0, 1.0, 0.0, 0.0, 1.0, 0.0 };
+		{ 0.0, 1.0, 0.0, 1.0, 0.0 };
 		pnlItemList.setLayout(gbl_pnlItemList);
 
 		JScrollPane scrlAuctionList = new JScrollPane();
@@ -156,28 +163,57 @@ public class MainPanel extends JPanel
 			}
 		});
 		GridBagConstraints gbc_btnOpenSubmitForm = new GridBagConstraints();
-		gbc_btnOpenSubmitForm.insets = new Insets(0, 5, 5, 5);
-		gbc_btnOpenSubmitForm.anchor = GridBagConstraints.SOUTH;
+		gbc_btnOpenSubmitForm.anchor = GridBagConstraints.NORTH;
+		gbc_btnOpenSubmitForm.insets = new Insets(0, 5, 20, 5);
 		gbc_btnOpenSubmitForm.gridx = 0;
 		gbc_btnOpenSubmitForm.gridy = 2;
 		pnlItemList.add(btnOpenSubmitForm, gbc_btnOpenSubmitForm);
 
 		txtAuctionDetails = new JTextArea();
+		txtAuctionDetails.setLineWrap(true);
 		txtAuctionDetails.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		GridBagConstraints gbc_txtAuctionDetails = new GridBagConstraints();
 		gbc_txtAuctionDetails.insets = new Insets(0, 5, 5, 5);
 		gbc_txtAuctionDetails.fill = GridBagConstraints.BOTH;
 		gbc_txtAuctionDetails.gridx = 0;
-		gbc_txtAuctionDetails.gridy = 4;
+		gbc_txtAuctionDetails.gridy = 3;
 		pnlItemList.add(txtAuctionDetails, gbc_txtAuctionDetails);
 
+		JPanel pnlMakeBid = new JPanel();
+		GridBagConstraints gbc_pnlMakeBid = new GridBagConstraints();
+		gbc_pnlMakeBid.insets = new Insets(0, 5, 5, 5);
+		gbc_pnlMakeBid.fill = GridBagConstraints.BOTH;
+		gbc_pnlMakeBid.gridx = 0;
+		gbc_pnlMakeBid.gridy = 4;
+		pnlItemList.add(pnlMakeBid, gbc_pnlMakeBid);
+		pnlMakeBid.setLayout(new BoxLayout(pnlMakeBid, BoxLayout.X_AXIS));
+
+		Component horizontalGlue = Box.createHorizontalGlue();
+		pnlMakeBid.add(horizontalGlue);
+
 		JButton btnBidOnItem = new JButton("Bid on Auction");
-		GridBagConstraints gbc_btnBidOnItem = new GridBagConstraints();
-		gbc_btnBidOnItem.anchor = GridBagConstraints.SOUTH;
-		gbc_btnBidOnItem.insets = new Insets(0, 5, 5, 5);
-		gbc_btnBidOnItem.gridx = 0;
-		gbc_btnBidOnItem.gridy = 5;
-		pnlItemList.add(btnBidOnItem, gbc_btnBidOnItem);
+		pnlMakeBid.add(btnBidOnItem);
+
+		Component horizontalGlue_2 = Box.createHorizontalGlue();
+		pnlMakeBid.add(horizontalGlue_2);
+
+		txtMakeBid = new JTextField();
+		pnlMakeBid.add(txtMakeBid);
+		txtMakeBid.setColumns(10);
+
+		Component horizontalGlue_1 = Box.createHorizontalGlue();
+		pnlMakeBid.add(horizontalGlue_1);
+		btnBidOnItem.addActionListener(new ActionListener()
+		{
+
+			public void actionPerformed(ActionEvent e)
+			{
+				Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
+				double amountBid = Double.parseDouble(txtMakeBid.getText());
+				Bid newBid = new Bid(1, selectedAuction.getItemId(), new Money(Currency.getInstance("GBP"), amountBid));
+				clientGUI.sendMessage(new Message(MessageType.BID_DELIVERY, newBid));
+			}
+		});
 
 		JPanel pnlFilters = new JPanel();
 		this.add(pnlFilters);
@@ -301,9 +337,19 @@ public class MainPanel extends JPanel
 				Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
 				txtAuctionDetails.setText("Item: " + selectedAuction.getName());
 				txtAuctionDetails.append("\n" + "Description: " + selectedAuction.getDescription());
-				txtAuctionDetails.append("\n" + "Category: " +selectedAuction.getCategory().toString());
-				txtAuctionDetails.append("\n" + "Start Time: " +selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
-				txtAuctionDetails.append("\n" +"End Time: " + selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
+				txtAuctionDetails.append("\n" + "Category: " + selectedAuction.getCategory().toString());
+				txtAuctionDetails.append("\n" + "Start Time: "
+						+ selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
+				txtAuctionDetails.append("\n" + "End Time: "
+						+ selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
+				double highestBid;
+				if (selectedAuction.getBids().isEmpty())
+				{
+					highestBid = 0;
+				}
+				else
+					highestBid = selectedAuction.getBids().peek().getAmount().getAmount();
+				txtAuctionDetails.append("\n" + "Highest Bid: " + highestBid);
 			}
 		}
 	}
