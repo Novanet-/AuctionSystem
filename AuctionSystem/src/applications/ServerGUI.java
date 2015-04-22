@@ -20,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import persistenceLayer.DataPersistence;
+import persistenceLayer.EntityType;
 import utilities.Category;
 import utilities.Money;
 import commLayer.Message;
@@ -105,6 +107,8 @@ public class ServerGUI
 
 		auctionList = new ArrayList<Item>();
 		userList = new ArrayList<User>();
+		
+		retrieveAuctionSystemData();
 
 		frame = new JFrame();
 		frame.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -165,7 +169,10 @@ public class ServerGUI
 	 */
 	synchronized public boolean addAuctionToSystem(Item item)
 	{
-		return auctionList.add(item);
+		boolean addSuccessful = auctionList.add(item);
+		if (addSuccessful)
+			DataPersistence.writeListToFile(auctionList, EntityType.ITEM);
+		return addSuccessful;
 	}
 
 
@@ -176,9 +183,21 @@ public class ServerGUI
 	 *            The user to be added
 	 * @return boolean - isUserAddSuccesful
 	 */
-	public boolean addUserToSystem(User user)
+	synchronized public boolean addUserToSystem(User user)
 	{
-		return userList.add(user);
+		boolean addSuccessful = userList.add(user);
+		if (addSuccessful)
+			DataPersistence.writeListToFile(userList, EntityType.USER);
+		return addSuccessful;
+	}
+	
+	synchronized public boolean addBidToSystem(Bid bid, Item auction)
+	{
+		auction.getBids().push(bid);
+		boolean addSuccessful = (auction.getBids().peek() == bid);
+		if (addSuccessful)
+			DataPersistence.writeListToFile(auctionList, EntityType.ITEM);
+		return addSuccessful;
 	}
 
 
@@ -189,7 +208,7 @@ public class ServerGUI
 	 *            The filter used to find the required auctions
 	 * @return boolean - true if any matching auctions found
 	 */
-	synchronized public boolean fetchAuctions(RequestType requestType)
+	public boolean fetchAuctions(RequestType requestType)
 	{
 		boolean openAuctionFound = false;
 		if (requestType == RequestType.ALL_OPEN_ITEMS)
@@ -234,9 +253,15 @@ public class ServerGUI
 		}
 		return false;
 	}
-
-
 	
+	@SuppressWarnings("unchecked")
+	public void retrieveAuctionSystemData()
+	{
+		auctionList = (ArrayList<Item>) DataPersistence.readListFromFile(EntityType.ITEM);
+		userList = (ArrayList<User>) DataPersistence.readListFromFile(EntityType.USER);
+	}
+
+
 	public ArrayList<Item> getAuctionList()
 	{
 		return auctionList;

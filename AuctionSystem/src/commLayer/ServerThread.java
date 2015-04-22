@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 /**
  * Created using Java 8
@@ -54,9 +55,7 @@ public class ServerThread extends Thread
 	{
 		System.out.println("Initialsing server socket");
 		serverSocket = new ServerSocket(portNumber);
-		clientSocket = serverSocket.accept();
-		out = new ObjectOutputStream(clientSocket.getOutputStream());
-		in = new ObjectInputStream(clientSocket.getInputStream());
+		serverSocket.setSoTimeout(0);
 	}
 
 
@@ -73,10 +72,16 @@ public class ServerThread extends Thread
 		{
 			try
 			{
+				clientSocket = serverSocket.accept();
+				out = new ObjectOutputStream(clientSocket.getOutputStream());
+				in = new ObjectInputStream(clientSocket.getInputStream());
 				if ((inputMessage = (Message) in.readObject()) != null)
 				{
 					comms.recieveMessage(inputMessage);
-//					out.writeObject(new Message(MessageType.NOTIFICATION, "Item recieved"));
+				}
+				else
+				{
+					clientSocket.close();
 				}
 			}
 			catch (ClassNotFoundException e)
