@@ -68,12 +68,14 @@ public class ServerComms implements AbstractComms
 			}
 			break;
 		case BID_DELIVERY:
-			recieveSuccesful = server.checkBidValid((Bid) message.getPayload());
+			if (recieveSuccesful = server.checkBidValid((Bid) message.getPayload()))
+				sendMessage(new Message(MessageType.NOTIFICATION, Notification.BID_RECIEVED));
 			break;
 		case BID_REQUEST:
 			break;
 		case USER_DELIVERY:
-			recieveSuccesful = server.addUserToSystem((User) message.getPayload());
+			if (recieveSuccesful = server.addUserToSystem((User) message.getPayload()))
+				sendMessage(new Message(MessageType.NOTIFICATION, Notification.USER_RECIEVED));
 			break;
 		case USER_REQUEST:
 			// Filter userList to specified item

@@ -73,11 +73,11 @@ public class ClientComms implements AbstractComms
 		{
 		case ITEM_DELIVERY:
 			recieveSuccesful = client.addAuctionToCache((Item) message.getPayload());
-			recieveSuccesful = client.refreshAuctionList();
+			recieveSuccesful = client.refreshAuctionList(RequestType.ALL_OPEN_ITEMS);
 			break;
 		case BID_DELIVERY:
-			recieveSuccesful = client.updateAuctionInCache((Item) message.getPayload());
-			recieveSuccesful = client.refreshAuctionList();
+			recieveSuccesful = client.addAuctionToCache((Item) message.getPayload());
+			recieveSuccesful = client.refreshAuctionList(RequestType.ALL_OPEN_ITEMS);
 			break;
 		case PROPERTY_DELIVERY:
 			// Use the property received for required function
@@ -90,6 +90,13 @@ public class ClientComms implements AbstractComms
 			{
 			case ITEM_RECIEVED:
 				System.out.println("Item Recieved by server at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+				client.clearCache();
+				sendMessage(new Message(MessageType.ITEM_REQUEST, RequestType.ALL_OPEN_ITEMS));
+				break;
+			case BID_RECIEVED:
+				System.out.println("Bid Recieved by server at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+				client.clearCache();
+				sendMessage(new Message(MessageType.ITEM_REQUEST, RequestType.ALL_OPEN_ITEMS));
 				break;
 			case PROPERTY_RECIEVED:
 				break;

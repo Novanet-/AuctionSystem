@@ -315,12 +315,16 @@ public class MainPanel extends JPanel
 	 * 
 	 * @return boolean - true if the auction list is the same size as the auction cache
 	 */
-	public boolean refreshAuctionList(ArrayList<Item> auctionCache)
+	public boolean refreshAuctionList(ArrayList<Item> auctionCache, RequestType filterType)
 	{
 		auctionModel.clear();
+		lstAuctionItems.clearSelection();
 		for (Item item : auctionCache)
 		{
-			auctionModel.addElement(item.getName());
+			if (filterType == RequestType.ALL_OPEN_ITEMS)
+			{
+				auctionModel.addElement(item.getName());
+			}
 		}
 		return (auctionModel.size() == auctionCache.size());
 	}

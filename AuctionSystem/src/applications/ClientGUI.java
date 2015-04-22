@@ -18,11 +18,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import clientGUIComponents.LoginPanel;
 import clientGUIComponents.MainPanel;
 import clientGUIComponents.SubmitPanel;
-
 import commLayer.ClientComms;
 import commLayer.ClientThread;
 import commLayer.Message;
-
+import commLayer.RequestType;
 import entities.Item;
 
 /**
@@ -167,18 +166,9 @@ public class ClientGUI
 	}
 
 
-	public boolean updateAuctionInCache(Item payload)
+	public void clearCache()
 	{
-		for (Item auction : auctionCache)
-		{
-			if (auction.getItemId() == payload.getItemId())
-			{
-				int auctionPosition = auctionCache.indexOf(auction);
-				auctionCache.set(auctionPosition, payload);
-				return true;
-			}
-		}
-		return false;
+		auctionCache.clear();
 	}
 
 
@@ -193,9 +183,9 @@ public class ClientGUI
 	 * 
 	 * @return boolean - true if the auction list is the same size as the auction cache
 	 */
-	public boolean refreshAuctionList()
+	public boolean refreshAuctionList(RequestType filterType)
 	{
-		return pnlMain.refreshAuctionList(auctionCache);
+		return pnlMain.refreshAuctionList(auctionCache, filterType);
 	}
 
 

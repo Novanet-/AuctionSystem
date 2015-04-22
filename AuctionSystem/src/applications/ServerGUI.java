@@ -232,4 +232,11 @@ public class ServerGUI
 		}
 		return false;
 	}
+
+
+	
+	public ArrayList<Item> getAuctionList()
+	{
+		return auctionList;
+	}
 }
