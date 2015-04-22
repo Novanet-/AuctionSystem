@@ -57,10 +57,11 @@ public class ServerGUI
 		System.out.println(item.toString());
 		System.out.println(item.getItemId());
 		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " "
-				+ item.getStartTime().toString() + " " + item.getEndTime().toString() + " " + item.getReservePrice().getAmount());
+				+ item.getStartTime().toString() + " " + item.getEndTime().toString() + " " + item.getReservePrice().getValue());
 		EventQueue.invokeLater(new Runnable()
 		{
 
+			@Override
 			public void run()
 			{
 				try
@@ -127,12 +128,13 @@ public class ServerGUI
 		btnNewButton.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				for (Item i : auctionList)
 				{
 					System.out.println(i.getItemId() + " " + i.getName() + " " + i.getDescription() + " " + i.getCategory().toString() + " "
-							+ i.getStartTime().toString() + " " + i.getEndTime().toString() + " " + i.getReservePrice().getAmount());
+							+ i.getStartTime().toString() + " " + i.getEndTime().toString() + " " + i.getReservePrice().getValue());
 				}
 			}
 		});
@@ -161,7 +163,7 @@ public class ServerGUI
 	 *            The auction to be added
 	 * @return boolean - isAuctionAddSuccesful
 	 */
-	public boolean addAuctionToSystem(Item item)
+	synchronized public boolean addAuctionToSystem(Item item)
 	{
 		return auctionList.add(item);
 	}
@@ -187,7 +189,7 @@ public class ServerGUI
 	 *            The filter used to find the required auctions
 	 * @return boolean - true if any matching auctions found
 	 */
-	public boolean fetchAuctions(RequestType requestType)
+	synchronized public boolean fetchAuctions(RequestType requestType)
 	{
 		boolean openAuctionFound = false;
 		if (requestType == RequestType.ALL_OPEN_ITEMS)
@@ -212,7 +214,7 @@ public class ServerGUI
 	}
 
 
-	public boolean checkBidValid(Bid payload)
+	synchronized public boolean checkBidValid(Bid payload)
 	{
 		for (Item auction : auctionList)
 		{
@@ -223,7 +225,7 @@ public class ServerGUI
 					auction.getBids().push(payload);
 					return true;
 				}
-				else if (payload.getAmount().getAmount() > auction.getBids().peek().getAmount().getAmount())
+				else if (payload.getAmount().getValue() > auction.getBids().peek().getAmount().getValue())
 				{
 					auction.getBids().push(payload);
 					return true;

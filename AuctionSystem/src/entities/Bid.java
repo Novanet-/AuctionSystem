@@ -17,6 +17,7 @@ import utilities.Money;
 public class Bid implements Serializable
 {
 
+	private static final long serialVersionUID = 4973658775952802883L;
 	private long userId;
 	private long itemId;
 	private Money amount;

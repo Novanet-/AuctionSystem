@@ -127,8 +127,8 @@ public class SubmitPanel extends JPanel
 		gbc_lblNewLabel_1.gridy = 7;
 		this.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
-		cmbCategory = new JComboBox<Category>();
-		cmbCategory.setModel(new DefaultComboBoxModel<Category>(Category.values()));
+		cmbCategory = new JComboBox<>();
+		cmbCategory.setModel(new DefaultComboBoxModel<>(Category.values()));
 		GridBagConstraints gbc_cmbCategory = new GridBagConstraints();
 		gbc_cmbCategory.fill = GridBagConstraints.HORIZONTAL;
 		gbc_cmbCategory.insets = new Insets(0, 0, 5, 5);
@@ -239,6 +239,7 @@ public class SubmitPanel extends JPanel
 		btnNewButton.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				clientGUI.changeCard("pnlMain");
@@ -266,7 +267,7 @@ public class SubmitPanel extends JPanel
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			boolean submitSuccesful = submitAuction();
+			boolean submitSuccesfull = submitAuction();
 		}
 
 
@@ -301,7 +302,7 @@ public class SubmitPanel extends JPanel
 			newItem.setReservePrice(new Money(Currency.getInstance("GBP"), Double.parseDouble(txtReservePrice.getText())));
 
 			System.out.println(newItem.getName() + " " + newItem.getDescription() + " " + newItem.getCategory().toString() + " "
-					+ newItem.getStartTime().toString() + " " + newItem.getEndTime().toString() + " " + newItem.getReservePrice().getAmount());
+					+ newItem.getStartTime().toString() + " " + newItem.getEndTime().toString() + " " + newItem.getReservePrice().getValue());
 			return clientGUI.sendMessage(new Message(MessageType.ITEM_DELIVERY, newItem));
 		}
 

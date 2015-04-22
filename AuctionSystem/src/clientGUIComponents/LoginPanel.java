@@ -94,6 +94,7 @@ public class LoginPanel extends JPanel
 		btnSwitchPanelsLogin.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 				clientGUI.changeCard("pnlMain");

@@ -1,5 +1,8 @@
 package commLayer;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import applications.ServerGUI;
 import entities.Item;
 import entities.User;
@@ -45,7 +48,8 @@ public class ServerComms implements AbstractComms
 	@Override
 	public boolean sendMessage(Message message)
 	{
-		System.out.println("server send");
+		System.out.println("Server Send " + message.getHeader().toString() + " " + message.getPayload().toString() + " at "
+				+ LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 		return serverThread.sendToOutputStream(message);
 	}
 
@@ -53,36 +57,47 @@ public class ServerComms implements AbstractComms
 	@Override
 	public boolean recieveMessage(Message message)
 	{
-		System.out.println("server recieve");
-		boolean recieveSuccesful = false;
+		System.out.println("Server Recieve " + message.getHeader().toString() + " " + message.getPayload().toString() + " at "
+				+ LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+		boolean recieveSuccessful = false;
 		switch (message.getHeader())
 		{
 		case ITEM_DELIVERY:
-			if (recieveSuccesful = server.addAuctionToSystem((Item) message.getPayload()))
+			recieveSuccessful = server.addAuctionToSystem((Item) message.getPayload());
+			if (recieveSuccessful)
 				sendMessage(new Message(MessageType.NOTIFICATION, Notification.ITEM_RECIEVED));
 			break;
 		case ITEM_REQUEST:
 			if (message.getPayload() == RequestType.ALL_OPEN_ITEMS)
 			{
-				recieveSuccesful = server.fetchAuctions(RequestType.ALL_OPEN_ITEMS);
+				recieveSuccessful = server.fetchAuctions(RequestType.ALL_OPEN_ITEMS);
 			}
 			break;
 		case BID_DELIVERY:
-			if (recieveSuccesful = server.checkBidValid((Bid) message.getPayload()))
+			Bid newBid = (Bid) message.getPayload();
+			recieveSuccessful = server.checkBidValid(newBid);
+			if (recieveSuccessful)
+			{
 				sendMessage(new Message(MessageType.NOTIFICATION, Notification.BID_RECIEVED));
+				sendMessage(new Message(MessageType.BID_DELIVERY, newBid));
+//				recieveMessage(new Message(MessageType.ITEM_REQUEST, RequestType.ALL_OPEN_ITEMS));
+			}
 			break;
 		case BID_REQUEST:
 			break;
 		case USER_DELIVERY:
-			if (recieveSuccesful = server.addUserToSystem((User) message.getPayload()))
+			recieveSuccessful = server.addUserToSystem((User) message.getPayload());
+			if (recieveSuccessful)
+			{
 				sendMessage(new Message(MessageType.NOTIFICATION, Notification.USER_RECIEVED));
+			}
 			break;
 		case USER_REQUEST:
 			// Filter userList to specified item
 			// Send specified item
 			if (message.getPayload() == RequestType.ALL_USERS)
 			{
-				recieveSuccesful = server.fetchUsers(RequestType.ALL_USERS);
+				recieveSuccessful = server.fetchUsers(RequestType.ALL_USERS);
 			}
 			break;
 		case PROPERTY_DELIVERY:
@@ -94,6 +109,6 @@ public class ServerComms implements AbstractComms
 		default:
 			break;
 		}
-		return recieveSuccesful;
+		return recieveSuccessful;
 	}
 }

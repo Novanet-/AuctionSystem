@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -27,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -108,14 +110,15 @@ public class MainPanel extends JPanel
 		JPopupMenu popAuctionList = new JPopupMenu();
 		// popAuctionList.add(new JMenuItem("Bid on Item"));
 
-		lstAuctionItems = new JList<String>();
-		auctionModel = new DefaultListModel<String>();
+		lstAuctionItems = new JList<>();
+		auctionModel = new DefaultListModel<>();
 		lstAuctionItems.setModel(auctionModel);
 		lstAuctionItems.addListSelectionListener(new AuctionSelectedListener());
 
 		lstAuctionItems.addMouseListener(new MouseAdapter()
 		{
 
+			@Override
 			public void mousePressed(MouseEvent e)
 			{
 				showPopup(popAuctionList, e);
@@ -157,6 +160,7 @@ public class MainPanel extends JPanel
 		btnOpenSubmitForm.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
 				clientGUI.changeCard("pnlSubmitItem");
@@ -206,6 +210,7 @@ public class MainPanel extends JPanel
 		btnBidOnItem.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
@@ -232,6 +237,7 @@ public class MainPanel extends JPanel
 		btnViewAll.addActionListener(new ActionListener()
 		{
 
+			@Override
 			public void actionPerformed(ActionEvent e)
 			{
 				clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, RequestType.ALL_OPEN_ITEMS));
@@ -299,8 +305,8 @@ public class MainPanel extends JPanel
 		gbc_btnFilterByCategory.gridy = 4;
 		pnlFilters.add(btnFilterByCategory, gbc_btnFilterByCategory);
 
-		JComboBox<Category> cmbFilterBycategory = new JComboBox<Category>();
-		cmbFilterBycategory.setModel(new DefaultComboBoxModel<Category>(Category.values()));
+		JComboBox<Category> cmbFilterBycategory = new JComboBox<>();
+		cmbFilterBycategory.setModel(new DefaultComboBoxModel<>(Category.values()));
 		GridBagConstraints gbc_cmbFilterBycategory = new GridBagConstraints();
 		gbc_cmbFilterBycategory.insets = new Insets(0, 0, 0, 5);
 		gbc_cmbFilterBycategory.fill = GridBagConstraints.HORIZONTAL;
@@ -317,22 +323,49 @@ public class MainPanel extends JPanel
 	 */
 	public boolean refreshAuctionList(ArrayList<Item> auctionCache, RequestType filterType)
 	{
-		auctionModel.clear();
-		lstAuctionItems.clearSelection();
-		for (Item item : auctionCache)
+		try
 		{
-			if (filterType == RequestType.ALL_OPEN_ITEMS)
+			SwingUtilities.invokeAndWait(new Runnable()
 			{
-				auctionModel.addElement(item.getName());
-			}
+
+				@Override
+				public void run()
+				{
+					auctionModel.clear();
+					lstAuctionItems.clearSelection();
+					for (Item item : auctionCache)
+					{
+						if (filterType == RequestType.ALL_OPEN_ITEMS)
+						{
+							auctionModel.addElement(item.getName());
+						}
+					}
+				}
+			});
+		}
+		catch (InvocationTargetException | InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return (auctionModel.size() == auctionCache.size());
+		// auctionModel.clear();
+		// lstAuctionItems.clearSelection();
+		// for (Item item : auctionCache)
+		// {
+		// if (filterType == RequestType.ALL_OPEN_ITEMS)
+		// {
+		// auctionModel.addElement(item.getName());
+		// }
+		// }
+		// return (auctionModel.size() == auctionCache.size());
 	}
 
 
 	private final class AuctionSelectedListener implements ListSelectionListener
 	{
 
+		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
 			if (!lstAuctionItems.isSelectionEmpty())
@@ -352,8 +385,8 @@ public class MainPanel extends JPanel
 					highestBid = 0;
 				}
 				else
-					highestBid = selectedAuction.getBids().peek().getAmount().getAmount();
-				txtAuctionDetails.append("\n" + "Highest Bid: " + highestBid);
+					highestBid = selectedAuction.getBids().peek().getAmount().getValue();
+				txtAuctionDetails.append("\n" + "Highest Bid: £" + highestBid);
 			}
 		}
 	}

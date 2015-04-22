@@ -17,7 +17,7 @@ public class Money implements Serializable
 	private static final long serialVersionUID = -6458682124885030639L;
 
 	private Currency currencyType;
-	private double amount;
+	private double value;
 
 
 	/**
@@ -28,19 +28,19 @@ public class Money implements Serializable
 	{
 		super();
 		this.currencyType = currencyType;
-		this.amount = amount;
+		this.value = amount;
 	}
 
 
-	public double getAmount()
+	public double getValue()
 	{
-		return amount;
+		return value;
 	}
 
 
-	public void setAmount(double amount)
+	public void setValue(double amount)
 	{
-		this.amount = amount;
+		this.value = amount;
 	}
 
 

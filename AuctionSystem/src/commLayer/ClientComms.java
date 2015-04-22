@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import applications.ClientGUI;
+import entities.Bid;
 import entities.Item;
 
 /**
@@ -54,7 +55,7 @@ public class ClientComms implements AbstractComms
 	@Override
 	public boolean sendMessage(Message message)
 	{
-		System.out.println("Client Send at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+		System.out.println("Client Send " + message.getHeader().toString() + " " + message.getPayload().toString() + " at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 		return clientThread.sendToOutputStream(message);
 	}
 
@@ -68,7 +69,7 @@ public class ClientComms implements AbstractComms
 	public boolean recieveMessage(Message message)
 	{
 		boolean recieveSuccesful = false;
-		System.out.println("Client Recieve at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+		System.out.println("Client Recieve " + message.getHeader().toString() +"  " + message.getPayload().toString() +  " at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 		switch (message.getHeader())
 		{
 		case ITEM_DELIVERY:
@@ -76,7 +77,7 @@ public class ClientComms implements AbstractComms
 			recieveSuccesful = client.refreshAuctionList(RequestType.ALL_OPEN_ITEMS);
 			break;
 		case BID_DELIVERY:
-			recieveSuccesful = client.addAuctionToCache((Item) message.getPayload());
+			recieveSuccesful = client.updateAuctionInCache((Bid) message.getPayload());
 			recieveSuccesful = client.refreshAuctionList(RequestType.ALL_OPEN_ITEMS);
 			break;
 		case PROPERTY_DELIVERY:
@@ -89,14 +90,12 @@ public class ClientComms implements AbstractComms
 			switch ((Notification) message.getPayload())
 			{
 			case ITEM_RECIEVED:
-				System.out.println("Item Recieved by server at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+				System.out.println("Item " + message.getPayload().toString() + " Recieved by server at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 				client.clearCache();
 				sendMessage(new Message(MessageType.ITEM_REQUEST, RequestType.ALL_OPEN_ITEMS));
 				break;
 			case BID_RECIEVED:
-				System.out.println("Bid Recieved by server at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
-				client.clearCache();
-				sendMessage(new Message(MessageType.ITEM_REQUEST, RequestType.ALL_OPEN_ITEMS));
+				System.out.println("Bid " + message.getPayload().toString() + " Recieved by server at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 				break;
 			case PROPERTY_RECIEVED:
 				break;

@@ -22,6 +22,7 @@ import commLayer.ClientComms;
 import commLayer.ClientThread;
 import commLayer.Message;
 import commLayer.RequestType;
+import entities.Bid;
 import entities.Item;
 
 /**
@@ -187,6 +188,18 @@ public class ClientGUI
 	{
 		return pnlMain.refreshAuctionList(auctionCache, filterType);
 	}
+	
+	public boolean updateAuctionInCache(Bid payload)
+	{
+		for (int i= 0; i < auctionCache.size(); i++)
+		{
+			if (auctionCache.get(i).getItemId() == payload.getItemID())
+			{
+				auctionCache.get(i).getBids().push(payload);
+			}
+		}
+		return false;
+	}
 
 
 	/**
@@ -249,5 +262,8 @@ public class ClientGUI
 		}
 
 	}
+
+
+
 
 }
