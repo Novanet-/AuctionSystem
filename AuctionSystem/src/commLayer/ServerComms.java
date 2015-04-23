@@ -68,6 +68,7 @@ public class ServerComms implements AbstractComms
 				sendMessage(new Message(MessageType.NOTIFICATION, Notification.ITEM_RECIEVED));
 			break;
 		case ITEM_REQUEST:
+			sendMessage(new Message(MessageType.NOTIFICATION, Notification.ITEM_REQUEST_RECIEVED));
 			if (message.getPayload() == RequestType.ALL_OPEN_ITEMS)
 			{
 				recieveSuccessful = server.fetchAuctions(RequestType.ALL_OPEN_ITEMS);

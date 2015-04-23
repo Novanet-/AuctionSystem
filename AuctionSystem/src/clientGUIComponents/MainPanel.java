@@ -333,6 +333,7 @@ public class MainPanel extends JPanel
 				{
 					auctionModel.clear();
 					lstAuctionItems.clearSelection();
+					txtAuctionDetails.setText("");
 					for (Item item : auctionCache)
 					{
 						if (filterType == RequestType.ALL_OPEN_ITEMS)
@@ -369,14 +370,16 @@ public class MainPanel extends JPanel
 						+ selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
 				txtAuctionDetails.append("\n" + "End Time: "
 						+ selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
-				double highestBid;
+				Money highestBid;
 				if (selectedAuction.getBids().isEmpty())
 				{
-					highestBid = 0;
+					highestBid = new Money(Currency.getInstance("GBP"), 0);
 				}
 				else
-					highestBid = selectedAuction.getBids().peek().getAmount().getValue();
-				txtAuctionDetails.append("\n" + "Highest Bid: �" + highestBid);
+				{
+					highestBid = new Money(Currency.getInstance("GBP"), selectedAuction.getBids().peek().getAmount().getValue());
+				}
+				txtAuctionDetails.append("\n" + "Highest Bid: " +highestBid.getCurrencyType().getSymbol() + highestBid.getValue());
 			}
 		}
 	}
