@@ -12,21 +12,38 @@ public class User implements Serializable
 
 	private static final long serialVersionUID = -5122910007155743127L;
 
-	private int userId;
+	private long userId;
 	private String firstName;
 	private String surname;
-	private String password;
+	private byte[] password;
 
 	private static AtomicLong counter = new AtomicLong(0);
 
+	
+	
 
-	public int getUserId()
+	/**
+	 * @param firstName
+	 * @param surname
+	 * @param password
+	 */
+	public User(String firstName, String surname, byte[] password)
+	{
+		super();
+		this.userId = nextId();
+		this.firstName = firstName;
+		this.surname = surname;
+		this.password = password;
+	}
+
+
+	public long getUserId()
 	{
 		return userId;
 	}
 
 
-	public void setUserId(int userId)
+	public void setUserId(long userId)
 	{
 		this.userId = userId;
 	}
@@ -56,13 +73,13 @@ public class User implements Serializable
 	}
 
 
-	public String getPassword()
+	public byte[] getPassword()
 	{
 		return password;
 	}
 
 
-	public void setPassword(String password)
+	public void setPassword(byte[] password)
 	{
 		this.password = password;
 	}
