@@ -349,16 +349,6 @@ public class MainPanel extends JPanel
 			e.printStackTrace();
 		}
 		return (auctionModel.size() == auctionCache.size());
-		// auctionModel.clear();
-		// lstAuctionItems.clearSelection();
-		// for (Item item : auctionCache)
-		// {
-		// if (filterType == RequestType.ALL_OPEN_ITEMS)
-		// {
-		// auctionModel.addElement(item.getName());
-		// }
-		// }
-		// return (auctionModel.size() == auctionCache.size());
 	}
 
 
@@ -386,7 +376,7 @@ public class MainPanel extends JPanel
 				}
 				else
 					highestBid = selectedAuction.getBids().peek().getAmount().getValue();
-				txtAuctionDetails.append("\n" + "Highest Bid: £" + highestBid);
+				txtAuctionDetails.append("\n" + "Highest Bid: ï¿½" + highestBid);
 			}
 		}
 	}

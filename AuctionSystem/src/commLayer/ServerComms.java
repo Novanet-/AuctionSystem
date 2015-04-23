@@ -80,7 +80,6 @@ public class ServerComms implements AbstractComms
 			{
 				sendMessage(new Message(MessageType.NOTIFICATION, Notification.BID_RECIEVED));
 				sendMessage(new Message(MessageType.BID_DELIVERY, newBid));
-//				recieveMessage(new Message(MessageType.ITEM_REQUEST, RequestType.ALL_OPEN_ITEMS));
 			}
 			break;
 		case BID_REQUEST:

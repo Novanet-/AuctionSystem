@@ -55,7 +55,9 @@ public class ServerThread extends Thread
 	{
 		System.out.println("Initialsing server socket");
 		serverSocket = new ServerSocket(portNumber);
-		serverSocket.setSoTimeout(0);
+		clientSocket = serverSocket.accept();
+		out = new ObjectOutputStream(clientSocket.getOutputStream());
+		in = new ObjectInputStream(clientSocket.getInputStream());
 	}
 
 
@@ -72,17 +74,14 @@ public class ServerThread extends Thread
 		{
 			try
 			{
-				clientSocket = serverSocket.accept();
-				out = new ObjectOutputStream(clientSocket.getOutputStream());
-				in = new ObjectInputStream(clientSocket.getInputStream());
 				if ((inputMessage = (Message) in.readObject()) != null)
 				{
 					comms.recieveMessage(inputMessage);
 				}
-				else
-				{
-					clientSocket.close();
-				}
+//				else
+//				{
+//					//clientSocket.close();
+//				}
 			}
 			catch (ClassNotFoundException e)
 			{

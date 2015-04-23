@@ -86,7 +86,7 @@ public class ClientGUI
 	private void initialize()
 	{
 		try
-		{
+		{	
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
 		catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e)
