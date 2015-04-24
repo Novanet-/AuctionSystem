@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import commLayer.Hasher;
+import commLayer.Message;
+import commLayer.MessageType;
 import entities.User;
 import applications.ClientGUI;
 
@@ -150,6 +152,7 @@ public class LoginPanel extends JPanel
 				try
 				{
 					User newUser = new User(txtFirstname.getText(), txtSurname.getName(), Hasher.getPasswordHash(txtPassword.getText()));
+					clientGUI.sendMessage(new Message(MessageType.USER_DELIVERY, newUser));
 				}
 				catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)
 				{

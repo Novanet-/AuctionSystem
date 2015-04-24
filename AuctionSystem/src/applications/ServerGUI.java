@@ -11,7 +11,15 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Currency;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -47,6 +55,7 @@ public class ServerGUI
 
 	private ServerThread serverThread;
 	private ServerComms serverComms;
+	private ExecutorService ioThreadPool;
 
 
 	/**
@@ -104,6 +113,8 @@ public class ServerGUI
 		}
 
 		serverComms = new ServerComms(this, serverThread);
+		ioThreadPool = new 
+		
 
 		auctionList = new ArrayList<Item>();
 		userList = new ArrayList<User>();
