@@ -118,6 +118,24 @@ public class LoginPanel extends JPanel
 		txtPassword.setColumns(10);
 
 		JButton btnSubmitLogin = new JButton("Login");
+		btnSubmitLogin.addActionListener(new ActionListener()
+		{
+
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				try
+				{
+					User loginUser = new User(txtFirstname.getText(), txtSurname.getName(), Hasher.getPasswordHash(txtPassword.getText()));
+					clientGUI.sendMessage(new Message(MessageType.LOGIN_REQUEST, loginUser));
+				}
+				catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)
+				{
+					e1.printStackTrace();
+				}
+			}
+
+		});
 		GridBagConstraints gbc_btnSubmitLogin = new GridBagConstraints();
 		gbc_btnSubmitLogin.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSubmitLogin.gridx = 2;

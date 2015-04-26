@@ -110,6 +110,16 @@ public class ClientComms implements AbstractComms
 				break;
 			case USER_REQUEST_RECIEVED:
 				break;
+			case USER_NOT_FOUND:
+				// Display user not found dialog
+				break;
+			case PASSWORD_CORRECT:
+				// Display login successful dialog
+				client.changeCard("pnlMain");
+				break;
+			case PASSWORD_INCORRECT:
+				// Display password incorrect dialog
+				break;
 			default:
 				break;
 			}

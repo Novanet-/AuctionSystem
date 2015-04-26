@@ -106,6 +106,9 @@ public class ServerComms implements AbstractComms
 		case PROPERTY_REQUEST:
 			// Fetch the specified property and send it
 			break;
+		case LOGIN_REQUEST:
+			boolean loginSuccessful = server.validateLoginRequest((User) message.getPayload());
+			break;
 		default:
 			break;
 		}

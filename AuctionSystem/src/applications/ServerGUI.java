@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -34,6 +35,7 @@ import utilities.Category;
 import utilities.Money;
 import commLayer.Message;
 import commLayer.MessageType;
+import commLayer.Notification;
 import commLayer.RequestType;
 import commLayer.ServerComms;
 import commLayer.ServerThread;
@@ -113,13 +115,19 @@ public class ServerGUI
 		}
 
 		serverComms = new ServerComms(this, serverThread);
-		ioThreadPool = new 
-		
+		ioThreadPool = Executors.newCachedThreadPool();
 
 		auctionList = new ArrayList<Item>();
 		userList = new ArrayList<User>();
-		
-		retrieveAuctionSystemData();
+
+		Runnable ioTask = () ->
+		{
+			retrieveAuctionSystemData();
+		};
+
+		ioThreadPool.submit(ioTask);
+
+		// retrieveAuctionSystemData();
 
 		frame = new JFrame();
 		frame.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -182,7 +190,14 @@ public class ServerGUI
 	{
 		boolean addSuccessful = auctionList.add(item);
 		if (addSuccessful)
-			DataPersistence.writeListToFile(auctionList, EntityType.ITEM);
+		{
+			Runnable ioTask = () ->
+			{
+				DataPersistence.writeListToFile(auctionList, EntityType.ITEM);
+			};
+
+			ioThreadPool.submit(ioTask);
+		}
 		return addSuccessful;
 	}
 
@@ -198,16 +213,31 @@ public class ServerGUI
 	{
 		boolean addSuccessful = userList.add(user);
 		if (addSuccessful)
-			DataPersistence.writeListToFile(userList, EntityType.USER);
+		{
+			Runnable ioTask = () ->
+			{
+				DataPersistence.writeListToFile(userList, EntityType.USER);
+			};
+
+			ioThreadPool.submit(ioTask);
+		}
 		return addSuccessful;
 	}
-	
+
+
 	synchronized public boolean addBidToSystem(Bid bid, Item auction)
 	{
 		auction.getBids().push(bid);
 		boolean addSuccessful = (auction.getBids().peek() == bid);
 		if (addSuccessful)
-			DataPersistence.writeListToFile(auctionList, EntityType.ITEM);
+		{
+			Runnable ioTask = () ->
+			{
+				DataPersistence.writeListToFile(auctionList, EntityType.ITEM);
+			};
+
+			ioThreadPool.submit(ioTask);
+		}
 		return addSuccessful;
 	}
 
@@ -264,10 +294,12 @@ public class ServerGUI
 		}
 		return false;
 	}
-	
+
+
 	@SuppressWarnings("unchecked")
 	public void retrieveAuctionSystemData()
 	{
+
 		auctionList = (ArrayList<Item>) DataPersistence.readListFromFile(EntityType.ITEM);
 		userList = (ArrayList<User>) DataPersistence.readListFromFile(EntityType.USER);
 	}
@@ -276,5 +308,25 @@ public class ServerGUI
 	public ArrayList<Item> getAuctionList()
 	{
 		return auctionList;
+	}
+
+
+	public boolean validateLoginRequest(User loginRequest)
+	{
+		for (User user : userList)
+		{
+			if ((user.getFirstName() == loginRequest.getFirstName()) && (user.getSurname() == loginRequest.getSurname()))
+			{
+				if (user.getPassword() == loginRequest.getPassword())
+				{
+					return serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.PASSWORD_CORRECT));
+				}
+				else
+				{
+					return serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.PASSWORD_INCORRECT));
+				}
+			}
+		}
+		return serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.USER_NOT_FOUND));
 	}
 }
