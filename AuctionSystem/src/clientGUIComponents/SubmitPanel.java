@@ -277,7 +277,7 @@ public class SubmitPanel extends JPanel
 		 */
 		private boolean submitAuction()
 		{
-			newItem = new Item(null, null, null, 0, null, null, null);
+			newItem = new Item(null, null, null, clientGUI.getCurrentUser().getUserId(), null, null, null);
 
 			Date rawStartDate, rawEndDate, rawStartTime, rawEndTime;
 			LocalDate startDate, endDate;

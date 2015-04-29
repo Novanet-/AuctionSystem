@@ -28,7 +28,7 @@ public class Bid implements Serializable
 	 * @param itemID
 	 * @param amount
 	 */
-	public Bid(int userId, long itemID, Money amount)
+	public Bid(long userId, long itemID, Money amount)
 	{
 		super();
 		this.userId = userId;

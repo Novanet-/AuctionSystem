@@ -26,7 +26,7 @@ public class Item implements Serializable
 	private String description;
 	private Category category;
 
-	private int userId;
+	private long userId;
 	private LocalDateTime startTime, endTime;
 
 	private Money reservePrice;
@@ -55,7 +55,7 @@ public class Item implements Serializable
 	 * @param bids
 	 *            A list of the bids on the auction
 	 */
-	public Item(String name, String description, Category category, int userId, LocalDateTime startTime, LocalDateTime endTime,
+	public Item(String name, String description, Category category, long userId, LocalDateTime startTime, LocalDateTime endTime,
 			Money reservePrice)
 	{
 		super();
@@ -114,7 +114,7 @@ public class Item implements Serializable
 	}
 
 
-	public int getUserId()
+	public long getUserId()
 	{
 		return userId;
 	}
