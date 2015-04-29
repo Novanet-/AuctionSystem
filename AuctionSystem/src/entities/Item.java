@@ -59,6 +59,7 @@ public class Item implements Serializable
 			Money reservePrice)
 	{
 		super();
+		this.itemId = nextId();
 		this.name = name;
 		this.description = description;
 		this.category = category;
@@ -67,7 +68,6 @@ public class Item implements Serializable
 		this.endTime = endTime;
 		this.reservePrice = reservePrice;
 		this.bids = new Stack<Bid>();
-		itemId = nextId();
 
 	}
 

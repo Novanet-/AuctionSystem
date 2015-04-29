@@ -27,7 +27,7 @@ public final class Hasher
 	 */
 	public static byte[] getPasswordHash(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException
 	{
-		MessageDigest digest = MessageDigest.getInstance("MD5");
+		MessageDigest digest = MessageDigest.getInstance("SHA-256");
 		digest.reset();
 		byte[] input = digest.digest(password.getBytes("UTF-8"));
 		return input;

@@ -126,7 +126,7 @@ public class LoginPanel extends JPanel
 			{
 				try
 				{
-					User loginUser = new User(txtFirstname.getText(), txtSurname.getName(), Hasher.getPasswordHash(txtPassword.getText()));
+					User loginUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getText()));
 					clientGUI.sendMessage(new Message(MessageType.LOGIN_REQUEST, loginUser));
 				}
 				catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)
@@ -169,7 +169,8 @@ public class LoginPanel extends JPanel
 			{
 				try
 				{
-					User newUser = new User(txtFirstname.getText(), txtSurname.getName(), Hasher.getPasswordHash(txtPassword.getText()));
+					User newUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getText()));
+					clientGUI.setCurrentUser(newUser);
 					clientGUI.sendMessage(new Message(MessageType.USER_DELIVERY, newUser));
 				}
 				catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)

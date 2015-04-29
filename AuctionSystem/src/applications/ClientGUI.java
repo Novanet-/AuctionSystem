@@ -24,6 +24,7 @@ import commLayer.Message;
 import commLayer.RequestType;
 import entities.Bid;
 import entities.Item;
+import entities.User;
 
 /**
  * Created using Java 8
@@ -45,6 +46,8 @@ public class ClientGUI
 	private MainPanel pnlMain;
 
 	private SubmitPanel pnlSubmitItem;
+	
+	private User currentUser;
 
 
 	/**
@@ -199,6 +202,13 @@ public class ClientGUI
 			}
 		}
 		return false;
+	}
+
+
+	
+	public void setCurrentUser(User currentUser)
+	{
+		this.currentUser = currentUser;
 	}
 
 

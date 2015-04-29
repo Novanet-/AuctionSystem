@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Currency;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -302,6 +304,11 @@ public class ServerGUI
 
 		auctionList = (ArrayList<Item>) DataPersistence.readListFromFile(EntityType.ITEM);
 		userList = (ArrayList<User>) DataPersistence.readListFromFile(EntityType.USER);
+
+		if (!auctionList.isEmpty())
+			Item.setCounter(new AtomicLong(auctionList.get(auctionList.size() - 1).getItemId()));
+		if (!userList.isEmpty())
+			User.setCounter(new AtomicLong(userList.get(auctionList.size() - 1).getUserId()));
 	}
 
 
@@ -315,9 +322,9 @@ public class ServerGUI
 	{
 		for (User user : userList)
 		{
-			if ((user.getFirstName() == loginRequest.getFirstName()) && (user.getSurname() == loginRequest.getSurname()))
+			if ((user.getFirstName().equals(loginRequest.getFirstName())) && (user.getSurname().equals(loginRequest.getSurname())))
 			{
-				if (user.getPassword() == loginRequest.getPassword())
+				if (Arrays.equals(user.getPassword(), loginRequest.getPassword()))
 				{
 					return serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.PASSWORD_CORRECT));
 				}
