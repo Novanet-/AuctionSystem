@@ -19,18 +19,19 @@ public class User implements Serializable
 
 	private static AtomicLong counter = new AtomicLong(0);
 
-	
-	
 
 	/**
 	 * @param firstName
 	 * @param surname
 	 * @param password
 	 */
-	public User(String firstName, String surname, byte[] password)
+	public User(String firstName, String surname, byte[] password, boolean incrementId)
 	{
 		super();
-		this.userId = nextId();
+		if (incrementId)
+			this.userId = nextId();
+		else
+			this.userId = 0;
 		this.firstName = firstName;
 		this.surname = surname;
 		this.password = password;

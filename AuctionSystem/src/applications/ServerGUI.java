@@ -38,6 +38,7 @@ import utilities.Money;
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.Notification;
+import commLayer.Request;
 import commLayer.RequestType;
 import commLayer.ServerComms;
 import commLayer.ServerThread;
@@ -67,12 +68,12 @@ public class ServerGUI
 	 */
 	public static void main(String[] args)
 	{
-		Item item = new Item("A", "B", Category.ART, 2, LocalDateTime.of(2015, Month.JANUARY, 1, 0, 0), LocalDateTime.of(2015, Month.DECEMBER,
-				31, 23, 59), new Money(Currency.getInstance("GBP"), 50.50));
+		Item item = new Item("A", "B", Category.ART, 2, LocalDateTime.of(2015, Month.JANUARY, 1, 0, 0), LocalDateTime.of(2015, Month.DECEMBER, 31, 23, 59), new Money(
+				Currency.getInstance("GBP"), 50.50));
 		System.out.println(item.toString());
 		System.out.println(item.getItemId());
-		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " "
-				+ item.getStartTime().toString() + " " + item.getEndTime().toString() + " " + item.getReservePrice().getValue());
+		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " " + item.getStartTime().toString() + " "
+				+ item.getEndTime().toString() + " " + item.getReservePrice().getValue());
 		EventQueue.invokeLater(new Runnable()
 		{
 
@@ -158,8 +159,8 @@ public class ServerGUI
 			{
 				for (Item i : auctionList)
 				{
-					System.out.println(i.getItemId() + " " + i.getName() + " " + i.getDescription() + " " + i.getCategory().toString() + " "
-							+ i.getStartTime().toString() + " " + i.getEndTime().toString() + " " + i.getReservePrice().getValue());
+					System.out.println(i.getItemId() + " " + i.getName() + " " + i.getDescription() + " " + i.getCategory().toString() + " " + i.getStartTime().toString()
+							+ " " + i.getEndTime().toString() + " " + i.getReservePrice().getValue());
 				}
 			}
 		});
@@ -251,10 +252,12 @@ public class ServerGUI
 	 *            The filter used to find the required auctions
 	 * @return boolean - true if any matching auctions found
 	 */
-	public boolean fetchAuctions(RequestType requestType)
+	public boolean fetchAuctions(Request request)
 	{
 		boolean openAuctionFound = false;
-		if (requestType == RequestType.ALL_OPEN_ITEMS)
+		switch (request.getRequestType())
+		{
+		case ALL_OPEN_ITEMS:
 			for (Item auction : auctionList)
 			{
 				LocalDateTime currentDateTime = LocalDateTime.now();
@@ -264,6 +267,54 @@ public class ServerGUI
 					openAuctionFound = true;
 				}
 			}
+			break;
+		case ALL_SOLD_ITEMS:
+			for (Item auction : auctionList)
+			{
+				LocalDateTime currentDateTime = LocalDateTime.now();
+				if (auction.getEndTime().isBefore(currentDateTime))
+				{
+					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+					openAuctionFound = true;
+				}
+			}
+			break;
+		case ITEM_BY_CATEGORY:
+			for (Item auction : auctionList)
+			{
+				LocalDateTime currentDateTime = LocalDateTime.now();
+				if (auction.getCategory().toString().equals(request.getRequestParameter()))
+				{
+					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+					openAuctionFound = true;
+				}
+			}
+			break;
+		case ITEM_BY_ID:
+			for (Item auction : auctionList)
+			{
+				LocalDateTime currentDateTime = LocalDateTime.now();
+				if (auction.getItemId() == Long.valueOf(request.getRequestParameter()).longValue())
+				{
+					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+					openAuctionFound = true;
+				}
+			}
+			break;
+		case ITEM_BY_SELLER:
+			for (Item auction : auctionList)
+			{
+				LocalDateTime currentDateTime = LocalDateTime.now();
+				if (auction.getUserId() == Long.valueOf(request.getRequestParameter()).longValue())
+				{
+					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+					openAuctionFound = true;
+				}
+			}
+			break;
+		default:
+			break;
+		}
 		return openAuctionFound;
 
 	}
@@ -318,7 +369,7 @@ public class ServerGUI
 	}
 
 
-	public boolean validateLoginRequest(User loginRequest)
+	public User validateLoginRequest(User loginRequest)
 	{
 		for (User user : userList)
 		{
@@ -326,14 +377,17 @@ public class ServerGUI
 			{
 				if (Arrays.equals(user.getPassword(), loginRequest.getPassword()))
 				{
-					return serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.PASSWORD_CORRECT));
+					serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.PASSWORD_CORRECT));
+					return user;
 				}
 				else
 				{
 					return serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.PASSWORD_INCORRECT));
+					return null;
 				}
 			}
 		}
-		return serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.USER_NOT_FOUND));
+		serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.USER_NOT_FOUND));
+		return null;
 	}
 }

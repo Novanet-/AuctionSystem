@@ -69,9 +69,25 @@ public class ServerComms implements AbstractComms
 			break;
 		case ITEM_REQUEST:
 			sendMessage(new Message(MessageType.NOTIFICATION, Notification.ITEM_REQUEST_RECIEVED));
-			if (message.getPayload() == RequestType.ALL_OPEN_ITEMS)
+			Request request = (Request) message.getPayload();
+			switch (request.getRequestType())
 			{
-				recieveSuccessful = server.fetchAuctions(RequestType.ALL_OPEN_ITEMS);
+			case ALL_OPEN_ITEMS:
+				recieveSuccessful = server.fetchAuctions(request);
+			case ALL_SOLD_ITEMS:
+				recieveSuccessful = server.fetchAuctions(request);
+				break;
+			case ITEM_BY_CATEGORY:
+				recieveSuccessful = server.fetchAuctions(request);
+				break;
+			case ITEM_BY_ID:
+				recieveSuccessful = server.fetchAuctions(request);
+				break;
+			case ITEM_BY_SELLER:
+				recieveSuccessful = server.fetchAuctions(request);
+				break;
+			default:
+				break;
 			}
 			break;
 		case BID_DELIVERY:
@@ -107,7 +123,9 @@ public class ServerComms implements AbstractComms
 			// Fetch the specified property and send it
 			break;
 		case LOGIN_REQUEST:
-			boolean loginSuccessful = server.validateLoginRequest((User) message.getPayload());
+			User requestedUser = server.validateLoginRequest((User) message.getPayload());
+			if (requestedUser != null)
+				sendMessage(new Message(MessageType.USER_DELIVERY, requestedUser));
 			break;
 		default:
 			break;

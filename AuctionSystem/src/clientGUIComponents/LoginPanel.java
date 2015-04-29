@@ -170,7 +170,6 @@ public class LoginPanel extends JPanel
 				try
 				{
 					User newUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getText()));
-					clientGUI.setCurrentUser(newUser);
 					clientGUI.sendMessage(new Message(MessageType.USER_DELIVERY, newUser));
 				}
 				catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)

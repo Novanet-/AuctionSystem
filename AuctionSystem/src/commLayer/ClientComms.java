@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import applications.ClientGUI;
 import entities.Bid;
 import entities.Item;
+import entities.User;
 
 /**
  * Created using Java 8
@@ -87,6 +88,7 @@ public class ClientComms implements AbstractComms
 			break;
 		case USER_DELIVERY:
 			// Use requested users details
+			client.setCurrentUser((User) message.getPayload());
 			break;
 		case NOTIFICATION:
 			switch ((Notification) message.getPayload())
