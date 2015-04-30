@@ -382,7 +382,7 @@ public class ServerGUI
 				}
 				else
 				{
-					return serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.PASSWORD_INCORRECT));
+					serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.PASSWORD_INCORRECT));
 					return null;
 				}
 			}

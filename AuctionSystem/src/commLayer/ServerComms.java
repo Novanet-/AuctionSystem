@@ -74,6 +74,7 @@ public class ServerComms implements AbstractComms
 			{
 			case ALL_OPEN_ITEMS:
 				recieveSuccessful = server.fetchAuctions(request);
+				break;
 			case ALL_SOLD_ITEMS:
 				recieveSuccessful = server.fetchAuctions(request);
 				break;

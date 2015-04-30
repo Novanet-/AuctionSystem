@@ -1,7 +1,8 @@
 package commLayer;
 
+import java.io.Serializable;
 
-public class Property
+public class Property implements Serializable
 {
 	private PropertyType propertyType;
 	private String value;
