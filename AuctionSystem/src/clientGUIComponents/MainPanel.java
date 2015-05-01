@@ -66,12 +66,14 @@ public class MainPanel extends JPanel
 
 	private JComboBox<Category> cmbFilterBycategory;
 
+
 	public MainPanel(ClientGUI clientGUI)
 	{
 		super();
 		this.clientGUI = clientGUI;
 		initialize();
 	}
+
 
 	/**
 	 * Initialises components of the panel and sets their constraints and listeners
@@ -122,11 +124,13 @@ public class MainPanel extends JPanel
 				showPopup(popAuctionList, e);
 			}
 
+
 			@Override
 			public void mouseReleased(MouseEvent e)
 			{
 				showPopup(popAuctionList, e);
 			}
+
 
 			private void showPopup(JPopupMenu popAuctionList, MouseEvent e)
 			{
@@ -199,8 +203,7 @@ public class MainPanel extends JPanel
 		{
 			final Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
 			final double amountBid = Double.parseDouble(txtMakeBid.getText());
-			final Bid newBid = new Bid(clientGUI.getCurrentUser().getUserId(), selectedAuction.getItemId(), new Money(
-					Currency.getInstance("GBP"), amountBid));
+			final Bid newBid = new Bid(clientGUI.getCurrentUser().getUserId(), selectedAuction.getItemId(), new Money(Currency.getInstance("GBP"), amountBid));
 			clientGUI.sendMessage(new Message(MessageType.BID_DELIVERY, newBid));
 		});
 
@@ -218,8 +221,7 @@ public class MainPanel extends JPanel
 		pnlFilters.setLayout(gbl_pnlFilters);
 
 		final JButton btnViewAll = new JButton("View All Auctions");
-		btnViewAll.addActionListener(e -> clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(
-				RequestType.ALL_OPEN_ITEMS, ""))));
+		btnViewAll.addActionListener(e -> clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, ""))));
 		btngrpFilters.add(btnViewAll);
 		final GridBagConstraints gbc_btnViewAll = new GridBagConstraints();
 		gbc_btnViewAll.fill = GridBagConstraints.HORIZONTAL;
@@ -229,8 +231,11 @@ public class MainPanel extends JPanel
 		pnlFilters.add(btnViewAll, gbc_btnViewAll);
 
 		final JButton btnViewSold = new JButton("View All Finished Auctions");
-		btnViewSold.addActionListener(e -> clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(
-				RequestType.ALL_SOLD_ITEMS, ""))));
+		btnViewSold.addActionListener(e ->
+		{
+			clearAuctionList();
+			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_SOLD_ITEMS, "")));
+		});
 		btngrpFilters.add(btnViewSold);
 		final GridBagConstraints gbc_btnViewSold = new GridBagConstraints();
 		gbc_btnViewSold.fill = GridBagConstraints.HORIZONTAL;
@@ -240,8 +245,11 @@ public class MainPanel extends JPanel
 		pnlFilters.add(btnViewSold, gbc_btnViewSold);
 
 		final JButton btnFilterByID = new JButton("Filter by Item ID");
-		btnFilterByID.addActionListener(e -> clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(
-				RequestType.ITEM_BY_ID, txtFilterByID.getText()))));
+		btnFilterByID.addActionListener(e ->
+		{
+			clearAuctionList();
+			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ITEM_BY_ID, txtFilterByID.getText())));
+		});
 		btngrpFilters.add(btnFilterByID);
 		final GridBagConstraints gbc_btnFilterByID = new GridBagConstraints();
 		gbc_btnFilterByID.fill = GridBagConstraints.HORIZONTAL;
@@ -260,8 +268,11 @@ public class MainPanel extends JPanel
 		txtFilterByID.setColumns(10);
 
 		final JButton btnFilterBySeller = new JButton("Filter by Seller");
-		btnFilterBySeller.addActionListener(e -> clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST,
-				new Request(RequestType.ITEM_BY_SELLER, txtFilterBySeller.getText()))));
+		btnFilterBySeller.addActionListener(e ->
+		{
+			clearAuctionList();
+			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ITEM_BY_SELLER, txtFilterBySeller.getText())));
+		});
 		btngrpFilters.add(btnFilterBySeller);
 		final GridBagConstraints gbc_btnFilterBySeller = new GridBagConstraints();
 		gbc_btnFilterBySeller.fill = GridBagConstraints.HORIZONTAL;
@@ -280,8 +291,11 @@ public class MainPanel extends JPanel
 		txtFilterBySeller.setColumns(10);
 
 		final JButton btnFilterByCategory = new JButton("Filter by Catgeory");
-		btnFilterByCategory.addActionListener(e -> clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST,
-				new Request(RequestType.ITEM_BY_CATEGORY, cmbFilterBycategory.getSelectedItem().toString()))));
+		btnFilterByCategory.addActionListener(e ->
+		{
+			clearAuctionList();
+			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ITEM_BY_CATEGORY, cmbFilterBycategory.getSelectedItem().toString())));
+		});
 		btngrpFilters.add(btnFilterByCategory);
 		final GridBagConstraints gbc_btnFilterByCategory = new GridBagConstraints();
 		gbc_btnFilterByCategory.fill = GridBagConstraints.HORIZONTAL;
@@ -299,6 +313,7 @@ public class MainPanel extends JPanel
 		gbc_cmbFilterBycategory.gridy = 4;
 		pnlFilters.add(cmbFilterBycategory, gbc_cmbFilterBycategory);
 	}
+
 
 	/**
 	 * Refreshes the list of auctions, clearing it and then re-adding elements from the auction cache to it
@@ -329,12 +344,14 @@ public class MainPanel extends JPanel
 		return (auctionModel.size() == auctionCache.size());
 	}
 
+
 	private void clearAuctionList()
 	{
 		auctionModel.clear();
 		lstAuctionItems.clearSelection();
 		txtAuctionDetails.setText("");
 	}
+
 
 	private final class AuctionSelectedListener implements ListSelectionListener
 	{
@@ -349,10 +366,8 @@ public class MainPanel extends JPanel
 				txtAuctionDetails.setText("Item: " + selectedAuction.getName());
 				txtAuctionDetails.append("\n" + "Description: " + selectedAuction.getDescription());
 				txtAuctionDetails.append("\n" + "Category: " + selectedAuction.getCategory().toString());
-				txtAuctionDetails.append("\n" + "Start Time: "
-						+ selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
-				txtAuctionDetails.append("\n" + "End Time: "
-						+ selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
+				txtAuctionDetails.append("\n" + "Start Time: " + selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
+				txtAuctionDetails.append("\n" + "End Time: " + selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
 				txtAuctionDetails.append("\n" + "Seller: " + selectedAuction.getUserId());
 				txtAuctionDetails.append("\n" + "Reserve Price: " + selectedAuction.getReservePrice().getValue());
 				Money highestBid;
@@ -362,11 +377,9 @@ public class MainPanel extends JPanel
 				}
 				else
 				{
-					highestBid = new Money(Currency.getInstance("GBP"), selectedAuction.getBids().peek().getAmount()
-							.getValue());
+					highestBid = new Money(Currency.getInstance("GBP"), selectedAuction.getBids().peek().getAmount().getValue());
 				}
-				txtAuctionDetails.append("\n" + "Highest Bid: " + highestBid.getCurrencyType().getSymbol()
-						+ highestBid.getValue());
+				txtAuctionDetails.append("\n" + "Highest Bid: " + highestBid.getCurrencyType().getSymbol() + highestBid.getValue());
 			}
 		}
 	}
