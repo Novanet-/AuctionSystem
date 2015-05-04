@@ -164,7 +164,7 @@ public class SubmitPanel extends JPanel
 
 		spnStartTime = new JSpinner();
 		spnStartTime.setModel(new SpinnerDateModel(new Date(1428966000000L), null, null, Calendar.HOUR_OF_DAY));
-		spnStartTime.setEditor(new JSpinner.DateEditor(spnStartTime, "hh:mm"));
+		spnStartTime.setEditor(new JSpinner.DateEditor(spnStartTime, "kk:mm"));
 		GridBagConstraints gbc_spnStartTime = new GridBagConstraints();
 		gbc_spnStartTime.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spnStartTime.insets = new Insets(0, 0, 5, 5);
@@ -200,7 +200,7 @@ public class SubmitPanel extends JPanel
 
 		spnEndTime = new JSpinner();
 		spnEndTime.setModel(new SpinnerDateModel(new Date(1428966000000L), null, null, Calendar.HOUR_OF_DAY));
-		spnEndTime.setEditor(new JSpinner.DateEditor(spnEndTime, "hh:mm"));
+		spnEndTime.setEditor(new JSpinner.DateEditor(spnEndTime, "kk:mm"));
 		GridBagConstraints gbc_spnEndTime = new GridBagConstraints();
 		gbc_spnEndTime.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spnEndTime.insets = new Insets(0, 0, 5, 5);

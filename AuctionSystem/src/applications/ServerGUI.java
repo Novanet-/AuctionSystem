@@ -9,18 +9,22 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Currency;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
@@ -43,6 +47,7 @@ import commLayer.Request;
 import commLayer.RequestType;
 import commLayer.ServerComms;
 import commLayer.ServerThread;
+import entities.AuctionStatus;
 import entities.Bid;
 import entities.Item;
 import entities.User;
@@ -63,18 +68,18 @@ public class ServerGUI
 	private ServerComms serverComms;
 	private ExecutorService ioThreadPool;
 
-
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args)
 	{
-		Item item = new Item("A", "B", Category.ART, 2, LocalDateTime.of(2015, Month.JANUARY, 1, 0, 0), LocalDateTime.of(2015, Month.DECEMBER, 31, 23, 59), new Money(
-				Currency.getInstance("GBP"), 50.50));
+		Item item = new Item("A", "B", Category.ART, 2, LocalDateTime.of(2015, Month.JANUARY, 1, 0, 0),
+				LocalDateTime.of(2015, Month.DECEMBER, 31, 23, 59), new Money(Currency.getInstance("GBP"), 50.50));
 		System.out.println(item.toString());
 		System.out.println(item.getItemId());
-		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " " + item.getStartTime().toString() + " "
-				+ item.getEndTime().toString() + " " + item.getReservePrice().getValue());
+		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " "
+				+ item.getStartTime().toString() + " " + item.getEndTime().toString() + " "
+				+ item.getReservePrice().getValue());
 		EventQueue.invokeLater(new Runnable()
 		{
 
@@ -94,7 +99,6 @@ public class ServerGUI
 		});
 	}
 
-
 	/**
 	 * Create the application.
 	 */
@@ -102,7 +106,6 @@ public class ServerGUI
 	{
 		initialize();
 	}
-
 
 	/**
 	 * Initialize the contents of the frame.
@@ -113,13 +116,16 @@ public class ServerGUI
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
-		catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e)
+		catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e)
 		{
 			e.printStackTrace();
 		}
 
 		serverComms = new ServerComms(this, serverThread);
 		ioThreadPool = Executors.newCachedThreadPool();
+
+		ScheduledThreadPoolExecutor timerThread = new ScheduledThreadPoolExecutor(1);
 
 		auctionList = new ArrayList<Item>();
 		userList = new ArrayList<User>();
@@ -131,7 +137,28 @@ public class ServerGUI
 
 		ioThreadPool.submit(ioTask);
 
-		// retrieveAuctionSystemData();
+		Runnable checkForFinishedAuctions = () ->
+		{
+			try
+			{
+				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME)
+						+ " Polling for finished auctions");
+				for (Item i : auctionList)
+				{
+					if ((i.getAuctionStatus() == entities.AuctionStatus.OPEN) && (!isAuctionOpen(i)))
+					{
+						i.setAuctionStatus(AuctionStatus.WON);
+						serverComms.sendMessage(new Message(MessageType.AUCTION_FINISHED, i));
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+
+		};
+		timerThread.scheduleAtFixedRate(checkForFinishedAuctions, 10, 5, TimeUnit.SECONDS);
 
 		frame = new JFrame();
 		frame.setFont(new Font("Segoe UI", Font.PLAIN, 12));
@@ -160,8 +187,9 @@ public class ServerGUI
 			{
 				for (Item i : auctionList)
 				{
-					System.out.println(i.getItemId() + " " + i.getName() + " " + i.getDescription() + " " + i.getCategory().toString() + " " + i.getStartTime().toString()
-							+ " " + i.getEndTime().toString() + " " + i.getReservePrice().getValue());
+					System.out.println(i.getItemId() + " " + i.getName() + " " + i.getDescription() + " "
+							+ i.getCategory().toString() + " " + i.getStartTime().toString() + " "
+							+ i.getEndTime().toString() + " " + i.getReservePrice().getValue());
 				}
 			}
 		});
@@ -181,7 +209,6 @@ public class ServerGUI
 		gbc_lblServer.gridy = 1;
 		pnlOuter.add(lblServer, gbc_lblServer);
 	}
-
 
 	/**
 	 * Adds an auction to the system
@@ -205,7 +232,6 @@ public class ServerGUI
 		return addSuccessful;
 	}
 
-
 	/**
 	 * Adds a user to the system
 	 * 
@@ -228,7 +254,6 @@ public class ServerGUI
 		return addSuccessful;
 	}
 
-
 	synchronized public boolean addBidToSystem(Bid bid, Item auction)
 	{
 		auction.getBids().push(bid);
@@ -244,7 +269,6 @@ public class ServerGUI
 		}
 		return addSuccessful;
 	}
-
 
 	/**
 	 * Fetch all auctions that match the specified RequestType
@@ -318,15 +342,25 @@ public class ServerGUI
 			break;
 		case ITEM_CONTAINING_BID_BY_CURRENT_USER:
 		{
+			long requestedUserId = Long.parseLong(request.getRequestParameter());
 			for (Item auction : auctionList)
 			{
 				openAuctionFound = isAuctionOpen(auction);
 				if (openAuctionFound)
 				{
-					Iterator<Bid> stackIterator =  auction.getBids().iterator();
-					while (stackIterator.hasNext())
+					Stack<Bid> auctionBids = auction.getBids();
+					int noOfBids = auctionBids.size();
+					if (noOfBids > 0)
 					{
-						Bid bid = stackIterator.next();
+						for (int i = noOfBids - 1; i < 0; i = i - 1)
+						{
+							Bid bid = auctionBids.get(i);
+							if (bid.getUserId() == requestedUserId)
+							{
+								serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+								break;
+							}
+						}
 					}
 				}
 			}
@@ -338,20 +372,17 @@ public class ServerGUI
 
 	}
 
-
 	private boolean isAuctionOpen(Item auction)
 	{
 		LocalDateTime currentDateTime = LocalDateTime.now();
 		return ((auction.getStartTime().isBefore(currentDateTime)) && (auction.getEndTime().isAfter(currentDateTime)));
 	}
 
-
 	public boolean fetchUsers(RequestType allUsers)
 	{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 
 	synchronized public boolean checkBidValid(Bid payload)
 	{
@@ -374,7 +405,6 @@ public class ServerGUI
 		return false;
 	}
 
-
 	@SuppressWarnings("unchecked")
 	public void retrieveAuctionSystemData()
 	{
@@ -388,18 +418,17 @@ public class ServerGUI
 			User.setCounter(new AtomicLong(userList.get(auctionList.size() - 1).getUserId()));
 	}
 
-
 	public ArrayList<Item> getAuctionList()
 	{
 		return auctionList;
 	}
 
-
 	public User validateLoginRequest(User loginRequest)
 	{
 		for (User user : userList)
 		{
-			if ((user.getFirstName().equals(loginRequest.getFirstName())) && (user.getSurname().equals(loginRequest.getSurname())))
+			if ((user.getFirstName().equals(loginRequest.getFirstName()))
+					&& (user.getSurname().equals(loginRequest.getSurname())))
 			{
 				if (Arrays.equals(user.getPassword(), loginRequest.getPassword()))
 				{
@@ -415,5 +444,10 @@ public class ServerGUI
 		}
 		serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.USER_NOT_FOUND));
 		return null;
+	}
+
+	public void closeAuction(Item auction)
+	{
+		auction.setAuctionStatus(AuctionStatus.CLOSED);
 	}
 }

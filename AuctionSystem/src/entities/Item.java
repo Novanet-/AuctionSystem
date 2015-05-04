@@ -31,6 +31,8 @@ public class Item implements Serializable
 
 	private Money reservePrice;
 	private Stack<Bid> bids;
+	
+	private AuctionStatus auctionStatus;
 
 	private static AtomicLong counter = new AtomicLong(0);
 
@@ -68,7 +70,7 @@ public class Item implements Serializable
 		this.endTime = endTime;
 		this.reservePrice = reservePrice;
 		this.bids = new Stack<Bid>();
-
+		this.auctionStatus = AuctionStatus.OPEN;
 	}
 
 
@@ -168,6 +170,18 @@ public class Item implements Serializable
 	public Stack<Bid> getBids()
 	{
 		return bids;
+	}
+
+
+	public AuctionStatus getAuctionStatus()
+	{
+		return auctionStatus;
+	}
+
+
+	public void setAuctionStatus(AuctionStatus auctionStatus)
+	{
+		this.auctionStatus = auctionStatus;
 	}
 
 

@@ -18,7 +18,6 @@ public class ClientComms implements AbstractComms
 	ClientGUI client;
 	ClientThread clientThread;
 
-
 	/**
 	 * Creates a client comms module, which has references to the client and the client's socket thread
 	 * 
@@ -35,10 +34,9 @@ public class ClientComms implements AbstractComms
 		initSocket();
 	}
 
-
 	/**
-	 * Initialises the client thread, creating a client socket , and input and output streams for this client socket
-	 * Then listens for any incoming data
+	 * Initialises the client thread, creating a client socket , and input and output streams for this client socket Then listens
+	 * for any incoming data
 	 */
 	@Override
 	public void initSocket()
@@ -46,7 +44,6 @@ public class ClientComms implements AbstractComms
 		clientThread = new ClientThread(this);
 		clientThread.start();
 	}
-
 
 	/**
 	 * Forwards a message to the client thread
@@ -56,11 +53,10 @@ public class ClientComms implements AbstractComms
 	@Override
 	public boolean sendMessage(Message message)
 	{
-		System.out.println("Client Send " + message.getHeader().toString() + " " + message.getPayload().toString() + " at "
-				+ LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+		System.out.println("Client Send " + message.getHeader().toString() + " " + message.getPayload().toString()
+				+ " at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 		return clientThread.sendToOutputStream(message);
 	}
-
 
 	/**
 	 * Receives a message forwarded from the client thread, processing it based on the message type
@@ -71,8 +67,8 @@ public class ClientComms implements AbstractComms
 	public boolean recieveMessage(Message message)
 	{
 		boolean recieveSuccesful = false;
-		System.out.println("Client Recieve " + message.getHeader().toString() + "  " + message.getPayload().toString() + " at "
-				+ LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+		System.out.println("Client Recieve " + message.getHeader().toString() + "  " + message.getPayload().toString()
+				+ " at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
 		switch (message.getHeader())
 		{
 		case ITEM_DELIVERY:
@@ -124,6 +120,23 @@ public class ClientComms implements AbstractComms
 				break;
 			default:
 				break;
+			}
+			break;
+		case AUCTION_FINISHED:
+			Item finishedAuction = (Item) message.getPayload();
+			// Display auction finished dialog
+			if (client.getCurrentUser() != null)
+			{
+				if (finishedAuction.getUserId() == client.getCurrentUser().getUserId())
+				{
+					// Display finished dialog
+				}
+				if (!finishedAuction.getBids().empty())
+				{
+					if (finishedAuction.getBids().peek().getUserId() == client.getCurrentUser().getUserId())
+						sendMessage(new Message(MessageType.WIN_RECIEVED, finishedAuction));
+					// Display won dialog
+				}
 			}
 			break;
 		default:

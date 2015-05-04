@@ -131,6 +131,9 @@ public class ServerComms implements AbstractComms
 			if (requestedUser != null)
 				sendMessage(new Message(MessageType.USER_DELIVERY, requestedUser));
 			break;
+		case WIN_RECIEVED:
+			server.closeAuction((Item) message.getPayload());
+			break;
 		default:
 			break;
 		}

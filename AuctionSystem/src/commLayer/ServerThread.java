@@ -6,6 +6,8 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created using Java 8
@@ -53,7 +55,7 @@ public class ServerThread extends Thread
 	 */
 	private void createServerSocket(int portNumber) throws IOException
 	{
-		System.out.println("Initialsing server socket");
+		System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Initialising server socket");
 		serverSocket = new ServerSocket(portNumber);
 		clientSocket = serverSocket.accept();
 		out = new ObjectOutputStream(clientSocket.getOutputStream());

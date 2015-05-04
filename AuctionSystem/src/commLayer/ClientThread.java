@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created using Java 8
@@ -48,7 +50,7 @@ public class ClientThread extends Thread
 	 */
 	private void createClientSocket() throws UnknownHostException, IOException
 	{
-		System.out.println("Initialsing client socket");
+		System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Initialising client socket");
 		clientSocket = new Socket("127.0.0.1", 62666);
 		out = new ObjectOutputStream(clientSocket.getOutputStream());
 		in = new ObjectInputStream(clientSocket.getInputStream());
