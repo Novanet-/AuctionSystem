@@ -36,12 +36,10 @@ import javax.swing.event.ListSelectionListener;
 import utilities.Category;
 import utilities.Money;
 import applications.ClientGUI;
-
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.Request;
 import commLayer.RequestType;
-
 import entities.Bid;
 import entities.Item;
 
@@ -236,6 +234,18 @@ public class MainPanel extends JPanel
 			clearAuctionList();
 			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_SOLD_ITEMS, "")));
 		});
+
+		JButton btnViewOwnAuction = new JButton("btnViewOwnAuction");
+		btnViewOwnAuction.addActionListener(e ->
+		{
+			clearAuctionList();
+			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ITEM_BY_SELLER, String.valueOf(clientGUI.getCurrentUser().getUserId()))));
+		});
+		GridBagConstraints gbc_btnViewOwnAuction = new GridBagConstraints();
+		gbc_btnViewOwnAuction.insets = new Insets(0, 0, 5, 5);
+		gbc_btnViewOwnAuction.gridx = 1;
+		gbc_btnViewOwnAuction.gridy = 0;
+		pnlFilters.add(btnViewOwnAuction, gbc_btnViewOwnAuction);
 		btngrpFilters.add(btnViewSold);
 		final GridBagConstraints gbc_btnViewSold = new GridBagConstraints();
 		gbc_btnViewSold.fill = GridBagConstraints.HORIZONTAL;
@@ -250,6 +260,20 @@ public class MainPanel extends JPanel
 			clearAuctionList();
 			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ITEM_BY_ID, txtFilterByID.getText())));
 		});
+
+		JButton btnViewOwnBids = new JButton("btnViewOwnBids");
+		btnViewOwnBids.addActionListener(e ->
+		{
+			clearAuctionList();
+			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ITEM_CONTAINING_BID_BY_CURRENT_USER, String.valueOf(clientGUI.getCurrentUser()
+					.getUserId()))));
+		});
+		GridBagConstraints gbc_btnViewOwnBids = new GridBagConstraints();
+		gbc_btnViewOwnBids.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnViewOwnBids.insets = new Insets(0, 0, 5, 5);
+		gbc_btnViewOwnBids.gridx = 1;
+		gbc_btnViewOwnBids.gridy = 1;
+		pnlFilters.add(btnViewOwnBids, gbc_btnViewOwnBids);
 		btngrpFilters.add(btnFilterByID);
 		final GridBagConstraints gbc_btnFilterByID = new GridBagConstraints();
 		gbc_btnFilterByID.fill = GridBagConstraints.HORIZONTAL;
@@ -260,7 +284,7 @@ public class MainPanel extends JPanel
 
 		txtFilterByID = new JTextField();
 		final GridBagConstraints gbc_txtFilterByID = new GridBagConstraints();
-		gbc_txtFilterByID.insets = new Insets(0, 0, 5, 5);
+		gbc_txtFilterByID.insets = new Insets(0, 0, 5, 0);
 		gbc_txtFilterByID.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtFilterByID.gridx = 1;
 		gbc_txtFilterByID.gridy = 2;
@@ -283,7 +307,7 @@ public class MainPanel extends JPanel
 
 		txtFilterBySeller = new JTextField();
 		final GridBagConstraints gbc_txtFilterBySeller = new GridBagConstraints();
-		gbc_txtFilterBySeller.insets = new Insets(0, 0, 5, 5);
+		gbc_txtFilterBySeller.insets = new Insets(0, 0, 5, 0);
 		gbc_txtFilterBySeller.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtFilterBySeller.gridx = 1;
 		gbc_txtFilterBySeller.gridy = 3;
@@ -307,7 +331,6 @@ public class MainPanel extends JPanel
 		cmbFilterBycategory = new JComboBox<>();
 		cmbFilterBycategory.setModel(new DefaultComboBoxModel<>(Category.values()));
 		final GridBagConstraints gbc_cmbFilterBycategory = new GridBagConstraints();
-		gbc_cmbFilterBycategory.insets = new Insets(0, 0, 0, 5);
 		gbc_cmbFilterBycategory.fill = GridBagConstraints.HORIZONTAL;
 		gbc_cmbFilterBycategory.gridx = 1;
 		gbc_cmbFilterBycategory.gridy = 4;

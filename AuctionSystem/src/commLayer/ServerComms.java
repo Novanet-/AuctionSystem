@@ -87,6 +87,9 @@ public class ServerComms implements AbstractComms
 			case ITEM_BY_SELLER:
 				recieveSuccessful = server.fetchAuctions(request);
 				break;
+			case ITEM_CONTAINING_BID_BY_CURRENT_USER:
+				recieveSuccessful = server.fetchAuctions(request);
+				break;
 			default:
 				break;
 			}

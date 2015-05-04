@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Currency;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -260,12 +261,9 @@ public class ServerGUI
 		case ALL_OPEN_ITEMS:
 			for (Item auction : auctionList)
 			{
-				LocalDateTime currentDateTime = LocalDateTime.now();
-				if ((auction.getStartTime().isBefore(currentDateTime)) && (auction.getEndTime().isAfter(currentDateTime)))
-				{
+				openAuctionFound = isAuctionOpen(auction);
+				if (openAuctionFound)
 					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
-					openAuctionFound = true;
-				}
 			}
 			break;
 		case ALL_SOLD_ITEMS:
@@ -282,41 +280,69 @@ public class ServerGUI
 		case ITEM_BY_CATEGORY:
 			for (Item auction : auctionList)
 			{
-				LocalDateTime currentDateTime = LocalDateTime.now();
-				if (auction.getCategory().toString().equals(request.getRequestParameter()))
+				openAuctionFound = isAuctionOpen(auction);
+				if (openAuctionFound)
 				{
-					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
-					openAuctionFound = true;
+					if (auction.getCategory().toString().equals(request.getRequestParameter()))
+					{
+						serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+					}
 				}
 			}
 			break;
 		case ITEM_BY_ID:
 			for (Item auction : auctionList)
 			{
-				LocalDateTime currentDateTime = LocalDateTime.now();
-				if (auction.getItemId() == Long.valueOf(request.getRequestParameter()).longValue())
+				openAuctionFound = isAuctionOpen(auction);
+				if (openAuctionFound)
 				{
-					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
-					openAuctionFound = true;
+					if (auction.getItemId() == Long.valueOf(request.getRequestParameter()).longValue())
+					{
+						serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+					}
 				}
 			}
 			break;
 		case ITEM_BY_SELLER:
 			for (Item auction : auctionList)
 			{
-				LocalDateTime currentDateTime = LocalDateTime.now();
-				if (auction.getUserId() == Long.valueOf(request.getRequestParameter()).longValue())
+				openAuctionFound = isAuctionOpen(auction);
+				if (openAuctionFound)
 				{
-					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
-					openAuctionFound = true;
+					if (auction.getUserId() == Long.valueOf(request.getRequestParameter()).longValue())
+					{
+						serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+					}
 				}
 			}
 			break;
+		case ITEM_CONTAINING_BID_BY_CURRENT_USER:
+		{
+			for (Item auction : auctionList)
+			{
+				openAuctionFound = isAuctionOpen(auction);
+				if (openAuctionFound)
+				{
+					Iterator<Bid> stackIterator =  auction.getBids().iterator();
+					while (stackIterator.hasNext())
+					{
+						Bid bid = stackIterator.next();
+					}
+				}
+			}
+		}
 		default:
 			break;
 		}
 		return openAuctionFound;
 
+	}
+
+
+	private boolean isAuctionOpen(Item auction)
+	{
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		return ((auction.getStartTime().isBefore(currentDateTime)) && (auction.getEndTime().isAfter(currentDateTime)));
 	}
 
 
