@@ -48,8 +48,8 @@ public class ServerComms implements AbstractComms
 	@Override
 	public boolean sendMessage(Message message)
 	{
-		System.out.println("Server Send " + message.getHeader().toString() + " " + message.getPayload().toString() + " at "
-				+ LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+		System.out
+				.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Server Send " + message.getHeader().toString() + " " + message.getPayload().toString());
 		return serverThread.sendToOutputStream(message);
 	}
 
@@ -57,8 +57,8 @@ public class ServerComms implements AbstractComms
 	@Override
 	public boolean recieveMessage(Message message)
 	{
-		System.out.println("Server Recieve " + message.getHeader().toString() + " " + message.getPayload().toString() + " at "
-				+ LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+		System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Server Recieve " + message.getHeader().toString() + " "
+				+ message.getPayload().toString());
 		boolean recieveSuccessful = false;
 		switch (message.getHeader())
 		{
@@ -88,6 +88,9 @@ public class ServerComms implements AbstractComms
 				recieveSuccessful = server.fetchAuctions(request);
 				break;
 			case ITEM_CONTAINING_BID_BY_CURRENT_USER:
+				recieveSuccessful = server.fetchAuctions(request);
+				break;
+			case ITEMS_WON_BY_USER:
 				recieveSuccessful = server.fetchAuctions(request);
 				break;
 			default:

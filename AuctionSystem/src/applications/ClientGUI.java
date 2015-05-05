@@ -8,7 +8,11 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -21,7 +25,9 @@ import clientGUIComponents.SubmitPanel;
 import commLayer.ClientComms;
 import commLayer.ClientThread;
 import commLayer.Message;
+import commLayer.MessageType;
 import commLayer.RequestType;
+import entities.AuctionStatus;
 import entities.Bid;
 import entities.Item;
 import entities.User;
@@ -46,7 +52,7 @@ public class ClientGUI
 	private MainPanel pnlMain;
 
 	private SubmitPanel pnlSubmitItem;
-	
+
 	private User currentUser;
 
 
@@ -58,6 +64,7 @@ public class ClientGUI
 		EventQueue.invokeLater(new Runnable()
 		{
 
+			@Override
 			public void run()
 			{
 				try
@@ -89,7 +96,7 @@ public class ClientGUI
 	private void initialize()
 	{
 		try
-		{	
+		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
 		catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e)
@@ -191,10 +198,11 @@ public class ClientGUI
 	{
 		return pnlMain.refreshAuctionList(auctionCache, filterType);
 	}
-	
+
+
 	public boolean updateAuctionInCache(Bid payload)
 	{
-		for (int i= 0; i < auctionCache.size(); i++)
+		for (int i = 0; i < auctionCache.size(); i++)
 		{
 			if (auctionCache.get(i).getItemId() == payload.getItemID())
 			{
@@ -205,8 +213,27 @@ public class ClientGUI
 	}
 
 
-	
-	
+	public void loginUser()
+	{
+		changeCard("pnlMain");
+		ScheduledThreadPoolExecutor winCheckerThread = new ScheduledThreadPoolExecutor(1);
+		Runnable checkForWonAuctions = () ->
+		{
+			try
+			{
+				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for won auctions");
+				sendMessage(new Message(MessageType.ITEM_REQUEST, new commLayer.Request(RequestType.ITEMS_WON_BY_USER, String.valueOf(getCurrentUser().getUserId()))));
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+
+		};
+		winCheckerThread.scheduleAtFixedRate(checkForWonAuctions, 5, 10, TimeUnit.SECONDS);
+	}
+
+
 	public User getCurrentUser()
 	{
 		return currentUser;
@@ -279,8 +306,5 @@ public class ClientGUI
 		}
 
 	}
-
-
-
 
 }

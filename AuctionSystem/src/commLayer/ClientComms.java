@@ -2,8 +2,10 @@ package commLayer;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
 
 import applications.ClientGUI;
+import entities.AuctionStatus;
 import entities.Bid;
 import entities.Item;
 import entities.User;
@@ -17,6 +19,7 @@ public class ClientComms implements AbstractComms
 
 	ClientGUI client;
 	ClientThread clientThread;
+
 
 	/**
 	 * Creates a client comms module, which has references to the client and the client's socket thread
@@ -34,9 +37,10 @@ public class ClientComms implements AbstractComms
 		initSocket();
 	}
 
+
 	/**
-	 * Initialises the client thread, creating a client socket , and input and output streams for this client socket Then listens
-	 * for any incoming data
+	 * Initialises the client thread, creating a client socket , and input and output streams for this client socket
+	 * Then listens for any incoming data
 	 */
 	@Override
 	public void initSocket()
@@ -44,6 +48,7 @@ public class ClientComms implements AbstractComms
 		clientThread = new ClientThread(this);
 		clientThread.start();
 	}
+
 
 	/**
 	 * Forwards a message to the client thread
@@ -53,10 +58,11 @@ public class ClientComms implements AbstractComms
 	@Override
 	public boolean sendMessage(Message message)
 	{
-		System.out.println("Client Send " + message.getHeader().toString() + " " + message.getPayload().toString()
-				+ " at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+		System.out
+				.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Client Send " + message.getHeader().toString() + " " + message.getPayload().toString());
 		return clientThread.sendToOutputStream(message);
 	}
+
 
 	/**
 	 * Receives a message forwarded from the client thread, processing it based on the message type
@@ -67,8 +73,8 @@ public class ClientComms implements AbstractComms
 	public boolean recieveMessage(Message message)
 	{
 		boolean recieveSuccesful = false;
-		System.out.println("Client Recieve " + message.getHeader().toString() + "  " + message.getPayload().toString()
-				+ " at " + LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+		System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Client Recieve " + message.getHeader().toString() + "  "
+				+ message.getPayload().toString());
 		switch (message.getHeader())
 		{
 		case ITEM_DELIVERY:
@@ -90,14 +96,12 @@ public class ClientComms implements AbstractComms
 			switch ((Notification) message.getPayload())
 			{
 			case ITEM_RECIEVED:
-				System.out.println("Item " + message.getPayload().toString() + " Recieved by server at "
-						+ LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Item " + message.getPayload().toString() + " Recieved by server");
 				client.clearCache();
-				sendMessage(new Message(MessageType.ITEM_REQUEST, RequestType.ALL_OPEN_ITEMS));
+				sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
 				break;
 			case BID_RECIEVED:
-				System.out.println("Bid " + message.getPayload().toString() + " Recieved by server at "
-						+ LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME));
+				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Bid " + message.getPayload().toString() + " Recieved by server");
 				break;
 			case PROPERTY_RECIEVED:
 				break;
@@ -113,7 +117,7 @@ public class ClientComms implements AbstractComms
 				break;
 			case PASSWORD_CORRECT:
 				// Display login successful dialog
-				client.changeCard("pnlMain");
+				client.loginUser();
 				break;
 			case PASSWORD_INCORRECT:
 				// Display password incorrect dialog
