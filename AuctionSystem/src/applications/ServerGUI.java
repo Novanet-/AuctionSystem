@@ -65,12 +65,6 @@ public class ServerGUI
 	 */
 	public static void main(String[] args)
 	{
-		Item item = new Item("A", "B", Category.ART, 2, LocalDateTime.of(2015, Month.JANUARY, 1, 0, 0), LocalDateTime.of(2015, Month.DECEMBER, 31, 23, 59), new Money(
-				Currency.getInstance("GBP"), 50.50));
-		System.out.println(item.toString());
-		System.out.println(item.getItemId());
-		System.out.println(item.getName() + " " + item.getDescription() + " " + item.getCategory().toString() + " " + item.getStartTime().toString() + " "
-				+ item.getEndTime().toString() + " " + item.getReservePrice().getValue());
 		EventQueue.invokeLater(new Runnable()
 		{
 
@@ -419,10 +413,19 @@ public class ServerGUI
 		auctionList = (ArrayList<Item>) DataPersistence.readListFromFile(EntityType.ITEM);
 		userList = (ArrayList<User>) DataPersistence.readListFromFile(EntityType.USER);
 
+		AtomicLong auctionID, userID;
+
 		if (!auctionList.isEmpty())
-			Item.setCounter(new AtomicLong(auctionList.get(auctionList.size() - 1).getItemId()));
+			auctionID = new AtomicLong(auctionList.get(auctionList.size() - 1).getItemId());
+		else
+			auctionID = new AtomicLong(0);
+		Item.setCounter(auctionID);
+		
 		if (!userList.isEmpty())
-			User.setCounter(new AtomicLong(userList.get(auctionList.size() - 1).getUserId()));
+			userID = new AtomicLong(userList.get(auctionList.size() - 1).getUserId());
+		else
+			userID = new AtomicLong(0);
+		User.setCounter(userID);
 	}
 
 

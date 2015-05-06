@@ -34,7 +34,7 @@ public class Item implements Serializable
 	
 	private AuctionStatus auctionStatus;
 
-	private static AtomicLong counter = new AtomicLong(0);
+	private static AtomicLong counter;
 
 
 
