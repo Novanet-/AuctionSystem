@@ -17,7 +17,7 @@ public class User implements Serializable
 	private String surname;
 	private byte[] password;
 
-	private static AtomicLong counter;
+	private static AtomicLong counter = new AtomicLong(0);
 
 
 	/**

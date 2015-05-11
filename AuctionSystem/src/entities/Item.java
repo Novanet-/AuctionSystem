@@ -31,12 +31,10 @@ public class Item implements Serializable
 
 	private Money reservePrice;
 	private Stack<Bid> bids;
-	
+
 	private AuctionStatus auctionStatus;
 
-	private static AtomicLong counter;
-
-
+	private static AtomicLong counter = new AtomicLong(0);
 
 
 	/**
@@ -57,8 +55,7 @@ public class Item implements Serializable
 	 * @param bids
 	 *            A list of the bids on the auction
 	 */
-	public Item(String name, String description, Category category, long userId, LocalDateTime startTime, LocalDateTime endTime,
-			Money reservePrice)
+	public Item(String name, String description, Category category, long userId, LocalDateTime startTime, LocalDateTime endTime, Money reservePrice)
 	{
 		super();
 		this.itemId = nextId();
@@ -116,6 +113,12 @@ public class Item implements Serializable
 	}
 
 
+	public void setItemId(long itemId)
+	{
+		this.itemId = itemId;
+	}
+
+
 	public long getUserId()
 	{
 		return userId;
@@ -164,9 +167,6 @@ public class Item implements Serializable
 	}
 
 
-
-
-	
 	public Stack<Bid> getBids()
 	{
 		return bids;

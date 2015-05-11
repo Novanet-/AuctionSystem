@@ -199,6 +199,7 @@ public class ServerGUI
 	 */
 	synchronized public boolean addAuctionToSystem(Item item)
 	{
+		item.setItemId(Item.nextId());
 		boolean addSuccessful = auctionList.add(item);
 		if (addSuccessful)
 		{
@@ -222,6 +223,7 @@ public class ServerGUI
 	 */
 	synchronized public boolean addUserToSystem(User user)
 	{
+		user.setUserId(User.nextId());
 		boolean addSuccessful = userList.add(user);
 		if (addSuccessful)
 		{
