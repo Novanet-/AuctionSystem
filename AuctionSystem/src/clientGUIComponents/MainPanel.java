@@ -12,6 +12,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Vector;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -43,6 +44,9 @@ import commLayer.RequestType;
 import entities.Bid;
 import entities.Item;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 public class MainPanel extends JPanel
 {
 
@@ -53,10 +57,9 @@ public class MainPanel extends JPanel
 	private JTextField txtFilterBySeller;
 
 	private final ButtonGroup btngrpFilters = new ButtonGroup();
-	private JList<String> lstAuctionItems;
+	private JTable lstAuctionItems;
 
-	private DefaultListModel<String> auctionModel;
-
+	private DefaultTableModel auctionModel;
 	private boolean listItemSelected;
 	private JTextArea txtAuctionDetails;
 
@@ -105,44 +108,100 @@ public class MainPanel extends JPanel
 		gbc_scrlAuctionList.gridy = 1;
 		pnlItemList.add(scrlAuctionList, gbc_scrlAuctionList);
 
-		final JPopupMenu popAuctionList = new JPopupMenu();
-		// popAuctionList.add(new JMenuItem("Bid on Item"));
-
-		lstAuctionItems = new JList<>();
-		auctionModel = new DefaultListModel<>();
-		lstAuctionItems.setModel(auctionModel);
-		lstAuctionItems.addListSelectionListener(new AuctionSelectedListener());
-
-		lstAuctionItems.addMouseListener(new MouseAdapter()
+		lstAuctionItems = new JTable();
+		lstAuctionItems.setShowHorizontalLines(false);
+		auctionModel = new DefaultTableModel(new Object[][]
+		{
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null },
+		{ null }, }, new String[]
+		{ "Auctions" })
 		{
 
-			@Override
-			public void mousePressed(MouseEvent e)
-			{
-				showPopup(popAuctionList, e);
-			}
+			/**
+					 * 
+					 */
+			private static final long serialVersionUID = 5450518863838008830L;
+			Class[] columnTypes = new Class[]
+			{ String.class };
 
 
 			@Override
-			public void mouseReleased(MouseEvent e)
+			public Class getColumnClass(int columnIndex)
 			{
-				showPopup(popAuctionList, e);
+				return columnTypes[columnIndex];
 			}
 
 
-			private void showPopup(JPopupMenu popAuctionList, MouseEvent e)
+			boolean[] columnEditables = new boolean[]
+			{ false };
+
+
+			@Override
+			public boolean isCellEditable(int row, int column)
 			{
-				if (e.isPopupTrigger())
-				{
-					popAuctionList.show(e.getComponent(), e.getX(), e.getY());
-				}
+				return columnEditables[column];
 			}
-		});
+		};
+		lstAuctionItems.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Auctions"
+			}
+		));
+		lstAuctionItems.getSelectionModel().addListSelectionListener(new AuctionSelectedListener());
+		// auctionModel = new DefaultListModel<>();
 
 		scrlAuctionList.setViewportView(lstAuctionItems);
-		lstAuctionItems.setVisibleRowCount(20);
 		lstAuctionItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		lstAuctionItems.setLayoutOrientation(JList.VERTICAL_WRAP);
 		lstAuctionItems.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 
 		final JLabel lblItemsForAuction = new JLabel("Items for Auction");
@@ -199,7 +258,7 @@ public class MainPanel extends JPanel
 		pnlMakeBid.add(horizontalGlue_1);
 		btnBidOnItem.addActionListener(e ->
 		{
-			final Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
+			final Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedRow());
 			final double amountBid = Double.parseDouble(txtMakeBid.getText());
 			final Bid newBid = new Bid(clientGUI.getCurrentUser().getUserId(), selectedAuction.getItemId(), new Money(Currency.getInstance("GBP"), amountBid));
 			clientGUI.sendMessage(new Message(MessageType.BID_DELIVERY, newBid));
@@ -354,7 +413,8 @@ public class MainPanel extends JPanel
 				{
 					// if (filterType == RequestType.ALL_OPEN_ITEMS)
 					// {
-					auctionModel.addElement(item.getName());
+					auctionModel.addRow(new Object[]
+					{ item.getName() });
 					// }
 				}
 			});
@@ -364,13 +424,18 @@ public class MainPanel extends JPanel
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return (auctionModel.size() == auctionCache.size());
+		return (auctionModel.getRowCount() == auctionCache.size());
 	}
 
 
 	private void clearAuctionList()
 	{
-		auctionModel.clear();
+		int rowCount = auctionModel.getRowCount();
+		// Remove rows one by one from the end of the table
+		for (int i = rowCount - 1; i >= 0; i--)
+		{
+			auctionModel.removeRow(i);
+		}
 		lstAuctionItems.clearSelection();
 		txtAuctionDetails.setText("");
 	}
@@ -382,10 +447,10 @@ public class MainPanel extends JPanel
 		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{
-			if (!lstAuctionItems.isSelectionEmpty())
+			if (lstAuctionItems.getSelectedRow() != -1)
 			{
 				listItemSelected = true;
-				final Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
+				final Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedRow());
 				txtAuctionDetails.setText("Item: " + selectedAuction.getName());
 				txtAuctionDetails.append("\n" + "Description: " + selectedAuction.getDescription());
 				txtAuctionDetails.append("\n" + "Category: " + selectedAuction.getCategory().toString());

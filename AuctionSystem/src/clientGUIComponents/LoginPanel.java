@@ -20,6 +20,7 @@ import applications.ClientGUI;
 import java.awt.Font;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import javax.swing.JPasswordField;
 
 public class LoginPanel extends JPanel
 {
@@ -29,7 +30,7 @@ public class LoginPanel extends JPanel
 	private ClientGUI clientGUI;
 
 	private JTextField txtFirstname;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 	private JTextField txtSurname;
 
 
@@ -51,11 +52,11 @@ public class LoginPanel extends JPanel
 		gbl_pnlLogin.columnWidths = new int[]
 		{ 30, 0, 30, 30, 30 };
 		gbl_pnlLogin.rowHeights = new int[]
-		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_pnlLogin.columnWeights = new double[]
 		{ 1.0, 0.0, 0.0, 1.0 };
 		gbl_pnlLogin.rowWeights = new double[]
-		{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		{ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		this.setLayout(gbl_pnlLogin);
 
 		JLabel lblLogin = new JLabel("Login");
@@ -108,7 +109,7 @@ public class LoginPanel extends JPanel
 		gbc_lblPassword.gridy = 4;
 		this.add(lblPassword, gbc_lblPassword);
 
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
 		GridBagConstraints gbc_txtPassword = new GridBagConstraints();
 		gbc_txtPassword.insets = new Insets(0, 0, 5, 5);
 		gbc_txtPassword.fill = GridBagConstraints.HORIZONTAL;
@@ -135,49 +136,31 @@ public class LoginPanel extends JPanel
 		gbc_btnSubmitLogin.gridx = 2;
 		gbc_btnSubmitLogin.gridy = 6;
 		this.add(btnSubmitLogin, gbc_btnSubmitLogin);
+				
+						JButton btnRegisterNewAccount = new JButton("Register New Account");
+						btnRegisterNewAccount.addActionListener(new ActionListener()
+						{
 
-		JButton btnSwitchPanelsLogin = new JButton("Switch Panels");
-		btnSwitchPanelsLogin.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				clientGUI.changeCard("pnlMain");
-			}
-
-		});
-		GridBagConstraints gbc_btnSwitchPanelsLogin = new GridBagConstraints();
-		gbc_btnSwitchPanelsLogin.anchor = GridBagConstraints.NORTH;
-		gbc_btnSwitchPanelsLogin.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSwitchPanelsLogin.gridx = 2;
-		gbc_btnSwitchPanelsLogin.gridy = 7;
-		this.add(btnSwitchPanelsLogin, gbc_btnSwitchPanelsLogin);
-
-		JButton btnRegisterNewAccount = new JButton("Register New Account");
-		btnRegisterNewAccount.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				try
-				{
-					User newUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getText()), true);
-					clientGUI.sendMessage(new Message(MessageType.USER_DELIVERY, newUser));
-				}
-				catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)
-				{
-					e1.printStackTrace();
-				}
-			}
-		});
-		GridBagConstraints gbc_btnRegisterNewAccount = new GridBagConstraints();
-		gbc_btnRegisterNewAccount.anchor = GridBagConstraints.NORTH;
-		gbc_btnRegisterNewAccount.insets = new Insets(0, 0, 0, 5);
-		gbc_btnRegisterNewAccount.gridx = 2;
-		gbc_btnRegisterNewAccount.gridy = 8;
-		add(btnRegisterNewAccount, gbc_btnRegisterNewAccount);
+							@Override
+							public void actionPerformed(ActionEvent e)
+							{
+								try
+								{
+									User newUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getText()), true);
+									clientGUI.sendMessage(new Message(MessageType.USER_DELIVERY, newUser));
+								}
+								catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)
+								{
+									e1.printStackTrace();
+								}
+							}
+						});
+						GridBagConstraints gbc_btnRegisterNewAccount = new GridBagConstraints();
+						gbc_btnRegisterNewAccount.anchor = GridBagConstraints.NORTH;
+						gbc_btnRegisterNewAccount.insets = new Insets(0, 0, 5, 5);
+						gbc_btnRegisterNewAccount.gridx = 2;
+						gbc_btnRegisterNewAccount.gridy = 8;
+						add(btnRegisterNewAccount, gbc_btnRegisterNewAccount);
 	}
 
 }
