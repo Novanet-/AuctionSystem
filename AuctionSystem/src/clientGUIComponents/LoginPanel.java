@@ -20,6 +20,7 @@ import applications.ClientGUI;
 import java.awt.Font;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import javax.swing.JPasswordField;
 
 public class LoginPanel extends JPanel
 {
@@ -29,7 +30,7 @@ public class LoginPanel extends JPanel
 	private ClientGUI clientGUI;
 
 	private JTextField txtFirstname;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 	private JTextField txtSurname;
 
 
@@ -108,7 +109,7 @@ public class LoginPanel extends JPanel
 		gbc_lblPassword.gridy = 4;
 		this.add(lblPassword, gbc_lblPassword);
 
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
 		GridBagConstraints gbc_txtPassword = new GridBagConstraints();
 		gbc_txtPassword.insets = new Insets(0, 0, 5, 5);
 		gbc_txtPassword.fill = GridBagConstraints.HORIZONTAL;
@@ -135,24 +136,6 @@ public class LoginPanel extends JPanel
 		gbc_btnSubmitLogin.gridx = 2;
 		gbc_btnSubmitLogin.gridy = 6;
 		this.add(btnSubmitLogin, gbc_btnSubmitLogin);
-
-		JButton btnSwitchPanelsLogin = new JButton("Switch Panels");
-		btnSwitchPanelsLogin.addActionListener(new ActionListener()
-		{
-
-			@Override
-			public void actionPerformed(ActionEvent arg0)
-			{
-				clientGUI.changeCard("pnlMain");
-			}
-
-		});
-		GridBagConstraints gbc_btnSwitchPanelsLogin = new GridBagConstraints();
-		gbc_btnSwitchPanelsLogin.anchor = GridBagConstraints.NORTH;
-		gbc_btnSwitchPanelsLogin.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSwitchPanelsLogin.gridx = 2;
-		gbc_btnSwitchPanelsLogin.gridy = 7;
-		this.add(btnSwitchPanelsLogin, gbc_btnSwitchPanelsLogin);
 
 		JButton btnRegisterNewAccount = new JButton("Register New Account");
 		btnRegisterNewAccount.addActionListener(new ActionListener()

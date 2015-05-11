@@ -168,8 +168,7 @@ public class ServerGUI
 		{
 			for (Item i : auctionList)
 			{
-				System.out.println(i.getItemId() + " " + i.getName() + " " + i.getDescription() + " " + i.getCategory().toString() + " " + i.getStartTime().toString() + " "
-						+ i.getEndTime().toString() + " " + i.getReservePrice().getValue());
+				displayAuctionsWon();
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -187,6 +186,28 @@ public class ServerGUI
 		gbc_lblServer.gridx = 1;
 		gbc_lblServer.gridy = 1;
 		pnlOuter.add(lblServer, gbc_lblServer);
+	}
+
+
+	private void displayAuctionsWon()
+	{
+		for (Item i : auctionList)
+		{
+			if (i.getAuctionStatus() == AuctionStatus.WON || i.getAuctionStatus() == AuctionStatus.CLOSED)
+			{
+				for (User u : userList)
+				{
+					if (!i.getBids().isEmpty())
+					{
+						if (u.getUserId() == i.getBids().peek().getUserId())
+						{
+							System.out.println(u.getFirstName() + " " + u.getSurname() + " " + i.getItemId() + " " + i.getName());
+						}
+					}
+				}
+			}
+		}
+
 	}
 
 
@@ -422,7 +443,7 @@ public class ServerGUI
 		else
 			auctionID = new AtomicLong(0);
 		Item.setCounter(auctionID);
-		
+
 		if (!userList.isEmpty())
 			userID = new AtomicLong(userList.get(auctionList.size() - 1).getUserId());
 		else
