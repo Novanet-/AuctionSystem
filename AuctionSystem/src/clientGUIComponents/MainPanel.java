@@ -113,32 +113,6 @@ public class MainPanel extends JPanel
 		lstAuctionItems.setModel(auctionModel);
 		lstAuctionItems.addListSelectionListener(new AuctionSelectedListener());
 
-		lstAuctionItems.addMouseListener(new MouseAdapter()
-		{
-
-			@Override
-			public void mousePressed(MouseEvent e)
-			{
-				showPopup(popAuctionList, e);
-			}
-
-
-			@Override
-			public void mouseReleased(MouseEvent e)
-			{
-				showPopup(popAuctionList, e);
-			}
-
-
-			private void showPopup(JPopupMenu popAuctionList, MouseEvent e)
-			{
-				if (e.isPopupTrigger())
-				{
-					popAuctionList.show(e.getComponent(), e.getX(), e.getY());
-				}
-			}
-		});
-
 		scrlAuctionList.setViewportView(lstAuctionItems);
 		lstAuctionItems.setVisibleRowCount(20);
 		lstAuctionItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -219,7 +193,11 @@ public class MainPanel extends JPanel
 		pnlFilters.setLayout(gbl_pnlFilters);
 
 		final JButton btnViewAll = new JButton("View All Auctions");
-		btnViewAll.addActionListener(e -> clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, ""))));
+		btnViewAll.addActionListener(e ->
+		{
+			clearAuctionList();
+			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
+		});
 		btngrpFilters.add(btnViewAll);
 		final GridBagConstraints gbc_btnViewAll = new GridBagConstraints();
 		gbc_btnViewAll.fill = GridBagConstraints.HORIZONTAL;
@@ -376,7 +354,7 @@ public class MainPanel extends JPanel
 	}
 
 
-	private final class AuctionSelectedListener implements ListSelectionListener
+	private class AuctionSelectedListener implements ListSelectionListener
 	{
 
 		@Override
@@ -385,7 +363,7 @@ public class MainPanel extends JPanel
 			if (!lstAuctionItems.isSelectionEmpty())
 			{
 				listItemSelected = true;
-				final Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
+				Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
 				txtAuctionDetails.setText("Item: " + selectedAuction.getName());
 				txtAuctionDetails.append("\n" + "Description: " + selectedAuction.getDescription());
 				txtAuctionDetails.append("\n" + "Category: " + selectedAuction.getCategory().toString());

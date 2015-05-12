@@ -44,7 +44,7 @@ public class ClientGUI
 	private ClientThread clientThread;
 	private ClientComms clientComms;
 
-	private ArrayList<Item> auctionCache;
+	ArrayList<Item> auctionCache;
 	private ResizingCardLayout lytCard;
 
 	private LoginPanel pnlLogin;
@@ -171,7 +171,7 @@ public class ClientGUI
 	 *            The item to be added
 	 * @return boolean - isItemAddSuccesful
 	 */
-	public boolean addAuctionToCache(Item item)
+	synchronized public boolean addAuctionToCache(Item item)
 	{
 		return auctionCache.add(item);
 	}
@@ -183,7 +183,7 @@ public class ClientGUI
 	}
 
 
-	public Item getAuctionFromCache(int index)
+	synchronized public Item getAuctionFromCache(int index)
 	{
 		return auctionCache.get(index);
 	}
@@ -217,20 +217,23 @@ public class ClientGUI
 	{
 		changeCard("pnlMain");
 		ScheduledThreadPoolExecutor winCheckerThread = new ScheduledThreadPoolExecutor(1);
-		Runnable checkForWonAuctions = () ->
-		{
-			try
-			{
-				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for won auctions");
-				sendMessage(new Message(MessageType.ITEM_REQUEST, new commLayer.Request(RequestType.ITEMS_WON_BY_USER, String.valueOf(getCurrentUser().getUserId()))));
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-
-		};
-		winCheckerThread.scheduleAtFixedRate(checkForWonAuctions, 5, 10, TimeUnit.SECONDS);
+//		Runnable checkForWonAuctions = () ->
+//		{
+//			try
+//			{
+//				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for won auctions");
+//				sendMessage(new Message(MessageType.ITEM_REQUEST, new commLayer.Request(RequestType.ITEMS_WON_BY_USER, String.valueOf(getCurrentUser().getUserId()))));
+//			}
+//			catch (Exception e)
+//			{
+//				e.printStackTrace();
+//			}
+//
+//		};
+//		winCheckerThread.scheduleAtFixedRate(checkForWonAuctions, 5, 10, TimeUnit.SECONDS);
+		
+		
+		//ON SUCCESFUL LOGIN REQUEST, SEND ALL WON ITEMS TO USER AND CHECK IF THEY MATCH UP TO THE LOGGED IN USER
 	}
 
 
