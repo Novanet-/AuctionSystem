@@ -216,21 +216,21 @@ public class ClientGUI
 	public void loginUser()
 	{
 		changeCard("pnlMain");
-		ScheduledThreadPoolExecutor winCheckerThread = new ScheduledThreadPoolExecutor(1);
-		Runnable checkForWonAuctions = () ->
-		{
-			try
-			{
-				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for won auctions");
-				sendMessage(new Message(MessageType.ITEM_REQUEST, new commLayer.Request(RequestType.ITEMS_WON_BY_USER, String.valueOf(getCurrentUser().getUserId()))));
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-
-		};
-		winCheckerThread.scheduleAtFixedRate(checkForWonAuctions, 5, 10, TimeUnit.SECONDS);
+//		ScheduledThreadPoolExecutor winCheckerThread = new ScheduledThreadPoolExecutor(1);
+//		Runnable checkForWonAuctions = () ->
+//		{
+//			try
+//			{
+//				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for won auctions");
+//				sendMessage(new Message(MessageType.ITEM_REQUEST, new commLayer.Request(RequestType.ITEMS_WON_BY_USER, String.valueOf(getCurrentUser().getUserId()))));
+//			}
+//			catch (Exception e)
+//			{
+//				e.printStackTrace();
+//			}
+//
+//		};
+//		winCheckerThread.scheduleAtFixedRate(checkForWonAuctions, 5, 10, TimeUnit.SECONDS);
 	}
 
 

@@ -57,7 +57,6 @@ public class MainPanel extends JPanel
 
 	private DefaultListModel<String> auctionModel;
 
-	private boolean listItemSelected;
 	private JTextArea txtAuctionDetails;
 
 	private JTextField txtMakeBid;
@@ -80,8 +79,6 @@ public class MainPanel extends JPanel
 	{
 		this.setPreferredSize(new Dimension(550, 450));
 		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-
-		listItemSelected = false;
 
 		final JPanel pnlItemList = new JPanel();
 		this.add(pnlItemList);
@@ -113,31 +110,6 @@ public class MainPanel extends JPanel
 		lstAuctionItems.setModel(auctionModel);
 		lstAuctionItems.addListSelectionListener(new AuctionSelectedListener());
 
-		lstAuctionItems.addMouseListener(new MouseAdapter()
-		{
-
-			@Override
-			public void mousePressed(MouseEvent e)
-			{
-				showPopup(popAuctionList, e);
-			}
-
-
-			@Override
-			public void mouseReleased(MouseEvent e)
-			{
-				showPopup(popAuctionList, e);
-			}
-
-
-			private void showPopup(JPopupMenu popAuctionList, MouseEvent e)
-			{
-				if (e.isPopupTrigger())
-				{
-					popAuctionList.show(e.getComponent(), e.getX(), e.getY());
-				}
-			}
-		});
 
 		scrlAuctionList.setViewportView(lstAuctionItems);
 		lstAuctionItems.setVisibleRowCount(20);
@@ -384,7 +356,6 @@ public class MainPanel extends JPanel
 		{
 			if (!lstAuctionItems.isSelectionEmpty())
 			{
-				listItemSelected = true;
 				final Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
 				txtAuctionDetails.setText("Item: " + selectedAuction.getName());
 				txtAuctionDetails.append("\n" + "Description: " + selectedAuction.getDescription());
