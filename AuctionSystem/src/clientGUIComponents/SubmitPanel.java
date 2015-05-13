@@ -242,6 +242,7 @@ public class SubmitPanel extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				clientGUI.changeCard("pnlMain");
+				clientGUI.pack();
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();

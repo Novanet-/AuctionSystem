@@ -108,6 +108,8 @@ public class ClientComms implements AbstractComms
 			case PROPERTY_RECIEVED:
 				break;
 			case USER_RECIEVED:
+				JOptionPane.showMessageDialog(null, "User has been registered", "Registration Succesful", JOptionPane.INFORMATION_MESSAGE);
+				client.enableLogin();
 				break;
 			case ITEM_REQUEST_RECIEVED:
 				client.clearCache();
@@ -134,6 +136,12 @@ public class ClientComms implements AbstractComms
 			case BID_ON_OWN_ITEM:
 				// Display invalid bid dialog
 				JOptionPane.showMessageDialog(null, "You can't bid on your own item", "Bid Failed", JOptionPane.ERROR_MESSAGE);
+				break;
+			case DATABASE_DOES_NOT_HAVE_USER:
+				client.disableLogin();
+				break;
+			case DATABASE_HAS_USER:
+				client.enableLogin();
 				break;
 			default:
 				break;

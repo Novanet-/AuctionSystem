@@ -399,9 +399,31 @@ public class ServerGUI
 	}
 
 
-	public boolean fetchUsers(RequestType allUsers)
+	public boolean fetchUsers(Request request)
 	{
-		// TODO Auto-generated method stub
+		switch (request.getRequestType())
+		{
+
+		case ALL_USERS:
+			for (User u : userList)
+			{
+				serverComms.sendMessage(new Message(MessageType.USER_DELIVERY, u));
+			}
+			break;
+		case DATABASE_HAS_A_USER:
+			if (!userList.isEmpty())
+			{
+				serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.DATABASE_HAS_USER));
+			}
+			else
+			{
+				serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.DATABASE_DOES_NOT_HAVE_USER));
+
+			}
+			break;
+		default:
+			break;
+		}
 		return false;
 	}
 

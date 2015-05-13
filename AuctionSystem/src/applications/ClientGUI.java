@@ -127,7 +127,7 @@ public class ClientGUI
 		 * in history, set user.counter to this value
 		 */
 
-		frmClient.pack();
+		pack();
 	}
 
 
@@ -140,7 +140,19 @@ public class ClientGUI
 	public void changeCard(String destinationPanel)
 	{
 		lytCard.show(frmClient.getContentPane(), destinationPanel);
+		pack();
+	}
+
+
+	/**
+	 * Packs the gui frame and puts it in the centre of the user's screen
+	 * 
+	 * @see java.awt.Window#pack()
+	 */
+	public void pack()
+	{
 		frmClient.pack();
+		frmClient.setLocationRelativeTo(null);
 	}
 
 
@@ -228,6 +240,16 @@ public class ClientGUI
 		// winCheckerThread.scheduleAtFixedRate(checkForWonAuctions, 5, 10, TimeUnit.SECONDS);
 
 		// ON SUCCESFUL LOGIN REQUEST, SEND ALL WON ITEMS TO USER AND CHECK IF THEY MATCH UP TO THE LOGGED IN USER
+	}
+	
+	public void enableLogin()
+	{
+		pnlLogin.getBtnSubmitLogin().setEnabled(true);
+	}
+	
+	public void disableLogin()
+	{
+		pnlLogin.getBtnSubmitLogin().setEnabled(true);
 	}
 
 

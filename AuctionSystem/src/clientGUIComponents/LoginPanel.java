@@ -1,5 +1,6 @@
 package clientGUIComponents;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,12 +15,15 @@ import javax.swing.JTextField;
 import commLayer.Hasher;
 import commLayer.Message;
 import commLayer.MessageType;
+import commLayer.Request;
+import commLayer.RequestType;
 import entities.User;
 import applications.ClientGUI;
 
 import java.awt.Font;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+
 import javax.swing.JPasswordField;
 
 public class LoginPanel extends JPanel
@@ -32,6 +36,8 @@ public class LoginPanel extends JPanel
 	private JTextField txtFirstname;
 	private JPasswordField txtPassword;
 	private JTextField txtSurname;
+
+	private JButton btnSubmitLogin;
 
 
 	public LoginPanel(ClientGUI clientGUI)
@@ -118,12 +124,12 @@ public class LoginPanel extends JPanel
 		this.add(txtPassword, gbc_txtPassword);
 		txtPassword.setColumns(10);
 
-		JButton btnSubmitLogin = new JButton("Login");
+		btnSubmitLogin = new JButton("Login");
 		btnSubmitLogin.addActionListener(e ->
 		{
 			try
 			{
-				User loginUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getText()), false);
+				User loginUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getPassword()), false);
 				clientGUI.sendMessage(new Message(MessageType.LOGIN_REQUEST, loginUser));
 			}
 			catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)
@@ -146,7 +152,7 @@ public class LoginPanel extends JPanel
 			{
 				try
 				{
-					User newUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getText()), true);
+					User newUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getPassword()), true);
 					clientGUI.sendMessage(new Message(MessageType.USER_DELIVERY, newUser));
 				}
 				catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)
@@ -161,6 +167,17 @@ public class LoginPanel extends JPanel
 		gbc_btnRegisterNewAccount.gridx = 2;
 		gbc_btnRegisterNewAccount.gridy = 8;
 		add(btnRegisterNewAccount, gbc_btnRegisterNewAccount);
+		
+		clientGUI.sendMessage(new Message(MessageType.USER_REQUEST, new Request(RequestType.DATABASE_HAS_A_USER, "")));
 	}
+
+
+	
+	public JButton getBtnSubmitLogin()
+	{
+		return btnSubmitLogin;
+	}
+
+
 
 }

@@ -126,7 +126,11 @@ public class MainPanel extends JPanel
 		lblItemsForAuction.setLabelFor(lstAuctionItems);
 
 		final JButton btnOpenSubmitForm = new JButton("Submit New Auction");
-		btnOpenSubmitForm.addActionListener(arg0 -> clientGUI.changeCard("pnlSubmitItem"));
+		btnOpenSubmitForm.addActionListener(arg0 ->
+		{
+			clientGUI.changeCard("pnlSubmitItem");
+			clientGUI.pack();
+		});
 		final GridBagConstraints gbc_btnOpenSubmitForm = new GridBagConstraints();
 		gbc_btnOpenSubmitForm.anchor = GridBagConstraints.NORTH;
 		gbc_btnOpenSubmitForm.insets = new Insets(0, 5, 20, 5);
@@ -310,6 +314,9 @@ public class MainPanel extends JPanel
 		gbc_cmbFilterBycategory.gridx = 1;
 		gbc_cmbFilterBycategory.gridy = 4;
 		pnlFilters.add(cmbFilterBycategory, gbc_cmbFilterBycategory);
+
+		clearAuctionList();
+		clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
 	}
 
 
@@ -367,7 +374,8 @@ public class MainPanel extends JPanel
 				txtAuctionDetails.append("\n" + "Start Time: " + selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
 				txtAuctionDetails.append("\n" + "End Time: " + selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
 				txtAuctionDetails.append("\n" + "Seller: " + selectedAuction.getUserId());
-				txtAuctionDetails.append("\n" + "Reserve Price: " + selectedAuction.getReservePrice().getValue());
+				txtAuctionDetails.append("\n" + "Reserve Price: " + selectedAuction.getReservePrice().getCurrencyType().getSymbol()
+						+ selectedAuction.getReservePrice().getValue());
 				Money highestBid;
 				if (selectedAuction.getBids().isEmpty())
 				{

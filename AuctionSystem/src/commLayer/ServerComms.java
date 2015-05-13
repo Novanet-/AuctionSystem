@@ -57,6 +57,7 @@ public class ServerComms implements AbstractComms
 	@Override
 	public boolean recieveMessage(Message message)
 	{
+		Request request;
 		System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Server Recieve " + message.getHeader().toString() + " "
 				+ message.getPayload().toString());
 		boolean recieveSuccessful = false;
@@ -69,7 +70,7 @@ public class ServerComms implements AbstractComms
 			break;
 		case ITEM_REQUEST:
 			sendMessage(new Message(MessageType.NOTIFICATION, Notification.ITEM_REQUEST_RECIEVED));
-			Request request = (Request) message.getPayload();
+			request = (Request) message.getPayload();
 			switch (request.getRequestType())
 			{
 			case ALL_OPEN_ITEMS:
@@ -116,11 +117,18 @@ public class ServerComms implements AbstractComms
 			}
 			break;
 		case USER_REQUEST:
-			// Filter userList to specified item
-			// Send specified item
-			if (message.getPayload() == RequestType.ALL_USERS)
+			request = (Request) message.getPayload();
+			switch (request.getRequestType())
 			{
-				recieveSuccessful = server.fetchUsers(RequestType.ALL_USERS);
+			case ALL_USERS:
+				recieveSuccessful = server.fetchUsers(request);
+				break;
+			case DATABASE_HAS_A_USER:
+				recieveSuccessful = server.fetchUsers(request);
+				break;
+			default:
+				break;
+
 			}
 			break;
 		case PROPERTY_DELIVERY:
