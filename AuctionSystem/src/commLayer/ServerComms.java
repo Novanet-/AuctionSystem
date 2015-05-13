@@ -140,7 +140,10 @@ public class ServerComms implements AbstractComms
 		case LOGIN_REQUEST:
 			User requestedUser = server.validateLoginRequest((User) message.getPayload());
 			if (requestedUser != null)
+			{
 				sendMessage(new Message(MessageType.USER_DELIVERY, requestedUser));
+				server.fetchAuctions(new Request(RequestType.ITEMS_WON_BY_USER, String.valueOf(requestedUser.getUserId())));
+			}
 			break;
 		case WIN_RECIEVED:
 			server.closeAuction((Item) message.getPayload());

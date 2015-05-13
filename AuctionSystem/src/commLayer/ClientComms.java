@@ -117,24 +117,19 @@ public class ClientComms implements AbstractComms
 			case USER_REQUEST_RECIEVED:
 				break;
 			case USER_NOT_FOUND:
-				// Display user not found dialog
 				JOptionPane.showMessageDialog(null, "User Invalid", "User Not Found", JOptionPane.ERROR_MESSAGE);
 				break;
 			case PASSWORD_CORRECT:
-				// Display login successful dialog
 				JOptionPane.showMessageDialog(null, "Password correct", "Login Succesful", JOptionPane.INFORMATION_MESSAGE);
 				client.loginUser();
 				break;
 			case PASSWORD_INCORRECT:
-				// Display password incorrect dialog
 				JOptionPane.showMessageDialog(null, "Password incorrect", "Login Failed", JOptionPane.ERROR_MESSAGE);
 				break;
 			case BID_LOWER_THAN_CURRENT:
-				// Display invalid bid dialog
 				JOptionPane.showMessageDialog(null, "Requested bid amount lower than current highest bid on item", "Bid Failed", JOptionPane.ERROR_MESSAGE);
 				break;
 			case BID_ON_OWN_ITEM:
-				// Display invalid bid dialog
 				JOptionPane.showMessageDialog(null, "You can't bid on your own item", "Bid Failed", JOptionPane.ERROR_MESSAGE);
 				break;
 			case DATABASE_DOES_NOT_HAVE_USER:
@@ -149,18 +144,20 @@ public class ClientComms implements AbstractComms
 			break;
 		case AUCTION_FINISHED:
 			Item finishedAuction = (Item) message.getPayload();
-			// Display auction finished dialog
 			if (client.getCurrentUser() != null)
 			{
 				if (finishedAuction.getUserId() == client.getCurrentUser().getUserId())
 				{
-					// Display finished dialog
+					JOptionPane.showMessageDialog(null, generateClosedAuctionMessage(finishedAuction).toString(), "Auction Ended", JOptionPane.INFORMATION_MESSAGE);
 				}
-				if (!finishedAuction.getBids().empty())
+				if (finishedAuction.getAuctionStatus() == AuctionStatus.WON)
 				{
-					if (finishedAuction.getBids().peek().getUserId() == client.getCurrentUser().getUserId())
-						sendMessage(new Message(MessageType.WIN_RECIEVED, finishedAuction));
-					// Display won dialog
+					if (!finishedAuction.getBids().empty())
+					{
+						if (finishedAuction.getBids().peek().getUserId() == client.getCurrentUser().getUserId())
+							sendMessage(new Message(MessageType.WIN_RECIEVED, finishedAuction));
+						JOptionPane.showMessageDialog(null, "Your have won the auction for " + finishedAuction.getName(), "Auction Won", JOptionPane.INFORMATION_MESSAGE);
+					}
 				}
 			}
 			break;
@@ -168,5 +165,31 @@ public class ClientComms implements AbstractComms
 			break;
 		}
 		return recieveSuccesful;
+	}
+
+
+	/**
+	 * Looks at various properties of the finished auction to determine why it doesn't have a winner, and generates a
+	 * message with the result to be displayed to the seller of the item
+	 * 
+	 * @param finishedAuction
+	 * @return
+	 */
+	private StringBuilder generateClosedAuctionMessage(Item finishedAuction)
+	{
+		StringBuilder closeMessage = new StringBuilder();
+		closeMessage.append("Your auction for " + finishedAuction.getName() + " has ended");
+		if (finishedAuction.getAuctionStatus() == AuctionStatus.CLOSED)
+		{
+			if (finishedAuction.getBids().isEmpty())
+			{
+				closeMessage.append(" with no bidders");
+			}
+			else if (finishedAuction.getBids().peek().getAmount().getValue() < finishedAuction.getReservePrice().getValue())
+			{
+				closeMessage.append(" with no bids above your reserve price");
+			}
+		}
+		return closeMessage;
 	}
 }

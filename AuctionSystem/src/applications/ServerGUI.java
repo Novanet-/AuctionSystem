@@ -130,11 +130,7 @@ public class ServerGUI
 				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for finished auctions");
 				for (Item i : auctionList)
 				{
-					if ((i.getAuctionStatus() == entities.AuctionStatus.OPEN) && (!isAuctionOpen(i)))
-					{
-						i.setAuctionStatus(AuctionStatus.WON);
-						serverComms.sendMessage(new Message(MessageType.AUCTION_FINISHED, i));
-					}
+					checkAuctionStatus(i);
 				}
 			}
 			catch (Exception e)
@@ -186,6 +182,35 @@ public class ServerGUI
 	}
 
 
+	private void checkAuctionStatus(Item i)
+	{
+		if ((i.getAuctionStatus() == entities.AuctionStatus.OPEN) && (!isAuctionOpen(i)))
+		{
+			if (!i.getBids().isEmpty())
+			{
+				if (i.getBids().peek().getAmount().getValue() > i.getReservePrice().getValue())
+				{
+					i.setAuctionStatus(AuctionStatus.WON);
+					serverComms.sendMessage(new Message(MessageType.AUCTION_FINISHED, i));
+					saveAuctionList();
+				}
+				else
+				{
+					i.setAuctionStatus(AuctionStatus.CLOSED);
+					serverComms.sendMessage(new Message(MessageType.AUCTION_FINISHED, i));
+					saveAuctionList();
+				}
+			}
+			else
+			{
+				i.setAuctionStatus(AuctionStatus.CLOSED);
+				serverComms.sendMessage(new Message(MessageType.AUCTION_FINISHED, i));
+				saveAuctionList();
+			}
+		}
+	}
+
+
 	private void displayAuctionsWon()
 	{
 		for (Item i : auctionList)
@@ -199,7 +224,7 @@ public class ServerGUI
 
 						if (u.getUserId() == i.getBids().peek().getUserId())
 						{
-							System.out.println(u.getFirstName() + " " + u.getSurname() + " " + i.getItemId() + " " + i.getName());
+							System.out.println("Winner: " + u.getFirstName() + " " + u.getSurname() + "    Won Item: ID- " + i.getItemId() + " Name- " + i.getName());
 						}
 
 					}
@@ -223,12 +248,7 @@ public class ServerGUI
 		boolean addSuccessful = auctionList.add(item);
 		if (addSuccessful)
 		{
-			Runnable ioTask = () ->
-			{
-				DataPersistence.writeListToFile(auctionList, EntityType.ITEM);
-			};
-
-			ioThreadPool.submit(ioTask);
+			saveAuctionList();
 		}
 		return addSuccessful;
 	}
@@ -247,12 +267,7 @@ public class ServerGUI
 		boolean addSuccessful = userList.add(user);
 		if (addSuccessful)
 		{
-			Runnable ioTask = () ->
-			{
-				DataPersistence.writeListToFile(userList, EntityType.USER);
-			};
-
-			ioThreadPool.submit(ioTask);
+			saveUserList();
 		}
 		return addSuccessful;
 	}
@@ -264,12 +279,7 @@ public class ServerGUI
 		boolean addSuccessful = (auction.getBids().peek() == bid);
 		if (addSuccessful)
 		{
-			Runnable ioTask = () ->
-			{
-				DataPersistence.writeListToFile(auctionList, EntityType.ITEM);
-			};
-
-			ioThreadPool.submit(ioTask);
+			saveAuctionList();
 		}
 		return addSuccessful;
 	}
@@ -369,6 +379,7 @@ public class ServerGUI
 					}
 				}
 			}
+			break;
 		}
 		case ITEMS_WON_BY_USER:
 			for (Item auction : auctionList)
@@ -434,6 +445,7 @@ public class ServerGUI
 		{
 			if (auction.getItemId() == payload.getItemID())
 			{
+
 				if (auction.getUserId() != payload.getUserId())
 				{
 					if (!auction.getBids().isEmpty())
@@ -461,6 +473,7 @@ public class ServerGUI
 					serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.BID_ON_OWN_ITEM));
 					break;
 				}
+
 			}
 		}
 		return false;
@@ -521,6 +534,45 @@ public class ServerGUI
 
 	public void closeAuction(Item auction)
 	{
-		auction.setAuctionStatus(AuctionStatus.CLOSED);
+		Item selectedAuction = null;
+		for (Item i: auctionList)
+		{
+
+			if (i.getItemId() == auction.getItemId())
+			{
+				selectedAuction = i;
+				break;
+			}
+		}
+		selectedAuction.setAuctionStatus(AuctionStatus.CLOSED);
+		saveAuctionList();
+	}
+
+
+	/**
+	 * Saves the auction list to file using a thread pool
+	 */
+	private void saveAuctionList()
+	{
+		Runnable ioTask = () ->
+		{
+			DataPersistence.writeListToFile(auctionList, EntityType.ITEM);
+		};
+
+		ioThreadPool.submit(ioTask);
+	}
+
+
+	/**
+	 * Saves the user list to file using a thread pool
+	 */
+	private void saveUserList()
+	{
+		Runnable ioTask = () ->
+		{
+			DataPersistence.writeListToFile(userList, EntityType.USER);
+		};
+
+		ioThreadPool.submit(ioTask);
 	}
 }
