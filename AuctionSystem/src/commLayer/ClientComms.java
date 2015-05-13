@@ -9,6 +9,7 @@ import entities.AuctionStatus;
 import entities.Bid;
 import entities.Item;
 import entities.User;
+import javax.swing.JOptionPane;
 
 /**
  * Created using Java 8
@@ -102,6 +103,7 @@ public class ClientComms implements AbstractComms
 				break;
 			case BID_RECIEVED:
 				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Bid " + message.getPayload().toString() + " Recieved by server");
+				JOptionPane.showMessageDialog(null, "Bid has been placed", "Bid Succesful", JOptionPane.INFORMATION_MESSAGE);
 				break;
 			case PROPERTY_RECIEVED:
 				break;
@@ -114,13 +116,24 @@ public class ClientComms implements AbstractComms
 				break;
 			case USER_NOT_FOUND:
 				// Display user not found dialog
+				JOptionPane.showMessageDialog(null, "User Invalid", "User Not Found", JOptionPane.ERROR_MESSAGE);
 				break;
 			case PASSWORD_CORRECT:
 				// Display login successful dialog
+				JOptionPane.showMessageDialog(null, "Password correct", "Login Succesful", JOptionPane.INFORMATION_MESSAGE);
 				client.loginUser();
 				break;
 			case PASSWORD_INCORRECT:
 				// Display password incorrect dialog
+				JOptionPane.showMessageDialog(null, "Password incorrect", "Login Failed", JOptionPane.ERROR_MESSAGE);
+				break;
+			case BID_LOWER_THAN_CURRENT:
+				// Display invalid bid dialog
+				JOptionPane.showMessageDialog(null, "Requested bid amount lower than current highest bid on item", "Bid Failed", JOptionPane.ERROR_MESSAGE);
+				break;
+			case BID_ON_OWN_ITEM:
+				// Display invalid bid dialog
+				JOptionPane.showMessageDialog(null, "You can't bid on your own item", "Bid Failed", JOptionPane.ERROR_MESSAGE);
 				break;
 			default:
 				break;

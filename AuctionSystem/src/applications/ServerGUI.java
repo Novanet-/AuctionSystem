@@ -166,10 +166,7 @@ public class ServerGUI
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.addActionListener(e ->
 		{
-			for (Item i : auctionList)
-			{
-				displayAuctionsWon();
-			}
+			displayAuctionsWon();
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
@@ -195,14 +192,16 @@ public class ServerGUI
 		{
 			if (i.getAuctionStatus() == AuctionStatus.WON || i.getAuctionStatus() == AuctionStatus.CLOSED)
 			{
-				for (User u : userList)
+				if (!i.getBids().isEmpty())
 				{
-					if (!i.getBids().isEmpty())
+					for (User u : userList)
 					{
+
 						if (u.getUserId() == i.getBids().peek().getUserId())
 						{
 							System.out.println(u.getFirstName() + " " + u.getSurname() + " " + i.getItemId() + " " + i.getName());
 						}
+
 					}
 				}
 			}
@@ -413,15 +412,32 @@ public class ServerGUI
 		{
 			if (auction.getItemId() == payload.getItemID())
 			{
-				if (auction.getBids().isEmpty())
+				if (auction.getUserId() != payload.getUserId())
 				{
-					auction.getBids().push(payload);
-					return true;
+					if (!auction.getBids().isEmpty())
+					{
+						if (auction.getBids().peek().getAmount().getValue() < payload.getAmount().getValue())
+						{
+							addBidToSystem(payload, auction);
+							return true;
+						}
+						else
+						{
+							serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.BID_LOWER_THAN_CURRENT));
+							break;
+						}
+					}
+					else
+					{
+						addBidToSystem(payload, auction);
+						return true;
+					}
+
 				}
-				else if (payload.getAmount().getValue() > auction.getBids().peek().getAmount().getValue())
+				else
 				{
-					auction.getBids().push(payload);
-					return true;
+					serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.BID_ON_OWN_ITEM));
+					break;
 				}
 			}
 		}

@@ -18,6 +18,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -27,10 +28,8 @@ import javax.swing.UIManager;
 import utilities.Category;
 import utilities.Money;
 import applications.ClientGUI;
-
 import commLayer.Message;
 import commLayer.MessageType;
-
 import entities.Item;
 
 public class SubmitPanel extends JPanel
@@ -268,6 +267,7 @@ public class SubmitPanel extends JPanel
 		public void actionPerformed(ActionEvent e)
 		{
 			boolean submitSuccesfull = submitAuction();
+			JOptionPane.showMessageDialog(null, "Your auction has been submitted", "Auction Submitted", JOptionPane.INFORMATION_MESSAGE);
 		}
 
 
