@@ -22,18 +22,18 @@ public class Encryptor
 	private static SecretKey	key64;
 	private static Cipher		cipher;
 
-
-	public Encryptor()
-	{
-		// TODO Auto-generated constructor stub
-	}
-
-
-	private void generateKey() throws NoSuchAlgorithmException, NoSuchPaddingException
+	static
 	{
 		key64 = new SecretKeySpec(new byte[]
 		{ 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 }, "Blowfish");
-		cipher = Cipher.getInstance("Blowfish");
+		try
+		{
+			cipher = Cipher.getInstance("Blowfish");
+		}
+		catch (NoSuchAlgorithmException | NoSuchPaddingException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 
