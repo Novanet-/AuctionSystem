@@ -216,7 +216,7 @@ public class MainPanel extends JPanel
 			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_SOLD_ITEMS, "")));
 		});
 
-		JButton btnViewOwnAuction = new JButton("btnViewOwnAuction");
+		JButton btnViewOwnAuction = new JButton("View Own Auctions");
 		btnViewOwnAuction.addActionListener(e ->
 		{
 			clearAuctionList();
@@ -242,7 +242,7 @@ public class MainPanel extends JPanel
 			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ITEM_BY_ID, txtFilterByID.getText())));
 		});
 
-		JButton btnViewOwnBids = new JButton("btnViewOwnBids");
+		JButton btnViewOwnBids = new JButton("View Own Bids");
 		btnViewOwnBids.addActionListener(e ->
 		{
 			clearAuctionList();
@@ -319,7 +319,7 @@ public class MainPanel extends JPanel
 
 		clearAuctionList();
 		clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
-		
+
 		addComponentListener(new ComponentAdapter()
 		{
 

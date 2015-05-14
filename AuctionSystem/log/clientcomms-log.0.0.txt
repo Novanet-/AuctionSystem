@@ -1,0 +1,10 @@
+May 14, 2015 2:03:14 PM commLayer.ClientComms sendMessage
+INFO: Send USER_REQUEST commLayer.Request@283ef71b 
+May 14, 2015 2:03:14 PM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION DATABASE_HAS_USER 
+May 14, 2015 2:03:14 PM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@68731173 
+May 14, 2015 2:03:14 PM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 14, 2015 2:03:14 PM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5838bc92 

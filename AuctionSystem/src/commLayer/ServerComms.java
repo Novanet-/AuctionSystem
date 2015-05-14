@@ -1,7 +1,17 @@
 package commLayer;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.FileAttribute;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import applications.ServerGUI;
 import entities.Item;
@@ -13,6 +23,9 @@ public class ServerComms implements AbstractComms
 
 	ServerGUI		server;
 	ServerThread	serverThread;
+
+	Logger			logger;
+	String			logMessage;
 
 
 	/**
@@ -29,6 +42,29 @@ public class ServerComms implements AbstractComms
 		this.server = server;
 		this.serverThread = serverThread;
 		initSocket();
+		try
+		{
+			createLogger();
+		}
+		catch (SecurityException | IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+
+	public void createLogger() throws SecurityException, IOException
+	{
+		logger = Logger.getLogger(ServerComms.class.getName());
+		logMessage = "{0} {1} {2} ";
+		Path serverLogPath = Paths.get("log/");
+		if (!Files.exists(serverLogPath))
+		{
+			Files.createDirectory(serverLogPath);
+		}
+		FileHandler fh = new FileHandler(System.getProperty("user.dir") + "/log/servercomms-log.%u.%g.txt", 1024 * 1024, 10, true);
+		fh.setFormatter(new SimpleFormatter());
+		logger.addHandler(fh);
 	}
 
 
@@ -53,8 +89,8 @@ public class ServerComms implements AbstractComms
 	@Override
 	public boolean sendMessage(Message message)
 	{
-		System.out
-				.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Server Send " + message.getHeader().toString() + " " + message.getPayload().toString());
+		logger.log(Level.INFO, logMessage, new Object[]
+		{ "Send", message.getHeader().toString(), message.getPayload().toString() });
 		return serverThread.sendToOutputStream(message);
 	}
 
@@ -68,8 +104,8 @@ public class ServerComms implements AbstractComms
 	public boolean recieveMessage(Message message)
 	{
 		Request request;
-		System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Server Recieve " + message.getHeader().toString() + " "
-				+ message.getPayload().toString());
+		logger.log(Level.INFO, logMessage, new Object[]
+		{ "Recieve", message.getHeader().toString(), message.getPayload().toString() });
 		boolean recieveSuccessful = false;
 		switch (message.getHeader())
 		{

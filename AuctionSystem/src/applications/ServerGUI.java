@@ -6,6 +6,10 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
@@ -19,6 +23,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -58,6 +66,9 @@ public class ServerGUI
 	private ServerThread	serverThread;
 	private ServerComms		serverComms;
 	private ExecutorService	ioThreadPool;
+
+	Logger					logger;
+	String					logMessage;
 
 
 	/**
@@ -127,7 +138,8 @@ public class ServerGUI
 		{
 			try
 			{
-				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for finished auctions");
+				//System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for finished auctions");
+				logger.log(Level.INFO, logMessage);
 				for (Item i : auctionList)
 				{
 					checkIfAuctionClosed(i);
@@ -172,11 +184,36 @@ public class ServerGUI
 		gbc_btnWinnerReport.gridx = 1;
 		gbc_btnWinnerReport.gridy = 1;
 		pnlOuter.add(btnWinnerReport, gbc_btnWinnerReport);
-		
+
 		frmServer.getRootPane().setDefaultButton(btnWinnerReport);
 		btnWinnerReport.requestFocusInWindow();
 		
+		try
+		{
+			createLogger();
+		}
+		catch (SecurityException | IOException e1)
+		{
+			e1.printStackTrace();
+		}
+
 		pack();
+	}
+
+
+	public void createLogger() throws SecurityException, IOException
+	{
+		logger = Logger.getLogger(ServerGUI.class.getName());
+		logMessage = "Polling for Finished Auctions";
+		//logger.addHandler(new ConsoleHandler());
+		Path serverLogPath = Paths.get("log/");
+		if (!Files.exists(serverLogPath))
+		{
+			Files.createDirectory(serverLogPath);
+		}
+		FileHandler fh = new FileHandler(System.getProperty("user.dir") + "/log/server-log.%u.%g.txt", 1024 * 1024, 10, true);
+		fh.setFormatter(new SimpleFormatter());
+		logger.addHandler(fh);
 	}
 
 
@@ -359,14 +396,20 @@ public class ServerGUI
 				}
 				break;
 			case ITEM_BY_SELLER:
-				for (Item auction : auctionList)
+				User requestedUser = findUserByFullName(request.getRequestParameter());
+				if (requestedUser == null)
+					return false;
+				else
 				{
-					openAuctionFound = isAuctionOpen(auction);
-					if (openAuctionFound)
+					for (Item auction : auctionList)
 					{
-						if (auction.getUserId() == Long.valueOf(request.getRequestParameter()).longValue())
+						openAuctionFound = isAuctionOpen(auction);
+						if (openAuctionFound)
 						{
-							serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+							if (auction.getUserId() == requestedUser.getUserId())
+							{
+								serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+							}
 						}
 					}
 				}
@@ -466,6 +509,18 @@ public class ServerGUI
 				break;
 		}
 		return false;
+	}
+
+
+	public User findUserByFullName(String fullName)
+	{
+		for (User u : userList)
+		{
+			String concatName = u.getFirstName() + " " + u.getSurname();
+			if (concatName.equals(fullName))
+				return u;
+		}
+		return null;
 	}
 
 

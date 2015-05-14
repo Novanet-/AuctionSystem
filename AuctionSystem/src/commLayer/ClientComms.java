@@ -1,14 +1,23 @@
 package commLayer;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import applications.ClientGUI;
 import entities.AuctionStatus;
 import entities.Bid;
 import entities.Item;
 import entities.User;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +29,9 @@ public class ClientComms implements AbstractComms
 
 	ClientGUI		client;
 	ClientThread	clientThread;
+
+	Logger			logger;
+	String			logMessage;
 
 
 	/**
@@ -48,6 +60,29 @@ public class ClientComms implements AbstractComms
 	{
 		clientThread = new ClientThread(this);
 		clientThread.start();
+		try
+		{
+			createLogger();
+		}
+		catch (SecurityException | IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+
+	public void createLogger() throws SecurityException, IOException
+	{
+		logger = Logger.getLogger(ServerComms.class.getName());
+		logMessage = "{0} {1} {2} ";
+		Path serverLogPath = Paths.get("log/");
+		if (!Files.exists(serverLogPath))
+		{
+			Files.createDirectory(serverLogPath);
+		}
+		FileHandler fh = new FileHandler(System.getProperty("user.dir") + "/log/clientcomms-log.%u.%g.txt", 1024 * 1024, 10, true);
+		fh.setFormatter(new SimpleFormatter());
+		logger.addHandler(fh);
 	}
 
 
@@ -59,8 +94,8 @@ public class ClientComms implements AbstractComms
 	@Override
 	public boolean sendMessage(Message message)
 	{
-		System.out
-				.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Client Send " + message.getHeader().toString() + " " + message.getPayload().toString());
+		logger.log(Level.INFO, logMessage, new Object[]
+		{ "Send", message.getHeader().toString(), message.getPayload().toString() });
 		return clientThread.sendToOutputStream(message);
 	}
 
@@ -74,8 +109,8 @@ public class ClientComms implements AbstractComms
 	public boolean recieveMessage(Message message)
 	{
 		boolean recieveSuccesful = false;
-		System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Client Recieve " + message.getHeader().toString() + "  "
-				+ message.getPayload().toString());
+		logger.log(Level.INFO, logMessage, new Object[]
+		{ "Recieve", message.getHeader().toString(), message.getPayload().toString() });
 		switch (message.getHeader())
 		{
 			case ITEM_DELIVERY:
