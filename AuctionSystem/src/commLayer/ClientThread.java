@@ -5,8 +5,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  * Created using Java 8
@@ -17,7 +23,7 @@ public class ClientThread extends Thread
 
 	Socket				clientSocket;
 	ObjectOutputStream	out;
-	ObjectInputStream	in, userIn;
+	ObjectInputStream	in;
 	AbstractComms		comms;
 
 
@@ -74,8 +80,16 @@ public class ClientThread extends Thread
 		Message input;
 		while (true)
 		{
-			if ((input = (Message) in.readObject()) != null)
-				comms.recieveMessage(input);
+			try
+			{
+				if ((input = Encryptor.readFromEncryptedStream(clientSocket.getInputStream())) != null)
+					comms.recieveMessage(input);
+			}
+			catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -91,10 +105,11 @@ public class ClientThread extends Thread
 	{
 		try
 		{
-			out.writeObject(message);
+			//			out.writeObject(message);
+			Encryptor.writeToEncryptedStream(clientSocket.getOutputStream(), message);
 			return true;
 		}
-		catch (IOException e)
+		catch (IOException | InvalidKeyException | IllegalBlockSizeException e)
 		{
 			e.printStackTrace();
 			return false;

@@ -1,8 +1,10 @@
 package commLayer;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -19,54 +21,40 @@ import javax.crypto.spec.SecretKeySpec;
 public class Encryptor
 {
 
-	private static SecretKey	key64;
-	private static Cipher		cipher;
+	private static final SecretKey	key64	= new SecretKeySpec(new byte[]
+											{ 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 }, "Blowfish");	;
+	private static Cipher		cipher = Encryptor.initCipher();;
 
-	static
+
+	public static void writeToEncryptedStream(OutputStream plainOutStream, Message message) throws IOException, InvalidKeyException, IllegalBlockSizeException
 	{
-		key64 = new SecretKeySpec(new byte[]
-		{ 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 }, "Blowfish");
-		try
-		{
-			cipher = Cipher.getInstance("Blowfish");
-		}
-		catch (NoSuchAlgorithmException | NoSuchPaddingException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
-
-	public static void writeToEncryptedStream(ObjectOutputStream plainOutStream, Message message) throws IOException, InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchPaddingException, IllegalBlockSizeException
-	{
+		cipher.init(Cipher.ENCRYPT_MODE, key64);
 		CipherOutputStream cipherOutputStream = new CipherOutputStream(plainOutStream, cipher);
-		plainOutStream = new ObjectOutputStream(cipherOutputStream);
-		plainOutStream.writeObject(sealMessage(message));
-		plainOutStream.close();
-		plainOutStream.flush();
+		ObjectOutputStream objOutStream = new ObjectOutputStream(cipherOutputStream);
+		objOutStream.writeObject(sealMessage(message));
+		objOutStream.close();
+		objOutStream.flush();
 		cipherOutputStream.flush();
 		cipherOutputStream.close();
 	}
 
 
-	public static Message readFromEncryptedStream(ObjectInputStream plainInStream) throws IOException, ClassNotFoundException, InvalidKeyException, IllegalBlockSizeException,
+	public static Message readFromEncryptedStream(InputStream plainInStream) throws IOException, ClassNotFoundException, InvalidKeyException, IllegalBlockSizeException,
 			BadPaddingException
 	{
 		cipher.init(Cipher.DECRYPT_MODE, key64);
 		CipherInputStream cipherInputStream = new CipherInputStream(plainInStream, cipher);
-		plainInStream = new ObjectInputStream(cipherInputStream);
-		SealedObject sealedObject = (SealedObject) plainInStream.readObject();
-		plainInStream.close();
+		ObjectInputStream objInStream = new ObjectInputStream(cipherInputStream);
+		SealedObject sealedObject = (SealedObject) objInStream.readObject();
+		objInStream.close();
 		cipherInputStream.close();
 		return unsealMessage(sealedObject);
 	}
 
 
-	private static SealedObject sealMessage(Message message) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException,
+	private static SealedObject sealMessage(Message message) throws IllegalBlockSizeException,
 			IOException
 	{
-		cipher.init(Cipher.ENCRYPT_MODE, key64);
 		SealedObject sealedObject = new SealedObject(message, cipher);
 		return sealedObject;
 	}
@@ -76,6 +64,20 @@ public class Encryptor
 	{
 		Message plainMessage = (Message) message.getObject(cipher);
 		return plainMessage;
+	}
+
+
+	private static Cipher initCipher()
+	{
+		try
+		{
+			return Cipher.getInstance("Blowfish");
+		}
+		catch (NoSuchAlgorithmException | NoSuchPaddingException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	//	@Test

@@ -5,8 +5,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  * Created using Java 8
@@ -75,12 +81,12 @@ public class ServerThread extends Thread
 		{
 			try
 			{
-				if ((inputMessage = (Message) in.readObject()) != null)
+				if ((inputMessage = Encryptor.readFromEncryptedStream(clientSocket.getInputStream())) != null)
 				{
 					comms.recieveMessage(inputMessage);
 				}
 			}
-			catch (ClassNotFoundException e)
+			catch (ClassNotFoundException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e)
 			{
 				e.printStackTrace();
 			}
@@ -99,10 +105,11 @@ public class ServerThread extends Thread
 	{
 		try
 		{
-			out.writeObject(message);
+//			out.writeObject(message);
+			Encryptor.writeToEncryptedStream(clientSocket.getOutputStream(), message);
 			return true;
 		}
-		catch (IOException e)
+		catch (IOException | InvalidKeyException | IllegalBlockSizeException e)
 		{
 			e.printStackTrace();
 			return false;
