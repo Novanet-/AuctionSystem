@@ -4,19 +4,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.attribute.FileAttribute;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import applications.ServerGUI;
+import entities.Bid;
 import entities.Item;
 import entities.User;
-import entities.Bid;
 
 public class ServerComms implements AbstractComms
 {

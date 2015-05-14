@@ -1,32 +1,31 @@
 package clientGUIComponents;
 
-import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import applications.ClientGUI;
 
 import commLayer.Hasher;
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.Request;
 import commLayer.RequestType;
+
 import entities.User;
-import applications.ClientGUI;
-
-import java.awt.Font;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-
-import javax.swing.JPasswordField;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class LoginPanel extends JPanel
 {

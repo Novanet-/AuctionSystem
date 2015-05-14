@@ -30,8 +30,10 @@ import javax.swing.UIManager;
 import utilities.Category;
 import utilities.Money;
 import applications.ClientGUI;
+
 import commLayer.Message;
 import commLayer.MessageType;
+
 import entities.Item;
 
 public class SubmitPanel extends JPanel

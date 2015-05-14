@@ -6,19 +6,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+
+import javax.swing.JOptionPane;
 
 import applications.ClientGUI;
 import entities.AuctionStatus;
 import entities.Bid;
 import entities.Item;
 import entities.User;
-
-import javax.swing.JOptionPane;
 
 /**
  * Created using Java 8

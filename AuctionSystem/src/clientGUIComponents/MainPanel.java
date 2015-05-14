@@ -8,8 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -38,10 +36,12 @@ import javax.swing.event.ListSelectionListener;
 import utilities.Category;
 import utilities.Money;
 import applications.ClientGUI;
+
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.Request;
 import commLayer.RequestType;
+
 import entities.Bid;
 import entities.Item;
 

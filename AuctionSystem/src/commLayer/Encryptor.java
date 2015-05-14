@@ -1,6 +1,5 @@
 package commLayer;
 
-import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -12,7 +11,6 @@ import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
 import javax.crypto.SecretKey;
@@ -21,8 +19,8 @@ import javax.crypto.spec.SecretKeySpec;
 public class Encryptor
 {
 
-	SecretKey	key64;
-	Cipher		cipher;
+	private static SecretKey	key64;
+	private static Cipher		cipher;
 
 
 	public Encryptor()
@@ -39,40 +37,45 @@ public class Encryptor
 	}
 
 
-	private SealedObject sealMessage(Message message) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, IOException
-	{
-		cipher.init(Cipher.ENCRYPT_MODE, key64);
-		SealedObject sealedObject = new SealedObject(message, cipher);
-		return sealedObject;
-	}
-	
-	private Message unsealMessage(SealedObject message) throws ClassNotFoundException, IllegalBlockSizeException, BadPaddingException, IOException
-	{
-		Message plainMessage = (Message) message.getObject( cipher );
-		return plainMessage;
-	}
-
-
-	public void writeToEncryptedStream(ObjectOutputStream plainOutStream, SealedObject message) throws IOException
+	public static void writeToEncryptedStream(ObjectOutputStream plainOutStream, Message message) throws IOException, InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException, IllegalBlockSizeException
 	{
 		CipherOutputStream cipherOutputStream = new CipherOutputStream(plainOutStream, cipher);
 		plainOutStream = new ObjectOutputStream(cipherOutputStream);
-		plainOutStream.writeObject( message );
+		plainOutStream.writeObject(sealMessage(message));
 		plainOutStream.close();
 		plainOutStream.flush();
 		cipherOutputStream.flush();
 		cipherOutputStream.close();
 	}
-	
-	public SealedObject readFromEncryptedStream(ObjectInputStream plainInStream) throws IOException, ClassNotFoundException, InvalidKeyException
+
+
+	public static Message readFromEncryptedStream(ObjectInputStream plainInStream) throws IOException, ClassNotFoundException, InvalidKeyException, IllegalBlockSizeException,
+			BadPaddingException
 	{
-		cipher.init( Cipher.DECRYPT_MODE, key64 );
-		CipherInputStream cipherInputStream = new CipherInputStream(plainInStream, cipher );
+		cipher.init(Cipher.DECRYPT_MODE, key64);
+		CipherInputStream cipherInputStream = new CipherInputStream(plainInStream, cipher);
 		plainInStream = new ObjectInputStream(cipherInputStream);
 		SealedObject sealedObject = (SealedObject) plainInStream.readObject();
 		plainInStream.close();
 		cipherInputStream.close();
+		return unsealMessage(sealedObject);
+	}
+
+
+	private static SealedObject sealMessage(Message message) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException,
+			IOException
+	{
+		cipher.init(Cipher.ENCRYPT_MODE, key64);
+		SealedObject sealedObject = new SealedObject(message, cipher);
 		return sealedObject;
+	}
+
+
+	private static Message unsealMessage(SealedObject message) throws ClassNotFoundException, IllegalBlockSizeException, BadPaddingException, IOException
+	{
+		Message plainMessage = (Message) message.getObject(cipher);
+		return plainMessage;
 	}
 
 	//	@Test

@@ -11,12 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Currency;
 import java.util.Stack;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,22 +26,20 @@ import java.util.logging.SimpleFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import persistenceLayer.DataPersistence;
 import persistenceLayer.EntityType;
-import utilities.Category;
-import utilities.Money;
+
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.Notification;
 import commLayer.Request;
-import commLayer.RequestType;
 import commLayer.ServerComms;
 import commLayer.ServerThread;
+
 import entities.AuctionStatus;
 import entities.Bid;
 import entities.Item;

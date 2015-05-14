@@ -11,23 +11,24 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import clientGUIComponents.LoginPanel;
 import clientGUIComponents.MainPanel;
 import clientGUIComponents.SubmitPanel;
+
 import commLayer.ClientComms;
 import commLayer.ClientThread;
 import commLayer.Message;
 import commLayer.RequestType;
+
 import entities.Bid;
 import entities.Item;
 import entities.User;
-
-import javax.swing.JMenuItem;
-import javax.swing.JMenu;
 
 /**
  * Created using Java 8
