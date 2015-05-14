@@ -50,7 +50,7 @@ import entities.User;
 public class ServerGUI
 {
 
-	private JFrame			frame;
+	private JFrame			frmServer;
 
 	private ArrayList<Item>	auctionList;
 	private ArrayList<User>	userList;
@@ -74,7 +74,7 @@ public class ServerGUI
 				try
 				{
 					ServerGUI window = new ServerGUI();
-					window.frame.setVisible(true);
+					window.frmServer.setVisible(true);
 				}
 				catch (Exception e)
 				{
@@ -141,44 +141,42 @@ public class ServerGUI
 		};
 		timerThread.scheduleAtFixedRate(checkForFinishedAuctions, 10, 10, TimeUnit.SECONDS);
 
-		frame = new JFrame();
-		frame.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmServer = new JFrame();
+		frmServer.setTitle("Server");
+		frmServer.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		frmServer.setBounds(100, 100, 450, 300);
+		frmServer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel pnlOuter = new JPanel();
-		frame.getContentPane().add(pnlOuter, BorderLayout.CENTER);
+		frmServer.getContentPane().add(pnlOuter, BorderLayout.CENTER);
 		GridBagLayout gbl_pnlOuter = new GridBagLayout();
 		gbl_pnlOuter.columnWidths = new int[]
-		{ 30, 0, 30 };
+		{ 30, 30, 30 };
 		gbl_pnlOuter.rowHeights = new int[]
-		{ 30, 0, 30 };
+		{ 30, 30, 30 };
 		gbl_pnlOuter.columnWeights = new double[]
-		{ 0.0, 0.0, 0.0 };
+		{ 0.0, 1.0, 0.0 };
 		gbl_pnlOuter.rowWeights = new double[]
-		{ 0.0, 0.0, 0.0 };
+		{ 0.0, 1.0, 0.0 };
 		pnlOuter.setLayout(gbl_pnlOuter);
 
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.addActionListener(e ->
+		JButton btnWinnerReport = new JButton("Display Winners");
+		btnWinnerReport.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btnWinnerReport.addActionListener(e ->
 		{
 			displayAuctionsWon();
 		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 0;
-		pnlOuter.add(btnNewButton, gbc_btnNewButton);
-
-		JLabel lblServer = new JLabel("ServerGUI");
-		lblServer.setFont(new Font("Segoe UI", Font.PLAIN, 18));
-		GridBagConstraints gbc_lblServer = new GridBagConstraints();
-		gbc_lblServer.weighty = 2.0;
-		gbc_lblServer.weightx = 2.0;
-		gbc_lblServer.insets = new Insets(0, 0, 5, 5);
-		gbc_lblServer.gridx = 1;
-		gbc_lblServer.gridy = 1;
-		pnlOuter.add(lblServer, gbc_lblServer);
+		GridBagConstraints gbc_btnWinnerReport = new GridBagConstraints();
+		gbc_btnWinnerReport.fill = GridBagConstraints.BOTH;
+		gbc_btnWinnerReport.insets = new Insets(0, 0, 5, 5);
+		gbc_btnWinnerReport.gridx = 1;
+		gbc_btnWinnerReport.gridy = 1;
+		pnlOuter.add(btnWinnerReport, gbc_btnWinnerReport);
+		
+		frmServer.getRootPane().setDefaultButton(btnWinnerReport);
+		btnWinnerReport.requestFocusInWindow();
+		
+		pack();
 	}
 
 
@@ -544,12 +542,6 @@ public class ServerGUI
 	}
 
 
-	public ArrayList<Item> getAuctionList()
-	{
-		return auctionList;
-	}
-
-
 	/**
 	 * Validates a login request by checking that the username + surname matches an existing user, and that the password
 	 * is correct
@@ -632,5 +624,18 @@ public class ServerGUI
 		};
 
 		ioThreadPool.submit(ioTask);
+	}
+
+
+	public void pack()
+	{
+		frmServer.pack();
+		frmServer.setLocationRelativeTo(null);
+	}
+
+
+	public ArrayList<Item> getAuctionList()
+	{
+		return auctionList;
 	}
 }

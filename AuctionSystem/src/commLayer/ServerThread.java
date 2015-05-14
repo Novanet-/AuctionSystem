@@ -80,10 +80,6 @@ public class ServerThread extends Thread
 				{
 					comms.recieveMessage(inputMessage);
 				}
-				//				else
-				//				{
-				//					//clientSocket.close();
-				//				}
 			}
 			catch (ClassNotFoundException e)
 			{

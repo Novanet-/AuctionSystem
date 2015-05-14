@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.UIManager;
@@ -24,6 +25,9 @@ import commLayer.RequestType;
 import entities.Bid;
 import entities.Item;
 import entities.User;
+
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
 
 /**
  * Created using Java 8
@@ -47,6 +51,8 @@ public class ClientGUI
 	private SubmitPanel			pnlSubmitItem;
 
 	private User				currentUser;
+	private JMenu				mnTools;
+	private JMenuItem			mntmLogout;
 
 
 	/**
@@ -122,10 +128,15 @@ public class ClientGUI
 		JMenuBar mnuMenuBar = new JMenuBar();
 		frmClient.setJMenuBar(mnuMenuBar);
 
-		/*
-		 * Ask server for number of auctions in history, set item.counter to this value Ask server for number of users
-		 * in history, set user.counter to this value
-		 */
+		mnTools = new JMenu("Tools");
+		mnuMenuBar.add(mnTools);
+
+		mntmLogout = new JMenuItem("Logout");
+		mntmLogout.addActionListener(e ->
+		{
+			logoutUser();
+		});
+		mnTools.add(mntmLogout);
 
 		pack();
 	}
@@ -240,6 +251,17 @@ public class ClientGUI
 	 */
 	public void loginUser()
 	{
+		changeCard("pnlMain");
+		pack();
+	}
+
+
+	/**
+	 * Sets the currently lgoged in user to null and take the user back to the login screen
+	 */
+	private void logoutUser()
+	{
+		setCurrentUser(null);
 		changeCard("pnlLogin");
 		pack();
 	}

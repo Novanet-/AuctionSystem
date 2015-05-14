@@ -25,6 +25,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.swing.JPasswordField;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class LoginPanel extends JPanel
 {
@@ -131,6 +133,9 @@ public class LoginPanel extends JPanel
 			{
 				User loginUser = new User(txtFirstname.getText(), txtSurname.getText(), Hasher.getPasswordHash(txtPassword.getPassword()), false);
 				clientGUI.sendMessage(new Message(MessageType.LOGIN_REQUEST, loginUser));
+				txtFirstname.setText(null);
+				txtSurname.setText(null);
+				txtPassword.setText(null);
 			}
 			catch (NoSuchAlgorithmException | UnsupportedEncodingException e1)
 			{
@@ -169,6 +174,16 @@ public class LoginPanel extends JPanel
 		add(btnRegisterNewAccount, gbc_btnRegisterNewAccount);
 
 		clientGUI.sendMessage(new Message(MessageType.USER_REQUEST, new Request(RequestType.DATABASE_HAS_A_USER, "")));
+
+		addComponentListener(new ComponentAdapter()
+		{
+
+			@Override
+			public void componentShown(ComponentEvent e)
+			{
+				txtFirstname.requestFocusInWindow();
+			}
+		});
 	}
 
 

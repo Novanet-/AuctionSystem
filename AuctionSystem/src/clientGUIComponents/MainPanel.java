@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
@@ -317,6 +319,16 @@ public class MainPanel extends JPanel
 
 		clearAuctionList();
 		clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
+		
+		addComponentListener(new ComponentAdapter()
+		{
+
+			@Override
+			public void componentShown(ComponentEvent e)
+			{
+				btnViewAll.requestFocusInWindow();
+			}
+		});
 	}
 
 

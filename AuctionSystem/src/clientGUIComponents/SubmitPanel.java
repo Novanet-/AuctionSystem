@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -255,6 +257,16 @@ public class SubmitPanel extends JPanel
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 16;
 		this.add(btnNewButton, gbc_btnNewButton);
+
+		addComponentListener(new ComponentAdapter()
+		{
+
+			@Override
+			public void componentShown(ComponentEvent e)
+			{
+				txtName.requestFocusInWindow();
+			}
+		});
 	}
 
 
