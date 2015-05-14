@@ -10,6 +10,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,13 +21,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import applications.ClientGUI;
-
 import commLayer.Hasher;
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.Request;
 import commLayer.RequestType;
-
+import entities.Item;
 import entities.User;
 
 public class LoginPanel extends JPanel
@@ -172,7 +174,21 @@ public class LoginPanel extends JPanel
 		gbc_btnRegisterNewAccount.gridy = 8;
 		add(btnRegisterNewAccount, gbc_btnRegisterNewAccount);
 
-		clientGUI.sendMessage(new Message(MessageType.USER_REQUEST, new Request(RequestType.DATABASE_HAS_A_USER, "")));
+		ScheduledThreadPoolExecutor timerThread = new ScheduledThreadPoolExecutor(1);
+		Runnable checkForExistingUsers = () ->
+		{
+			try
+			{
+//				clientGUI.sendMessage(new Message(MessageType.USER_REQUEST, new Request(RequestType.DATABASE_HAS_A_USER, "")));
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+
+		};
+		timerThread.schedule(checkForExistingUsers, 10, TimeUnit.SECONDS);
+//		clientGUI.sendMessage(new Message(MessageType.USER_REQUEST, new Request(RequestType.DATABASE_HAS_A_USER, "")));
 
 		addComponentListener(new ComponentAdapter()
 		{

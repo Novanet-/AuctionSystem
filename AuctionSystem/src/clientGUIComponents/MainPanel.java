@@ -318,7 +318,7 @@ public class MainPanel extends JPanel
 		pnlFilters.add(cmbFilterBycategory, gbc_cmbFilterBycategory);
 
 		clearAuctionList();
-		clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
+//		clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
 
 		addComponentListener(new ComponentAdapter()
 		{
@@ -327,6 +327,7 @@ public class MainPanel extends JPanel
 			public void componentShown(ComponentEvent e)
 			{
 				btnViewAll.requestFocusInWindow();
+//				clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
 			}
 		});
 	}

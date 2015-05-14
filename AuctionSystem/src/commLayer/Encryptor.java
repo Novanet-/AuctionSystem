@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -21,51 +22,93 @@ import javax.crypto.spec.SecretKeySpec;
 public class Encryptor
 {
 
-	private static final SecretKey	key64	= new SecretKeySpec(new byte[]
-											{ 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07 }, "Blowfish");	;
-	private static Cipher		cipher = Encryptor.initCipher();;
+	private static final byte[]	key				= "MyDifficultPassw".getBytes();
+	private static final String	transformation	= "AES";
 
 
-	public static void writeToEncryptedStream(OutputStream plainOutStream, Message message) throws IOException, InvalidKeyException, IllegalBlockSizeException
+	public static ObjectOutputStream createEncryptedOutputStream(OutputStream plainOutStream) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
 	{
-		cipher.init(Cipher.ENCRYPT_MODE, key64);
-		CipherOutputStream cipherOutputStream = new CipherOutputStream(plainOutStream, cipher);
-		ObjectOutputStream objOutStream = new ObjectOutputStream(cipherOutputStream);
-		objOutStream.writeObject(sealMessage(message));
-		objOutStream.close();
-		objOutStream.flush();
-		cipherOutputStream.flush();
-		cipherOutputStream.close();
+		// Length is 16 byte
+		SecretKeySpec sks = new SecretKeySpec(key, transformation);
+
+		// Create cipher
+		Cipher cipher = Cipher.getInstance(transformation);
+		cipher.init(Cipher.ENCRYPT_MODE, sks);
+
+		// Wrap the output stream
+		CipherOutputStream cos = new CipherOutputStream(plainOutStream, cipher);
+		ObjectOutputStream outputStream = new ObjectOutputStream(cos);
+		return outputStream;
 	}
-
-
-	public static Message readFromEncryptedStream(InputStream plainInStream) throws IOException, ClassNotFoundException, InvalidKeyException, IllegalBlockSizeException,
-			BadPaddingException
+	
+	public static ObjectInputStream createEncryptedInputStream(InputStream plainInStream) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
 	{
-		cipher.init(Cipher.DECRYPT_MODE, key64);
+		SecretKeySpec sks = new SecretKeySpec(key, transformation);
+		Cipher cipher = Cipher.getInstance(transformation);
+		cipher.init(Cipher.DECRYPT_MODE, sks);
+
 		CipherInputStream cipherInputStream = new CipherInputStream(plainInStream, cipher);
-		ObjectInputStream objInStream = new ObjectInputStream(cipherInputStream);
-		SealedObject sealedObject = (SealedObject) objInStream.readObject();
-		objInStream.close();
-		cipherInputStream.close();
-		return unsealMessage(sealedObject);
+		ObjectInputStream inputStream = new ObjectInputStream(cipherInputStream);
+		return inputStream;
 	}
 
 
-	private static SealedObject sealMessage(Message message) throws IllegalBlockSizeException,
-			IOException
+	synchronized public static void writeToEncryptedStream(ObjectOutputStream objectOutStream, Serializable message) throws IOException, InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException
 	{
-		SealedObject sealedObject = new SealedObject(message, cipher);
-		return sealedObject;
+		try
+		{
+			// Length is 16 byte
+			SecretKeySpec sks = new SecretKeySpec(key, transformation);
+
+			// Create cipher
+			Cipher cipher = Cipher.getInstance(transformation);
+			cipher.init(Cipher.ENCRYPT_MODE, sks);
+			SealedObject sealedObject = new SealedObject(message, cipher);
+
+			objectOutStream.writeObject(sealedObject);
+			//			outputStream.close();
+		}
+		catch (IllegalBlockSizeException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 
-	private static Message unsealMessage(SealedObject message) throws ClassNotFoundException, IllegalBlockSizeException, BadPaddingException, IOException
+	synchronized public static Object readFromEncryptedStream(ObjectInputStream plainInStream) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
 	{
-		Message plainMessage = (Message) message.getObject(cipher);
-		return plainMessage;
+		SecretKeySpec sks = new SecretKeySpec(key, transformation);
+		Cipher cipher = Cipher.getInstance(transformation);
+		cipher.init(Cipher.DECRYPT_MODE, sks);
+
+		SealedObject sealedObject;
+		try
+		{
+			sealedObject = (SealedObject) plainInStream.readObject();
+			//			inputStream.close();
+			return sealedObject.getObject(cipher);
+		}
+		catch (ClassNotFoundException | IllegalBlockSizeException | BadPaddingException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 
+
+	//	private static SealedObject sealMessage(Message message) throws IllegalBlockSizeException, IOException
+	//	{
+	//		SealedObject sealedObject = new SealedObject(message, cipher);
+	//		return sealedObject;
+	//	}
+	//
+	//
+	//	private static Message unsealMessage(SealedObject message) throws ClassNotFoundException, IllegalBlockSizeException, BadPaddingException, IOException
+	//	{
+	//		Message plainMessage = (Message) message.getObject(cipher);
+	//		return plainMessage;
+	//	}
 
 	private static Cipher initCipher()
 	{

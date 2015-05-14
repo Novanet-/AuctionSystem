@@ -64,7 +64,7 @@ public class ClientThread extends Thread
 		System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Initialising client socket");
 		clientSocket = new Socket("127.0.0.1", 62666);
 		out = new ObjectOutputStream(clientSocket.getOutputStream());
-		in = new ObjectInputStream(clientSocket.getInputStream());
+		in = new ObjectInputStream(clientSocket.getInputStream());		
 	}
 
 
@@ -80,16 +80,8 @@ public class ClientThread extends Thread
 		Message input;
 		while (true)
 		{
-			try
-			{
-				if ((input = Encryptor.readFromEncryptedStream(clientSocket.getInputStream())) != null)
-					comms.recieveMessage(input);
-			}
-			catch (InvalidKeyException | IllegalBlockSizeException | BadPaddingException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			if ((input = (Message) in.readObject()) != null)
+				comms.recieveMessage(input);
 		}
 	}
 
@@ -106,10 +98,10 @@ public class ClientThread extends Thread
 		try
 		{
 			//			out.writeObject(message);
-			Encryptor.writeToEncryptedStream(clientSocket.getOutputStream(), message);
+			Encryptor.writeToEncryptedStream(out, message);
 			return true;
 		}
-		catch (IOException | InvalidKeyException | IllegalBlockSizeException e)
+		catch (IOException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException e)
 		{
 			e.printStackTrace();
 			return false;

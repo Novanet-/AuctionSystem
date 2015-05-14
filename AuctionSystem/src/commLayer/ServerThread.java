@@ -81,12 +81,12 @@ public class ServerThread extends Thread
 		{
 			try
 			{
-				if ((inputMessage = Encryptor.readFromEncryptedStream(clientSocket.getInputStream())) != null)
+				if ((inputMessage = (Message) in.readObject()) != null)
 				{
 					comms.recieveMessage(inputMessage);
 				}
 			}
-			catch (ClassNotFoundException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e)
+			catch (ClassNotFoundException e)
 			{
 				e.printStackTrace();
 			}
@@ -105,11 +105,10 @@ public class ServerThread extends Thread
 	{
 		try
 		{
-//			out.writeObject(message);
-			Encryptor.writeToEncryptedStream(clientSocket.getOutputStream(), message);
+			out.writeObject(message);
 			return true;
 		}
-		catch (IOException | InvalidKeyException | IllegalBlockSizeException e)
+		catch (IOException e)
 		{
 			e.printStackTrace();
 			return false;
