@@ -10,14 +10,14 @@ import java.util.concurrent.atomic.AtomicLong;
 public class User implements Serializable
 {
 
-	private static final long serialVersionUID = -5122910007155743127L;
+	private static final long	serialVersionUID	= -5122910007155743127L;
 
-	private long userId;
-	private String firstName;
-	private String surname;
-	private byte[] password;
+	private long				userId;
+	private String				firstName;
+	private String				surname;
+	private byte[]				password;
 
-	private static AtomicLong counter = new AtomicLong(0);
+	private static AtomicLong	counter				= new AtomicLong(0);
 
 
 	/**

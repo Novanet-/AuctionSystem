@@ -35,18 +35,18 @@ import entities.Item;
 public class SubmitPanel extends JPanel
 {
 
-	private static final long serialVersionUID = -6334501558318314753L;
+	private static final long	serialVersionUID	= -6334501558318314753L;
 
-	private ClientGUI clientGUI;
+	private ClientGUI			clientGUI;
 
-	private JTextField txtName;
-	private JTextField txtDescription;
-	private JTextField txtReservePrice;
-	private JComboBox<Category> cmbCategory;
-	private JSpinner spnStartDate;
-	private JSpinner spnEndDate;
-	private JSpinner spnStartTime;
-	private JSpinner spnEndTime;
+	private JTextField			txtName;
+	private JTextField			txtDescription;
+	private JTextField			txtReservePrice;
+	private JComboBox<Category>	cmbCategory;
+	private JSpinner			spnStartDate;
+	private JSpinner			spnEndDate;
+	private JSpinner			spnStartTime;
+	private JSpinner			spnEndTime;
 
 
 	public SubmitPanel(ClientGUI clientGUI)
@@ -238,6 +238,11 @@ public class SubmitPanel extends JPanel
 		btnNewButton.addActionListener(new ActionListener()
 		{
 
+			/**
+			 * Takes the logged in user to the main menu
+			 * 
+			 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
@@ -253,10 +258,14 @@ public class SubmitPanel extends JPanel
 	}
 
 
+	/**
+	 * An action lsitener for handling when an item is submitted
+	 *
+	 */
 	private class SubmitItemAction implements ActionListener
 	{
 
-		private Item newItem;
+		private Item	newItem;
 
 
 		/**
@@ -302,8 +311,8 @@ public class SubmitPanel extends JPanel
 			newItem.setEndTime(LocalDateTime.of(endDate, endTime));
 			newItem.setReservePrice(new Money(Currency.getInstance("GBP"), Double.parseDouble(txtReservePrice.getText())));
 
-			System.out.println(newItem.getName() + " " + newItem.getDescription() + " " + newItem.getCategory().toString() + " "
-					+ newItem.getStartTime().toString() + " " + newItem.getEndTime().toString() + " " + newItem.getReservePrice().getValue());
+			System.out.println(newItem.getName() + " " + newItem.getDescription() + " " + newItem.getCategory().toString() + " " + newItem.getStartTime().toString() + " "
+					+ newItem.getEndTime().toString() + " " + newItem.getReservePrice().getValue());
 			return clientGUI.sendMessage(new Message(MessageType.ITEM_DELIVERY, newItem));
 		}
 

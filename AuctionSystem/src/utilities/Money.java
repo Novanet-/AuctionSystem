@@ -14,10 +14,10 @@ import java.util.Currency;
 public class Money implements Serializable
 {
 
-	private static final long serialVersionUID = -6458682124885030639L;
+	private static final long	serialVersionUID	= -6458682124885030639L;
 
-	private Currency currencyType;
-	private double value;
+	private Currency			currencyType;
+	private double				value;
 
 
 	/**

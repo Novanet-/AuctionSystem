@@ -18,8 +18,8 @@ import javax.swing.JOptionPane;
 public class ClientComms implements AbstractComms
 {
 
-	ClientGUI client;
-	ClientThread clientThread;
+	ClientGUI		client;
+	ClientThread	clientThread;
 
 
 	/**
@@ -78,93 +78,99 @@ public class ClientComms implements AbstractComms
 				+ message.getPayload().toString());
 		switch (message.getHeader())
 		{
-		case ITEM_DELIVERY:
-			recieveSuccesful = client.addAuctionToCache((Item) message.getPayload());
-			recieveSuccesful = client.refreshAuctionList(RequestType.ALL_OPEN_ITEMS);
-			break;
-		case BID_DELIVERY:
-			recieveSuccesful = client.updateAuctionInCache((Bid) message.getPayload());
-			recieveSuccesful = client.refreshAuctionList(RequestType.ALL_OPEN_ITEMS);
-			break;
-		case PROPERTY_DELIVERY:
-			// Use the property received for required function
-			break;
-		case USER_DELIVERY:
-			// Use requested users details
-			client.setCurrentUser((User) message.getPayload());
-			break;
-		case NOTIFICATION:
-			switch ((Notification) message.getPayload())
-			{
-			case ITEM_RECIEVED:
-				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Item " + message.getPayload().toString() + " Recieved by server");
-				client.clearCache();
-				sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
+			case ITEM_DELIVERY:
+				recieveSuccesful = client.addAuctionToCache((Item) message.getPayload());
+				recieveSuccesful = client.refreshAuctionList(RequestType.ALL_OPEN_ITEMS);
 				break;
-			case BID_RECIEVED:
-				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Bid " + message.getPayload().toString() + " Recieved by server");
-				JOptionPane.showMessageDialog(null, "Bid has been placed", "Bid Succesful", JOptionPane.INFORMATION_MESSAGE);
+			case BID_DELIVERY:
+				recieveSuccesful = client.updateAuctionInCache((Bid) message.getPayload());
+				recieveSuccesful = client.refreshAuctionList(RequestType.ALL_OPEN_ITEMS);
 				break;
-			case PROPERTY_RECIEVED:
+			case USER_DELIVERY:
+				client.setCurrentUser((User) message.getPayload());
 				break;
-			case USER_RECIEVED:
-				JOptionPane.showMessageDialog(null, "User has been registered", "Registration Succesful", JOptionPane.INFORMATION_MESSAGE);
-				client.enableLogin();
+			case NOTIFICATION:
+				switch ((Notification) message.getPayload())
+				{
+					case ITEM_RECIEVED:
+						System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Item " + message.getPayload().toString() + " Recieved by server");
+						client.clearCache();
+						sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
+						break;
+					case BID_RECIEVED:
+						System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Bid " + message.getPayload().toString() + " Recieved by server");
+						JOptionPane.showMessageDialog(null, "Bid has been placed", "Bid Succesful", JOptionPane.INFORMATION_MESSAGE);
+						break;
+					case USER_RECIEVED:
+						JOptionPane.showMessageDialog(null, "User has been registered", "Registration Succesful", JOptionPane.INFORMATION_MESSAGE);
+						client.enableLogin();
+						break;
+					case ITEM_REQUEST_RECIEVED:
+						client.clearCache();
+						break;
+					case USER_REQUEST_RECIEVED:
+						break;
+					case USER_NOT_FOUND:
+						JOptionPane.showMessageDialog(null, "User Invalid", "User Not Found", JOptionPane.ERROR_MESSAGE);
+						break;
+					case PASSWORD_CORRECT:
+						JOptionPane.showMessageDialog(null, "Password correct", "Login Succesful", JOptionPane.INFORMATION_MESSAGE);
+						client.loginUser();
+						break;
+					case PASSWORD_INCORRECT:
+						JOptionPane.showMessageDialog(null, "Password incorrect", "Login Failed", JOptionPane.ERROR_MESSAGE);
+						break;
+					case BID_LOWER_THAN_CURRENT:
+						JOptionPane.showMessageDialog(null, "Requested bid amount lower than current highest bid on item", "Bid Failed", JOptionPane.ERROR_MESSAGE);
+						break;
+					case BID_ON_OWN_ITEM:
+						JOptionPane.showMessageDialog(null, "You can't bid on your own item", "Bid Failed", JOptionPane.ERROR_MESSAGE);
+						break;
+					case DATABASE_DOES_NOT_HAVE_USER:
+						client.disableLogin();
+						break;
+					case DATABASE_HAS_USER:
+						client.enableLogin();
+						break;
+					default:
+						break;
+				}
 				break;
-			case ITEM_REQUEST_RECIEVED:
-				client.clearCache();
-				break;
-			case USER_REQUEST_RECIEVED:
-				break;
-			case USER_NOT_FOUND:
-				JOptionPane.showMessageDialog(null, "User Invalid", "User Not Found", JOptionPane.ERROR_MESSAGE);
-				break;
-			case PASSWORD_CORRECT:
-				JOptionPane.showMessageDialog(null, "Password correct", "Login Succesful", JOptionPane.INFORMATION_MESSAGE);
-				client.loginUser();
-				break;
-			case PASSWORD_INCORRECT:
-				JOptionPane.showMessageDialog(null, "Password incorrect", "Login Failed", JOptionPane.ERROR_MESSAGE);
-				break;
-			case BID_LOWER_THAN_CURRENT:
-				JOptionPane.showMessageDialog(null, "Requested bid amount lower than current highest bid on item", "Bid Failed", JOptionPane.ERROR_MESSAGE);
-				break;
-			case BID_ON_OWN_ITEM:
-				JOptionPane.showMessageDialog(null, "You can't bid on your own item", "Bid Failed", JOptionPane.ERROR_MESSAGE);
-				break;
-			case DATABASE_DOES_NOT_HAVE_USER:
-				client.disableLogin();
-				break;
-			case DATABASE_HAS_USER:
-				client.enableLogin();
+			case AUCTION_FINISHED:
+				Item finishedAuction = (Item) message.getPayload();
+				if (client.getCurrentUser() != null)
+				{
+					processClosedStatus(finishedAuction);
+				}
 				break;
 			default:
 				break;
-			}
-			break;
-		case AUCTION_FINISHED:
-			Item finishedAuction = (Item) message.getPayload();
-			if (client.getCurrentUser() != null)
-			{
-				if (finishedAuction.getUserId() == client.getCurrentUser().getUserId())
-				{
-					JOptionPane.showMessageDialog(null, generateClosedAuctionMessage(finishedAuction).toString(), "Auction Ended", JOptionPane.INFORMATION_MESSAGE);
-				}
-				if (finishedAuction.getAuctionStatus() == AuctionStatus.WON)
-				{
-					if (!finishedAuction.getBids().empty())
-					{
-						if (finishedAuction.getBids().peek().getUserId() == client.getCurrentUser().getUserId())
-							sendMessage(new Message(MessageType.WIN_RECIEVED, finishedAuction));
-						JOptionPane.showMessageDialog(null, "Your have won the auction for " + finishedAuction.getName(), "Auction Won", JOptionPane.INFORMATION_MESSAGE);
-					}
-				}
-			}
-			break;
-		default:
-			break;
 		}
 		return recieveSuccesful;
+	}
+
+
+	/**
+	 * Determines if the auction has any winners and if the current user is the seller/winner, and display a relevant
+	 * message
+	 * 
+	 * @param finishedAuction
+	 */
+	private void processClosedStatus(Item finishedAuction)
+	{
+		if (finishedAuction.getUserId() == client.getCurrentUser().getUserId())
+		{
+			JOptionPane.showMessageDialog(null, generateClosedAuctionMessage(finishedAuction).toString(), "Auction Ended", JOptionPane.INFORMATION_MESSAGE);
+		}
+		if (finishedAuction.getAuctionStatus() == AuctionStatus.WON)
+		{
+			if (!finishedAuction.getBids().empty())
+			{
+				if (finishedAuction.getBids().peek().getUserId() == client.getCurrentUser().getUserId())
+					sendMessage(new Message(MessageType.WIN_RECIEVED, finishedAuction));
+				JOptionPane.showMessageDialog(null, "Your have won the auction for " + finishedAuction.getName(), "Auction Won", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
 	}
 
 

@@ -16,11 +16,11 @@ import java.time.format.DateTimeFormatter;
 public class ServerThread extends Thread
 {
 
-	ServerSocket serverSocket;
-	Socket clientSocket;
-	ObjectOutputStream out;
-	ObjectInputStream in;
-	AbstractComms comms;
+	ServerSocket		serverSocket;
+	Socket				clientSocket;
+	ObjectOutputStream	out;
+	ObjectInputStream	in;
+	AbstractComms		comms;
 
 
 	public ServerThread(AbstractComms comms)
@@ -80,10 +80,10 @@ public class ServerThread extends Thread
 				{
 					comms.recieveMessage(inputMessage);
 				}
-//				else
-//				{
-//					//clientSocket.close();
-//				}
+				//				else
+				//				{
+				//					//clientSocket.close();
+				//				}
 			}
 			catch (ClassNotFoundException e)
 			{

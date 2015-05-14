@@ -19,7 +19,7 @@ import entities.User;
 public class DataPersistence
 {
 
-	static Path dataDir = Paths.get(System.getProperty("user.dir"), File.separator + "data" + File.separator);
+	static Path	dataDir	= Paths.get(System.getProperty("user.dir"), File.separator + "data" + File.separator);
 
 
 	/**

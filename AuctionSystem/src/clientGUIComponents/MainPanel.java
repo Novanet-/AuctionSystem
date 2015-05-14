@@ -46,22 +46,22 @@ import entities.Item;
 public class MainPanel extends JPanel
 {
 
-	private static final long serialVersionUID = -1651115114692051343L;
+	private static final long			serialVersionUID	= -1651115114692051343L;
 
-	private final ClientGUI clientGUI;
-	private JTextField txtFilterByID;
-	private JTextField txtFilterBySeller;
+	private final ClientGUI				clientGUI;
+	private JTextField					txtFilterByID;
+	private JTextField					txtFilterBySeller;
 
-	private final ButtonGroup btngrpFilters = new ButtonGroup();
-	private JList<String> lstAuctionItems;
+	private final ButtonGroup			btngrpFilters		= new ButtonGroup();
+	private JList<String>				lstAuctionItems;
 
-	private DefaultListModel<String> auctionModel;
+	private DefaultListModel<String>	auctionModel;
 
-	private JTextArea txtAuctionDetails;
+	private JTextArea					txtAuctionDetails;
 
-	private JTextField txtMakeBid;
+	private JTextField					txtMakeBid;
 
-	private JComboBox<Category> cmbFilterBycategory;
+	private JComboBox<Category>			cmbFilterBycategory;
 
 
 	public MainPanel(ClientGUI clientGUI)
@@ -350,6 +350,9 @@ public class MainPanel extends JPanel
 	}
 
 
+	/**
+	 * Clears the list of auctions and the auction details window
+	 */
 	private void clearAuctionList()
 	{
 		auctionModel.clear();
@@ -358,9 +361,18 @@ public class MainPanel extends JPanel
 	}
 
 
+	/**
+	 * A ListSelectionListener for handling when an auction is selected from the list
+	 *
+	 */
 	private class AuctionSelectedListener implements ListSelectionListener
 	{
 
+		/**
+		 * Retrieves the details of the selected auction and displays them in the auction details window
+		 * 
+		 * @see javax.swing.event.ListSelectionListener#valueChanged(javax.swing.event.ListSelectionEvent)
+		 */
 		@Override
 		public void valueChanged(ListSelectionEvent e)
 		{

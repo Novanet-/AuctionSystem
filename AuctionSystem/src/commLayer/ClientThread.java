@@ -15,10 +15,10 @@ import java.time.format.DateTimeFormatter;
 public class ClientThread extends Thread
 {
 
-	Socket clientSocket;
-	ObjectOutputStream out;
-	ObjectInputStream in, userIn;
-	AbstractComms comms;
+	Socket				clientSocket;
+	ObjectOutputStream	out;
+	ObjectInputStream	in, userIn;
+	AbstractComms		comms;
 
 
 	public ClientThread(AbstractComms comms)
@@ -27,11 +27,16 @@ public class ClientThread extends Thread
 	}
 
 
+	/**
+	 * Creates a client socket and then listens for input
+	 * 
+	 * @see java.lang.Thread#run()
+	 */
 	@Override
 	public void run()
 	{
 		try
-		{			
+		{
 			createClientSocket();
 			listenForInput();
 		}

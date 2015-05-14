@@ -32,21 +32,21 @@ import entities.User;
 public class ClientGUI
 {
 
-	private JFrame frmClient;
+	private JFrame				frmClient;
 
-	private ClientThread clientThread;
-	private ClientComms clientComms;
+	private ClientThread		clientThread;
+	private ClientComms			clientComms;
 
-	ArrayList<Item> auctionCache;
-	private ResizingCardLayout lytCard;
+	private ArrayList<Item>		auctionCache;
+	private ResizingCardLayout	lytCard;
 
-	private LoginPanel pnlLogin;
+	private LoginPanel			pnlLogin;
 
-	private MainPanel pnlMain;
+	private MainPanel			pnlMain;
 
-	private SubmitPanel pnlSubmitItem;
+	private SubmitPanel			pnlSubmitItem;
 
-	private User currentUser;
+	private User				currentUser;
 
 
 	/**
@@ -182,12 +182,21 @@ public class ClientGUI
 	}
 
 
+	/**
+	 * Empties the auction cache
+	 */
 	public void clearCache()
 	{
 		auctionCache.clear();
 	}
 
 
+	/**
+	 * Retrieves the auction at the given index from the auctionCache
+	 * 
+	 * @param index
+	 * @return The item retrieved
+	 */
 	synchronized public Item getAuctionFromCache(int index)
 	{
 		return auctionCache.get(index);
@@ -205,48 +214,49 @@ public class ClientGUI
 	}
 
 
-	public boolean updateAuctionInCache(Bid payload)
+	/**
+	 * Updates an auction in cache with a new bid that has been made
+	 * 
+	 * @param bid
+	 *            The bid to be placed in the updated auction
+	 * @return true if auction matching bid has been found and updated
+	 */
+	public boolean updateAuctionInCache(Bid bid)
 	{
 		for (int i = 0; i < auctionCache.size(); i++)
 		{
-			if (auctionCache.get(i).getItemId() == payload.getItemID())
+			if (auctionCache.get(i).getItemId() == bid.getItemID())
 			{
-				auctionCache.get(i).getBids().push(payload);
+				auctionCache.get(i).getBids().push(bid);
+				return true;
 			}
 		}
 		return false;
 	}
 
 
+	/**
+	 * Switches the logged in user to the main menu
+	 */
 	public void loginUser()
 	{
-		changeCard("pnlMain");
-
-		// ScheduledThreadPoolExecutor winCheckerThread = new ScheduledThreadPoolExecutor(1);
-		// Runnable checkForWonAuctions = () ->
-		// {
-		// try
-		// {
-		// System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for won auctions");
-		// sendMessage(new Message(MessageType.ITEM_REQUEST, new commLayer.Request(RequestType.ITEMS_WON_BY_USER,
-		// String.valueOf(getCurrentUser().getUserId()))));
-		// }
-		// catch (Exception e)
-		// {
-		// e.printStackTrace();
-		// }
-		//
-		// };
-		// winCheckerThread.scheduleAtFixedRate(checkForWonAuctions, 5, 10, TimeUnit.SECONDS);
-
-		// ON SUCCESFUL LOGIN REQUEST, SEND ALL WON ITEMS TO USER AND CHECK IF THEY MATCH UP TO THE LOGGED IN USER
+		changeCard("pnlLogin");
+		pack();
 	}
-	
+
+
+	/**
+	 * Enables the login button
+	 */
 	public void enableLogin()
 	{
 		pnlLogin.getBtnSubmitLogin().setEnabled(true);
 	}
-	
+
+
+	/**
+	 * Disable the login button
+	 */
 	public void disableLogin()
 	{
 		pnlLogin.getBtnSubmitLogin().setEnabled(true);
@@ -272,7 +282,7 @@ public class ClientGUI
 	public static class ResizingCardLayout extends CardLayout
 	{
 
-		private static final long serialVersionUID = -7578838449014921005L;
+		private static final long	serialVersionUID	= -7578838449014921005L;
 
 
 		public ResizingCardLayout()

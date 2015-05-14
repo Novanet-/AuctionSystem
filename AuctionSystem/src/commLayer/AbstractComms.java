@@ -3,8 +3,12 @@ package commLayer;
 public interface AbstractComms
 {
 
+	/**
+	 * Creates a socket
+	 */
 	public abstract void initSocket();
-	
+
+
 	/**
 	 * Sends a message to a socket
 	 * 

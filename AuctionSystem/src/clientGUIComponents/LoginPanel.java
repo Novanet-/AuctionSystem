@@ -29,15 +29,15 @@ import javax.swing.JPasswordField;
 public class LoginPanel extends JPanel
 {
 
-	private static final long serialVersionUID = -996719470440190853L;
+	private static final long	serialVersionUID	= -996719470440190853L;
 
-	private ClientGUI clientGUI;
+	private ClientGUI			clientGUI;
 
-	private JTextField txtFirstname;
-	private JPasswordField txtPassword;
-	private JTextField txtSurname;
+	private JTextField			txtFirstname;
+	private JPasswordField		txtPassword;
+	private JTextField			txtSurname;
 
-	private JButton btnSubmitLogin;
+	private JButton				btnSubmitLogin;
 
 
 	public LoginPanel(ClientGUI clientGUI)
@@ -167,17 +167,14 @@ public class LoginPanel extends JPanel
 		gbc_btnRegisterNewAccount.gridx = 2;
 		gbc_btnRegisterNewAccount.gridy = 8;
 		add(btnRegisterNewAccount, gbc_btnRegisterNewAccount);
-		
+
 		clientGUI.sendMessage(new Message(MessageType.USER_REQUEST, new Request(RequestType.DATABASE_HAS_A_USER, "")));
 	}
 
 
-	
 	public JButton getBtnSubmitLogin()
 	{
 		return btnSubmitLogin;
 	}
-
-
 
 }

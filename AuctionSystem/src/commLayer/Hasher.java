@@ -15,11 +15,6 @@ import java.util.Arrays;
 public final class Hasher
 {
 
-	public Hasher()
-	{
-	}
-
-
 	/**
 	 * Creates an MD5 hash of a given password
 	 * 

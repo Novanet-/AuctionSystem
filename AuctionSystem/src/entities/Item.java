@@ -19,22 +19,22 @@ import utilities.Money;
 public class Item implements Serializable
 {
 
-	private static final long serialVersionUID = -4247500001194895879L;
+	private static final long	serialVersionUID	= -4247500001194895879L;
 
-	private long itemId;
-	private String name;
-	private String description;
-	private Category category;
+	private long				itemId;
+	private String				name;
+	private String				description;
+	private Category			category;
 
-	private long userId;
-	private LocalDateTime startTime, endTime;
+	private long				userId;
+	private LocalDateTime		startTime, endTime;
 
-	private Money reservePrice;
-	private Stack<Bid> bids;
+	private Money				reservePrice;
+	private Stack<Bid>			bids;
 
-	private AuctionStatus auctionStatus;
+	private AuctionStatus		auctionStatus;
 
-	private static AtomicLong counter = new AtomicLong(0);
+	private static AtomicLong	counter				= new AtomicLong(0);
 
 
 	/**

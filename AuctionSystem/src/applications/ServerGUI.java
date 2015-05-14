@@ -50,14 +50,14 @@ import entities.User;
 public class ServerGUI
 {
 
-	private JFrame frame;
+	private JFrame			frame;
 
-	private ArrayList<Item> auctionList;
-	private ArrayList<User> userList;
+	private ArrayList<Item>	auctionList;
+	private ArrayList<User>	userList;
 
-	private ServerThread serverThread;
-	private ServerComms serverComms;
-	private ExecutorService ioThreadPool;
+	private ServerThread	serverThread;
+	private ServerComms		serverComms;
+	private ExecutorService	ioThreadPool;
 
 
 	/**
@@ -130,7 +130,7 @@ public class ServerGUI
 				System.out.println(LocalTime.now().format(DateTimeFormatter.ISO_LOCAL_TIME) + " Polling for finished auctions");
 				for (Item i : auctionList)
 				{
-					checkAuctionStatus(i);
+					checkIfAuctionClosed(i);
 				}
 			}
 			catch (Exception e)
@@ -182,13 +182,20 @@ public class ServerGUI
 	}
 
 
-	private void checkAuctionStatus(Item i)
+	/**
+	 * Checks an auction to see if it should be closed, and whether it has been won by a bidder or not, sending a
+	 * relevant message to the client
+	 * 
+	 * @param i
+	 *            The item that will be check if it is won/closed
+	 */
+	private void checkIfAuctionClosed(Item i)
 	{
-		if ((i.getAuctionStatus() == entities.AuctionStatus.OPEN) && (!isAuctionOpen(i)))
+		if ((i.getAuctionStatus() == entities.AuctionStatus.OPEN) && (!isAuctionOpen(i))) //Checks if an open auction has expired
 		{
-			if (!i.getBids().isEmpty())
+			if (!i.getBids().isEmpty()) //Check that the item has had bids
 			{
-				if (i.getBids().peek().getAmount().getValue() > i.getReservePrice().getValue())
+				if (i.getBids().peek().getAmount().getValue() > i.getReservePrice().getValue()) //Check that the highest bid is larger than the reserve price
 				{
 					i.setAuctionStatus(AuctionStatus.WON);
 					serverComms.sendMessage(new Message(MessageType.AUCTION_FINISHED, i));
@@ -211,6 +218,9 @@ public class ServerGUI
 	}
 
 
+	/**
+	 * Displays a list of all auction winners along with the item that they won
+	 */
 	private void displayAuctionsWon()
 	{
 		for (Item i : auctionList)
@@ -273,6 +283,13 @@ public class ServerGUI
 	}
 
 
+	/**
+	 * Adds a bid to the given auction
+	 * 
+	 * @param bid
+	 * @param auction
+	 * @return
+	 */
 	synchronized public boolean addBidToSystem(Bid bid, Item auction)
 	{
 		auction.getBids().push(bid);
@@ -286,7 +303,8 @@ public class ServerGUI
 
 
 	/**
-	 * Fetch all auctions that match the specified RequestType
+	 * Fetch all auctions that match the specified RequestType and send a message to the client for each item found
+	 * matching this request
 	 * 
 	 * @param requestType
 	 *            The filter used to find the required auctions
@@ -297,112 +315,118 @@ public class ServerGUI
 		boolean openAuctionFound = false;
 		switch (request.getRequestType())
 		{
-		case ALL_OPEN_ITEMS:
-			for (Item auction : auctionList)
-			{
-				openAuctionFound = isAuctionOpen(auction);
-				if (openAuctionFound)
-					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
-			}
-			break;
-		case ALL_SOLD_ITEMS:
-			for (Item auction : auctionList)
-			{
-				LocalDateTime currentDateTime = LocalDateTime.now();
-				if (auction.getEndTime().isBefore(currentDateTime))
+			case ALL_OPEN_ITEMS:
+				for (Item auction : auctionList)
 				{
-					serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
-					openAuctionFound = true;
+					openAuctionFound = isAuctionOpen(auction);
+					if (openAuctionFound)
+						serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
 				}
-			}
-			break;
-		case ITEM_BY_CATEGORY:
-			for (Item auction : auctionList)
-			{
-				openAuctionFound = isAuctionOpen(auction);
-				if (openAuctionFound)
+				break;
+			case ALL_SOLD_ITEMS:
+				for (Item auction : auctionList)
 				{
-					if (auction.getCategory().toString().equals(request.getRequestParameter()))
+					LocalDateTime currentDateTime = LocalDateTime.now();
+					if (auction.getEndTime().isBefore(currentDateTime))
 					{
 						serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+						openAuctionFound = true;
 					}
 				}
-			}
-			break;
-		case ITEM_BY_ID:
-			for (Item auction : auctionList)
-			{
-				openAuctionFound = isAuctionOpen(auction);
-				if (openAuctionFound)
+				break;
+			case ITEM_BY_CATEGORY:
+				for (Item auction : auctionList)
 				{
-					if (auction.getItemId() == Long.valueOf(request.getRequestParameter()).longValue())
+					openAuctionFound = isAuctionOpen(auction);
+					if (openAuctionFound)
 					{
-						serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
-					}
-				}
-			}
-			break;
-		case ITEM_BY_SELLER:
-			for (Item auction : auctionList)
-			{
-				openAuctionFound = isAuctionOpen(auction);
-				if (openAuctionFound)
-				{
-					if (auction.getUserId() == Long.valueOf(request.getRequestParameter()).longValue())
-					{
-						serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
-					}
-				}
-			}
-			break;
-		case ITEM_CONTAINING_BID_BY_CURRENT_USER:
-		{
-			long requestedUserId = Long.parseLong(request.getRequestParameter());
-			for (Item auction : auctionList)
-			{
-				openAuctionFound = isAuctionOpen(auction);
-				if (openAuctionFound)
-				{
-					Stack<Bid> auctionBids = auction.getBids();
-					int noOfBids = auctionBids.size();
-					if (noOfBids > 0)
-					{
-						for (int i = noOfBids - 1; i >= 0; --i)
+						if (auction.getCategory().toString().equals(request.getRequestParameter()))
 						{
-							Bid bid = auctionBids.get(i);
-							if (bid.getUserId() == requestedUserId)
+							serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+						}
+					}
+				}
+				break;
+			case ITEM_BY_ID:
+				for (Item auction : auctionList)
+				{
+					openAuctionFound = isAuctionOpen(auction);
+					if (openAuctionFound)
+					{
+						if (auction.getItemId() == Long.valueOf(request.getRequestParameter()).longValue())
+						{
+							serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+						}
+					}
+				}
+				break;
+			case ITEM_BY_SELLER:
+				for (Item auction : auctionList)
+				{
+					openAuctionFound = isAuctionOpen(auction);
+					if (openAuctionFound)
+					{
+						if (auction.getUserId() == Long.valueOf(request.getRequestParameter()).longValue())
+						{
+							serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+						}
+					}
+				}
+				break;
+			case ITEM_CONTAINING_BID_BY_CURRENT_USER:
+			{
+				long requestedUserId = Long.parseLong(request.getRequestParameter());
+				for (Item auction : auctionList)
+				{
+					openAuctionFound = isAuctionOpen(auction);
+					if (openAuctionFound)
+					{
+						Stack<Bid> auctionBids = auction.getBids();
+						int noOfBids = auctionBids.size();
+						if (noOfBids > 0)
+						{
+							for (int i = noOfBids - 1; i >= 0; --i)
 							{
-								serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
-								break;
+								Bid bid = auctionBids.get(i);
+								if (bid.getUserId() == requestedUserId)
+								{
+									serverComms.sendMessage(new Message(MessageType.ITEM_DELIVERY, auction));
+									break;
+								}
 							}
 						}
 					}
 				}
+				break;
 			}
-			break;
-		}
-		case ITEMS_WON_BY_USER:
-			for (Item auction : auctionList)
-			{
-
-				if (auction.getAuctionStatus() == AuctionStatus.WON)
+			case ITEMS_WON_BY_USER:
+				for (Item auction : auctionList)
 				{
-					if (!auction.getBids().isEmpty())
-						if (auction.getBids().peek().getUserId() == Long.valueOf(request.getRequestParameter()).longValue())
-						{
-							serverComms.sendMessage(new Message(MessageType.AUCTION_FINISHED, auction));
-						}
+
+					if (auction.getAuctionStatus() == AuctionStatus.WON)
+					{
+						if (!auction.getBids().isEmpty())
+							if (auction.getBids().peek().getUserId() == Long.valueOf(request.getRequestParameter()).longValue())
+							{
+								serverComms.sendMessage(new Message(MessageType.AUCTION_FINISHED, auction));
+							}
+					}
 				}
-			}
-			break;
-		default:
-			break;
+				break;
+			default:
+				break;
 		}
 		return openAuctionFound;
 
 	}
 
 
+	/**
+	 * Checks whether the given auction is open
+	 * 
+	 * @param auction
+	 * @return true if the the auction is open
+	 */
 	private boolean isAuctionOpen(Item auction)
 	{
 		LocalDateTime currentDateTime = LocalDateTime.now();
@@ -410,35 +434,49 @@ public class ServerGUI
 	}
 
 
+	/**
+	 * Fetch all users that match the specified RequestType and send a message to the client for each user found
+	 * matching this request
+	 * 
+	 * @param request
+	 *            The request used to determine which users to find
+	 * @return true if a matching user has been found
+	 */
 	public boolean fetchUsers(Request request)
 	{
 		switch (request.getRequestType())
 		{
 
-		case ALL_USERS:
-			for (User u : userList)
-			{
-				serverComms.sendMessage(new Message(MessageType.USER_DELIVERY, u));
-			}
-			break;
-		case DATABASE_HAS_A_USER:
-			if (!userList.isEmpty())
-			{
-				serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.DATABASE_HAS_USER));
-			}
-			else
-			{
-				serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.DATABASE_DOES_NOT_HAVE_USER));
+			case ALL_USERS:
+				for (User u : userList)
+				{
+					serverComms.sendMessage(new Message(MessageType.USER_DELIVERY, u));
+				}
+				break;
+			case DATABASE_HAS_A_USER:
+				if (!userList.isEmpty())
+				{
+					serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.DATABASE_HAS_USER));
+				}
+				else
+				{
+					serverComms.sendMessage(new Message(MessageType.NOTIFICATION, Notification.DATABASE_DOES_NOT_HAVE_USER));
 
-			}
-			break;
-		default:
-			break;
+				}
+				break;
+			default:
+				break;
 		}
 		return false;
 	}
 
 
+	/**
+	 * Checks that the bid is valid before appyling it to an auction
+	 * 
+	 * @param payload
+	 * @return
+	 */
 	synchronized public boolean checkBidValid(Bid payload)
 	{
 		for (Item auction : auctionList)
@@ -446,11 +484,11 @@ public class ServerGUI
 			if (auction.getItemId() == payload.getItemID())
 			{
 
-				if (auction.getUserId() != payload.getUserId())
+				if (auction.getUserId() != payload.getUserId()) //Check that bidder is not the seller
 				{
 					if (!auction.getBids().isEmpty())
 					{
-						if (auction.getBids().peek().getAmount().getValue() < payload.getAmount().getValue())
+						if (auction.getBids().peek().getAmount().getValue() < payload.getAmount().getValue()) //Check that new bid is higher than any current bids
 						{
 							addBidToSystem(payload, auction);
 							return true;
@@ -480,6 +518,9 @@ public class ServerGUI
 	}
 
 
+	/**
+	 * Retrieves the the data of the system from its persistent storage
+	 */
 	@SuppressWarnings("unchecked")
 	public void retrieveAuctionSystemData()
 	{
@@ -509,6 +550,14 @@ public class ServerGUI
 	}
 
 
+	/**
+	 * Validates a login request by checking that the username + surname matches an existing user, and that the password
+	 * is correct
+	 * 
+	 * @param loginRequest
+	 *            The details of the user that is attempting to be logged in
+	 * @return If the login request is succesful, return the user that has been logged in
+	 */
 	public User validateLoginRequest(User loginRequest)
 	{
 		for (User user : userList)
@@ -532,10 +581,15 @@ public class ServerGUI
 	}
 
 
+	/**
+	 * Changes the given auction's status to closed
+	 * 
+	 * @param auction
+	 */
 	public void closeAuction(Item auction)
 	{
 		Item selectedAuction = null;
-		for (Item i: auctionList)
+		for (Item i : auctionList)
 		{
 
 			if (i.getItemId() == auction.getItemId())
@@ -544,6 +598,10 @@ public class ServerGUI
 				break;
 			}
 		}
+
+		if (selectedAuction == null)
+			return;
+
 		selectedAuction.setAuctionStatus(AuctionStatus.CLOSED);
 		saveAuctionList();
 	}

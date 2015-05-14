@@ -4,8 +4,12 @@ import java.io.Serializable;
 
 public class Request implements Serializable
 {
-	private RequestType requestType;
-	private String requestParameter;
+
+	private static final long	serialVersionUID	= -8359430905646455658L;
+
+	private RequestType			requestType;
+	private String				requestParameter;
+
 
 	/**
 	 * @param requestType
@@ -18,10 +22,12 @@ public class Request implements Serializable
 		this.requestParameter = requestParameter;
 	}
 
+
 	public RequestType getRequestType()
 	{
 		return requestType;
 	}
+
 
 	public String getRequestParameter()
 	{
