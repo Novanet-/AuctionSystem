@@ -45,6 +45,11 @@ public class ServerComms implements AbstractComms
 	}
 
 
+	/**
+	 * Send a message through the server's socket
+	 * 
+	 * @see commLayer.AbstractComms#sendMessage(commLayer.Message)
+	 */
 	@Override
 	public boolean sendMessage(Message message)
 	{
@@ -54,6 +59,11 @@ public class ServerComms implements AbstractComms
 	}
 
 
+	/**
+	 * Checks and processes a message based off it's MessageType
+	 * 
+	 * @see commLayer.AbstractComms#recieveMessage(commLayer.Message)
+	 */
 	@Override
 	public boolean recieveMessage(Message message)
 	{
@@ -71,32 +81,7 @@ public class ServerComms implements AbstractComms
 			case ITEM_REQUEST:
 				sendMessage(new Message(MessageType.NOTIFICATION, Notification.ITEM_REQUEST_RECIEVED));
 				request = (Request) message.getPayload();
-				switch (request.getRequestType())
-				{
-					case ALL_OPEN_ITEMS:
-						recieveSuccessful = server.fetchAuctions(request);
-						break;
-					case ALL_SOLD_ITEMS:
-						recieveSuccessful = server.fetchAuctions(request);
-						break;
-					case ITEM_BY_CATEGORY:
-						recieveSuccessful = server.fetchAuctions(request);
-						break;
-					case ITEM_BY_ID:
-						recieveSuccessful = server.fetchAuctions(request);
-						break;
-					case ITEM_BY_SELLER:
-						recieveSuccessful = server.fetchAuctions(request);
-						break;
-					case ITEM_CONTAINING_BID_BY_CURRENT_USER:
-						recieveSuccessful = server.fetchAuctions(request);
-						break;
-					case ITEMS_WON_BY_USER:
-						recieveSuccessful = server.fetchAuctions(request);
-						break;
-					default:
-						break;
-				}
+				recieveSuccessful = server.fetchAuctions(request);
 				break;
 			case BID_DELIVERY:
 				Bid newBid = (Bid) message.getPayload();

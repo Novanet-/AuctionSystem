@@ -23,9 +23,13 @@ public class DataPersistence
 
 
 	/**
+	 * Writes a given arraylist to a file, identifying the type of the arraylist with the entity parameter
+	 * 
 	 * @param list
+	 *            The arraylist to be written
 	 * @param entity
-	 * @return
+	 *            The type of the objects in the arraylist
+	 * @return true if the file is written succesfully
 	 */
 	public static boolean writeListToFile(ArrayList<?> list, EntityType entity)
 	{
@@ -45,11 +49,12 @@ public class DataPersistence
 			e.printStackTrace();
 			try
 			{
+				if (fout == null)
+					return false;
 				fout.close();
 			}
 			catch (IOException e1)
 			{
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			return false;
@@ -58,8 +63,11 @@ public class DataPersistence
 
 
 	/**
+	 * Reads a given arraylist fron a file, identifying the type of the arraylist with the entity parameter
+	 * 
 	 * @param entity
-	 * @return
+	 *            The type of the objects in the arraylist
+	 * @return The read arraylist
 	 */
 	@SuppressWarnings("rawtypes")
 	public static ArrayList<?> readListFromFile(EntityType entity)
@@ -114,7 +122,9 @@ public class DataPersistence
 
 
 	/**
-	 * @return
+	 * Checks that the database directory exists
+	 * 
+	 * @return true if the database directory exists
 	 */
 	private static boolean checkDataStoreExists()
 	{
@@ -138,6 +148,8 @@ public class DataPersistence
 
 
 	/**
+	 * Creates the database directory and the relevant datastore files
+	 * 
 	 * @throws IOException
 	 */
 	private static void createDataStore() throws IOException
