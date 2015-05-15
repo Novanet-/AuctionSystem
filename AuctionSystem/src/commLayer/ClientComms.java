@@ -121,7 +121,15 @@ public class ClientComms implements AbstractComms
 				recieveSuccesful = client.refreshAuctionList(RequestType.ALL_OPEN_ITEMS);
 				break;
 			case USER_DELIVERY:
-				client.setCurrentUser((User) message.getPayload());
+				if (client.getCurrentUser() == null)
+				{
+					client.setCurrentUser((User) message.getPayload());
+				}
+				else
+				{
+					client.setRequestedUser((User) message.getPayload());
+				}
+
 				break;
 			case NOTIFICATION:
 				switch ((Notification) message.getPayload())

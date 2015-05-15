@@ -52,6 +52,7 @@ public class ClientGUI
 	private SubmitPanel			pnlSubmitItem;
 
 	private User				currentUser;
+	private User				requestedUser;
 	private JMenu				mnTools;
 	private JMenuItem			mntmLogout;
 
@@ -282,7 +283,7 @@ public class ClientGUI
 	 */
 	public void disableLogin()
 	{
-		pnlLogin.getBtnSubmitLogin().setEnabled(true);
+		pnlLogin.getBtnSubmitLogin().setEnabled(false);
 	}
 
 
@@ -295,6 +296,20 @@ public class ClientGUI
 	public void setCurrentUser(User currentUser)
 	{
 		this.currentUser = currentUser;
+	}
+
+
+	
+	public User getRequestedUser()
+	{
+		return requestedUser;
+	}
+
+
+	
+	public void setRequestedUser(User requestedUser)
+	{
+		this.requestedUser = requestedUser;
 	}
 
 

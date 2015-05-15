@@ -135,17 +135,8 @@ public class ServerComms implements AbstractComms
 				break;
 			case USER_REQUEST:
 				request = (Request) message.getPayload();
-				switch (request.getRequestType())
-				{
-					case ALL_USERS:
-						recieveSuccessful = server.fetchUsers(request);
-						break;
-					case DATABASE_HAS_A_USER:
-						recieveSuccessful = server.fetchUsers(request);
-						break;
-					default:
-						break;
-				}
+				recieveSuccessful = server.fetchUsers(request);
+
 				break;
 			case LOGIN_REQUEST:
 				User requestedUser = server.validateLoginRequest((User) message.getPayload());

@@ -499,6 +499,15 @@ public class ServerGUI
 
 				}
 				break;
+			case USER_BY_ID:
+				for (User u : userList)
+				{
+					if (u.getUserId() == Long.parseLong(request.getRequestParameter()))
+					{
+						serverComms.sendMessage(new Message(MessageType.USER_DELIVERY, u));
+						return true;
+					}
+				}
 			default:
 				break;
 		}

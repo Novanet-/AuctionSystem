@@ -18,6 +18,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -32,18 +33,23 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import utilities.Category;
 import utilities.Money;
 import applications.ClientGUI;
-
 import commLayer.Message;
 import commLayer.MessageType;
 import commLayer.Request;
 import commLayer.RequestType;
-
 import entities.Bid;
 import entities.Item;
+
+import javax.swing.JTextPane;
 
 public class MainPanel extends JPanel
 {
@@ -59,11 +65,13 @@ public class MainPanel extends JPanel
 
 	private DefaultListModel<String>	auctionModel;
 
-	private JTextArea					txtAuctionDetails;
+	private JTextPane					txtAuctionDetails;
 
 	private JTextField					txtMakeBid;
 
 	private JComboBox<Category>			cmbFilterBycategory;
+
+	private String						auctionSeller;
 
 
 	public MainPanel(ClientGUI clientGUI)
@@ -140,8 +148,7 @@ public class MainPanel extends JPanel
 		gbc_btnOpenSubmitForm.gridy = 2;
 		pnlItemList.add(btnOpenSubmitForm, gbc_btnOpenSubmitForm);
 
-		txtAuctionDetails = new JTextArea();
-		txtAuctionDetails.setLineWrap(true);
+		txtAuctionDetails = new JTextPane();
 		txtAuctionDetails.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		final GridBagConstraints gbc_txtAuctionDetails = new GridBagConstraints();
 		gbc_txtAuctionDetails.insets = new Insets(0, 5, 5, 5);
@@ -220,7 +227,8 @@ public class MainPanel extends JPanel
 		btnViewOwnAuction.addActionListener(e ->
 		{
 			clearAuctionList();
-			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ITEM_BY_SELLER, String.valueOf(clientGUI.getCurrentUser().getUserId()))));
+			clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ITEM_BY_SELLER, clientGUI.getCurrentUser().getFirstName() + " "
+					+ clientGUI.getCurrentUser().getSurname())));
 		});
 		GridBagConstraints gbc_btnViewOwnAuction = new GridBagConstraints();
 		gbc_btnViewOwnAuction.insets = new Insets(0, 0, 5, 5);
@@ -320,6 +328,9 @@ public class MainPanel extends JPanel
 		clearAuctionList();
 		clientGUI.sendMessage(new Message(MessageType.ITEM_REQUEST, new Request(RequestType.ALL_OPEN_ITEMS, "")));
 
+		StyledDocument doc = txtAuctionDetails.getStyledDocument();
+		addStylesToDocument(doc);
+
 		addComponentListener(new ComponentAdapter()
 		{
 
@@ -373,6 +384,51 @@ public class MainPanel extends JPanel
 	}
 
 
+	protected void addStylesToDocument(StyledDocument doc)
+	{
+		//Initialize some styles.
+		Style def = StyleContext.getDefaultStyleContext().getStyle(StyleContext.DEFAULT_STYLE);
+
+		Style regular = doc.addStyle("regular", def);
+		StyleConstants.setFontFamily(def, "SansSerif");
+
+		Style s = doc.addStyle("italic", regular);
+		StyleConstants.setItalic(s, true);
+
+		s = doc.addStyle("bold", regular);
+		StyleConstants.setBold(s, true);
+
+		s = doc.addStyle("small", regular);
+		StyleConstants.setFontSize(s, 10);
+
+		s = doc.addStyle("Medium", regular);
+		StyleConstants.setFontSize(s, 14);
+
+		s = doc.addStyle("Large", regular);
+		StyleConstants.setFontSize(s, 18);
+
+		s = doc.addStyle("Image", regular);
+		StyleConstants.setAlignment(s, StyleConstants.ALIGN_JUSTIFIED);
+		ImageIcon pigIcon = new ImageIcon("images/Pig.gif", "a cute pig");
+		if (pigIcon != null)
+		{
+			StyleConstants.setIcon(s, pigIcon);
+		}
+	}
+
+
+	public String getAuctionSeller()
+	{
+		return auctionSeller;
+	}
+
+
+	public void setAuctionSeller(String auctionSeller)
+	{
+		this.auctionSeller = auctionSeller;
+	}
+
+
 	/**
 	 * A ListSelectionListener for handling when an auction is selected from the list
 	 *
@@ -390,28 +446,75 @@ public class MainPanel extends JPanel
 		{
 			if (!lstAuctionItems.isSelectionEmpty())
 			{
+				txtAuctionDetails.setText("");
 				final Item selectedAuction = clientGUI.getAuctionFromCache(lstAuctionItems.getSelectedIndex());
+				setAuctionSeller(String.valueOf(selectedAuction.getUserId()));
+				if (clientGUI.getRequestedUser() != null)
+				{
+					setAuctionSeller(clientGUI.getRequestedUser().getFirstName() + " " + clientGUI.getRequestedUser().getSurname());
+				}
+				clientGUI.sendMessage(new Message(MessageType.USER_REQUEST, new Request(RequestType.USER_BY_ID, String.valueOf(selectedAuction.getUserId()))));
 
-				txtAuctionDetails.setText("Item: " + selectedAuction.getName());
-				txtAuctionDetails.append("\n" + "Description: " + selectedAuction.getDescription());
-				txtAuctionDetails.append("\n" + "Category: " + selectedAuction.getCategory().toString());
-				txtAuctionDetails.append("\n" + "Start Time: " + selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
-				txtAuctionDetails.append("\n" + "End Time: " + selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
-				txtAuctionDetails.append("\n" + "Seller: " + selectedAuction.getUserId());
-				txtAuctionDetails.append("\n" + "Reserve Price: " + selectedAuction.getReservePrice().getCurrencyType().getSymbol()
-						+ selectedAuction.getReservePrice().getValue());
-				Money highestBid;
-				if (selectedAuction.getBids().isEmpty())
+				StyledDocument doc = txtAuctionDetails.getStyledDocument();
+				addStylesToDocument(doc);
+
+				try
 				{
-					highestBid = new Money(Currency.getInstance("GBP"), 0);
+					doc.insertString(doc.getLength(), "Item:                 " + selectedAuction.getName() + System.getProperty("line.separator"), doc.getStyle("Medium"));
+					doc.insertString(doc.getLength(), "Description:      " + selectedAuction.getDescription() + System.getProperty("line.separator"), doc.getStyle("Medium"));
+					doc.insertString(doc.getLength(), "Category:         " + selectedAuction.getCategory().toString() + System.getProperty("line.separator"),
+							doc.getStyle("Medium"));
+					doc.insertString(
+							doc.getLength(),
+							"Start Time:       " + selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm"))
+									+ System.getProperty("line.separator"), doc.getStyle("Medium"));
+					doc.insertString(
+							doc.getLength(),
+							"End Time:         " + selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm"))
+									+ System.getProperty("line.separator"), doc.getStyle("Medium"));
+					//					doc.insertString(doc.getLength(), "Seller:               " + selectedAuction.getUserId() + System.getProperty("line.separator"), doc.getStyle("Medium"));
+					doc.insertString(doc.getLength(), "Seller:               " + getAuctionSeller() + System.getProperty("line.separator"), doc.getStyle("Medium"));
+					doc.insertString(doc.getLength(), "Reserve Price:  " + selectedAuction.getReservePrice().getCurrencyType().getSymbol()
+							+ selectedAuction.getReservePrice().getValue() + System.getProperty("line.separator"), doc.getStyle("Medium"));
+					Money highestBid;
+					if (selectedAuction.getBids().isEmpty())
+					{
+						highestBid = new Money(Currency.getInstance("GBP"), 0);
+					}
+					else
+					{
+						highestBid = new Money(Currency.getInstance("GBP"), selectedAuction.getBids().peek().getAmount().getValue());
+					}
+					doc.insertString(doc.getLength(),
+							"Highest Bid:      " + highestBid.getCurrencyType().getSymbol() + highestBid.getValue() + System.getProperty("line.separator"),
+							doc.getStyle("Medium"));
 				}
-				else
+				catch (BadLocationException e1)
 				{
-					highestBid = new Money(Currency.getInstance("GBP"), selectedAuction.getBids().peek().getAmount().getValue());
+					e1.printStackTrace();
 				}
-				txtAuctionDetails.append("\n" + "Highest Bid: " + highestBid.getCurrencyType().getSymbol() + highestBid.getValue());
+
+				//				txtAuctionDetails.setText("Item: " + selectedAuction.getName());
+				//				txtAuctionDetails.append("\n" + "Description: " + selectedAuction.getDescription());
+				//				txtAuctionDetails.append("\n" + "Category: " + selectedAuction.getCategory().toString());
+				//				txtAuctionDetails.append("\n" + "Start Time: " + selectedAuction.getStartTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
+				//				txtAuctionDetails.append("\n" + "End Time: " + selectedAuction.getEndTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy  hh:mm")));
+				//				txtAuctionDetails.append("\n" + "Seller: " + selectedAuction.getUserId());
+				//				txtAuctionDetails.append("\n" + "Reserve Price: " + selectedAuction.getReservePrice().getCurrencyType().getSymbol()
+				//						+ selectedAuction.getReservePrice().getValue());
+				//				Money highestBid;
+				//				if (selectedAuction.getBids().isEmpty())
+				//				{
+				//					highestBid = new Money(Currency.getInstance("GBP"), 0);
+				//				}
+				//				else
+				//				{
+				//					highestBid = new Money(Currency.getInstance("GBP"), selectedAuction.getBids().peek().getAmount().getValue());
+				//				}
+				//				txtAuctionDetails.append("\n" + "Highest Bid: " + highestBid.getCurrencyType().getSymbol() + highestBid.getValue());
 			}
 		}
+
 	}
 
 }
