@@ -31,6 +31,8 @@ public class ClientComms implements AbstractComms
 
 	Logger			logger;
 	String			logMessage;
+
+
 	/**
 	 * Creates a client comms module, which has references to the client and the client's socket thread
 	 * 

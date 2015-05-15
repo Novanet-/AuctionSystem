@@ -9,8 +9,13 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import javax.crypto.NoSuchPaddingException;
+
+import commLayer.Encryptor;
 import entities.Item;
 import entities.User;
 
@@ -36,13 +41,14 @@ public class DataPersistence
 		{
 			Path filePath = Paths.get(dataDir + File.separator + entity.toString() + ".dat");
 			fout = new FileOutputStream(filePath.toFile());
-			ObjectOutputStream oos = new ObjectOutputStream(fout);
-			oos.writeObject(list);
-			fout.flush();
+//			ObjectOutputStream oos = new ObjectOutputStream(fout);
+			Encryptor.writeToEncryptedStream(Encryptor.createEncryptedOutputStream(fout), list);
+
+			//oos.writeObject(list);
 			fout.close();
 			return true;
 		}
-		catch (IOException e)
+		catch (IOException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException e)
 		{
 			e.printStackTrace();
 			try
@@ -79,15 +85,15 @@ public class DataPersistence
 				fin = new FileInputStream(filePath.toFile());
 				if (fin.available() > 0)
 				{
-					ObjectInputStream ois = new ObjectInputStream(fin);
+//					ObjectInputStream ois = new ObjectInputStream(fin);
 					ArrayList<?> entityList;
-					if ((entityList = (ArrayList<?>) ois.readObject()) != null)
+					if ((entityList = (ArrayList<?>) Encryptor.readFromEncryptedStream(Encryptor.createEncryptedInputStream(fin))) != null)
 					{
-						ois.close();
+						fin.close();
 						return entityList;
 					}
 
-					ois.close();
+					fin.close();
 					if (entity == EntityType.ITEM)
 					{
 						return entityList = new ArrayList<Item>();
@@ -102,7 +108,7 @@ public class DataPersistence
 
 			}
 		}
-		catch (IOException | ClassNotFoundException e)
+		catch (IOException | InvalidKeyException | NoSuchAlgorithmException | NoSuchPaddingException e)
 		{
 			e.printStackTrace();
 			try

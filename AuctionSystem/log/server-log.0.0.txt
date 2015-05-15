@@ -120,3 +120,1061 @@ May 14, 2015 8:02:34 PM applications.ServerGUI lambda$1
 INFO: Polling for Finished Auctions
 May 14, 2015 8:02:44 PM applications.ServerGUI lambda$1
 INFO: Polling for Finished Auctions
+May 14, 2015 8:15:22 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 8:17:32 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 8:17:42 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 8:18:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 8:36:07 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 8:41:09 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 8:57:15 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:00:57 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:01:07 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:01:17 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:01:27 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:01:37 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:01:47 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:01:57 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:02:07 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:02:17 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:02:27 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:02:37 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:02:47 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:02:57 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:03:07 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:03:17 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:03:27 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:03:37 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:03:47 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:03:57 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:04:07 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:04:17 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:04:27 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:04:37 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:04:47 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:04:57 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:05:07 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:05:17 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:05:27 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:05:47 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:05:57 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:06:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:06:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:06:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:06:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:06:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:07:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:07:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:07:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:07:45 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:07:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:08:05 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:08:15 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:08:25 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:08:35 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:08:45 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:08:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:09:05 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:09:15 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:09:25 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:09:35 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:09:45 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:09:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:10:05 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:10:15 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:10:25 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:10:35 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:10:45 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:10:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:11:05 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:11:15 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:11:25 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:11:35 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:11:45 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:11:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:12:05 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:12:15 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:12:25 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:12:35 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:12:45 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:12:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:13:05 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:13:15 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:13:25 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:13:35 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:13:45 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:13:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:14:05 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:14:15 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:54 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:42:55 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:43:05 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 9:43:15 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:20:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:20:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:20:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:20:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:20:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:20:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:21:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:21:47 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:21:57 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:22:07 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:22:17 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:22:27 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:22:37 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:22:47 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:22:57 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:23:07 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:23:17 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:23:27 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:23:37 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:23:47 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:23:57 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:24:07 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:24:17 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:24:40 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:24:50 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:25:00 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:25:10 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:25:20 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:25:30 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:25:40 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:25:50 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:26:00 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:26:10 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:26:20 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:26:30 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:26:40 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:26:50 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:27:00 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:27:10 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:27:20 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:27:30 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:27:40 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:27:50 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:28:00 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:28:10 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:28:20 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:28:30 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:28:40 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:28:50 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:29:00 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:29:10 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:29:20 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:29:30 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:29:40 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:29:50 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:30:00 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:30:10 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:30:20 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:30:30 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:30:40 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:30:50 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:31:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:31:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:31:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:31:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:31:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:31:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:32:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:32:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:32:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:32:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:32:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:32:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:33:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:33:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:33:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:33:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:33:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:33:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:34:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:34:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:42:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:42:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:42:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:42:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:43:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:43:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:43:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:43:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:43:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:43:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:44:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:44:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:44:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:44:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:44:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:44:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:45:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:45:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:45:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:45:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:45:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:45:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:46:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:46:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:46:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:46:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:46:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:46:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:47:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:47:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:47:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:47:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:47:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:47:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:48:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:48:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:48:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:48:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:48:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:48:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:49:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:49:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:49:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:49:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:50:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:50:16 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:50:26 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:50:36 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:50:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:51:02 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:51:12 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:51:22 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:51:32 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:51:42 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:51:52 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:52:02 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:52:12 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:52:46 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:52:56 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 14, 2015 11:53:06 PM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 12:06:02 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 12:06:12 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 12:06:22 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:32:13 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:32:23 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:32:33 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:32:43 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:32:53 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:33:03 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:33:13 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:33:23 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:33:33 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:33:43 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:33:53 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:34:03 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:34:13 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:34:23 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:34:33 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:34:43 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:34:53 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:35:03 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:35:13 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:35:23 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:35:33 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:35:43 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:35:53 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:36:03 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:36:13 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:36:23 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:36:33 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:36:43 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:36:53 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:37:03 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:37:13 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:37:23 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:37:33 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:37:43 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:37:53 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:38:03 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:38:13 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:38:23 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:38:33 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:38:43 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:38:53 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:39:03 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:39:13 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:39:23 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:39:33 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:39:43 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:39:53 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:40:03 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:40:13 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:40:23 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:40:33 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:40:43 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:42:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:42:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:43:08 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:43:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:43:28 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:43:38 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:43:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:43:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:44:08 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:44:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:46:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:46:28 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:46:38 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:46:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:46:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:47:08 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:47:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:47:28 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:47:38 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:47:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:47:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:48:08 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:48:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:48:28 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:48:38 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:48:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:48:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:49:08 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:49:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:49:28 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:49:38 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:49:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:49:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:50:45 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:50:45 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:50:45 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:50:45 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:50:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:50:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:51:08 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:51:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:51:28 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:51:38 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:51:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:51:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:52:08 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:52:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:52:28 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:52:38 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:52:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:52:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:53:08 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:53:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:53:28 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:53:38 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:53:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:53:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:54:08 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:54:18 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:54:28 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:54:38 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:54:48 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:54:58 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:57:12 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:57:22 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:57:32 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:57:42 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:57:52 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:58:02 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:58:12 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:58:22 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:58:32 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:58:42 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions
+May 15, 2015 2:58:52 AM applications.ServerGUI lambda$1
+INFO: Polling for Finished Auctions

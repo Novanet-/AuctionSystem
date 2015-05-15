@@ -1,0 +1,6 @@
+May 14, 2015 8:41:02 PM commLayer.ClientComms sendMessage
+INFO: Send USER_REQUEST commLayer.Request@5fea4624 
+May 14, 2015 8:41:02 PM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@16a7312f 
+May 14, 2015 9:05:41 PM commLayer.ClientComms sendMessage
+INFO: Send USER_REQUEST commLayer.Request@245639b8 

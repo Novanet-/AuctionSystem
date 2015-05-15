@@ -26,7 +26,8 @@ public class Encryptor
 	private static final String	transformation	= "AES";
 
 
-	public static ObjectOutputStream createEncryptedOutputStream(OutputStream plainOutStream) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
+	public static ObjectOutputStream createEncryptedOutputStream(OutputStream plainOutStream) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException,
+			InvalidKeyException
 	{
 		// Length is 16 byte
 		SecretKeySpec sks = new SecretKeySpec(key, transformation);
@@ -40,8 +41,10 @@ public class Encryptor
 		ObjectOutputStream outputStream = new ObjectOutputStream(cos);
 		return outputStream;
 	}
-	
-	public static ObjectInputStream createEncryptedInputStream(InputStream plainInStream) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException
+
+
+	public static ObjectInputStream createEncryptedInputStream(InputStream plainInStream) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException,
+			InvalidKeyException
 	{
 		SecretKeySpec sks = new SecretKeySpec(key, transformation);
 		Cipher cipher = Cipher.getInstance(transformation);
@@ -53,8 +56,8 @@ public class Encryptor
 	}
 
 
-	synchronized public static void writeToEncryptedStream(ObjectOutputStream objectOutStream, Serializable message) throws IOException, InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchPaddingException
+	synchronized public static void writeToEncryptedStream(ObjectOutputStream objectOutStream, Serializable message) throws IOException, InvalidKeyException,
+			NoSuchAlgorithmException, NoSuchPaddingException
 	{
 		try
 		{
@@ -67,7 +70,8 @@ public class Encryptor
 			SealedObject sealedObject = new SealedObject(message, cipher);
 
 			objectOutStream.writeObject(sealedObject);
-			//			outputStream.close();
+			objectOutStream.flush();
+			objectOutStream.close();
 		}
 		catch (IllegalBlockSizeException e)
 		{
@@ -76,7 +80,8 @@ public class Encryptor
 	}
 
 
-	synchronized public static Object readFromEncryptedStream(ObjectInputStream plainInStream) throws IOException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException
+	synchronized public static Object readFromEncryptedStream(ObjectInputStream plainInStream) throws IOException, InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException
 	{
 		SecretKeySpec sks = new SecretKeySpec(key, transformation);
 		Cipher cipher = Cipher.getInstance(transformation);
