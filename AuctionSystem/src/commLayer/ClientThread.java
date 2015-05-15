@@ -9,8 +9,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Created using Java 8
- *
+ * Created using Java 8 
+ * I tried getting my two way encryption to work with sockets but failed :(, it works with files
+ * though :)
  */
 public class ClientThread extends Thread
 {

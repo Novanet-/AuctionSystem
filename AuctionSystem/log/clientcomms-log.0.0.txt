@@ -170,3 +170,203 @@ May 15, 2015 2:58:12 AM commLayer.ClientComms sendMessage
 INFO: Send ITEM_REQUEST commLayer.Request@afa30d2 
 May 15, 2015 2:58:14 AM commLayer.ClientComms sendMessage
 INFO: Send ITEM_REQUEST commLayer.Request@45a2b0ea 
+May 15, 2015 3:11:33 AM commLayer.ClientComms sendMessage
+INFO: Send USER_REQUEST commLayer.Request@64a88f21 
+May 15, 2015 3:11:33 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION DATABASE_DOES_NOT_HAVE_USER 
+May 15, 2015 3:11:33 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@911fe0f 
+May 15, 2015 3:11:33 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:11:51 AM commLayer.ClientComms sendMessage
+INFO: Send LOGIN_REQUEST entities.User@64ace531 
+May 15, 2015 3:11:51 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION USER_NOT_FOUND 
+May 15, 2015 3:12:08 AM commLayer.ClientComms sendMessage
+INFO: Send USER_DELIVERY entities.User@586b129e 
+May 15, 2015 3:12:08 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION USER_RECIEVED 
+May 15, 2015 3:12:20 AM commLayer.ClientComms sendMessage
+INFO: Send USER_DELIVERY entities.User@3fe52db8 
+May 15, 2015 3:12:20 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION USER_RECIEVED 
+May 15, 2015 3:12:30 AM commLayer.ClientComms sendMessage
+INFO: Send LOGIN_REQUEST entities.User@3ae8d52b 
+May 15, 2015 3:12:30 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION PASSWORD_CORRECT 
+May 15, 2015 3:12:31 AM commLayer.ClientComms recieveMessage
+INFO: Recieve USER_DELIVERY entities.User@611575a7 
+May 15, 2015 3:13:00 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_DELIVERY entities.Item@3ea3af28 
+May 15, 2015 3:13:00 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_RECIEVED 
+May 15, 2015 3:13:00 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@7ac6704 
+May 15, 2015 3:13:00 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:00 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:13:37 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_DELIVERY entities.Item@6c23fc06 
+May 15, 2015 3:13:37 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_RECIEVED 
+May 15, 2015 3:13:37 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@38f423c1 
+May 15, 2015 3:13:37 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:37 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:13:37 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5adb85c5 
+May 15, 2015 3:13:41 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@708a346e 
+May 15, 2015 3:13:41 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:42 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@755644fd 
+May 15, 2015 3:13:42 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:43 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@3777a95d 
+May 15, 2015 3:13:43 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:43 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:13:43 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5adb85c5 
+May 15, 2015 3:13:44 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@5be19574 
+May 15, 2015 3:13:44 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:45 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@6bc0d8c4 
+May 15, 2015 3:13:45 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:46 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@1b85ef98 
+May 15, 2015 3:13:46 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:47 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@11671caf 
+May 15, 2015 3:13:47 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:52 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@6947e466 
+May 15, 2015 3:13:52 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:13:52 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:13:52 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5adb85c5 
+May 15, 2015 3:14:06 AM commLayer.ClientComms sendMessage
+INFO: Send LOGIN_REQUEST entities.User@42f87db 
+May 15, 2015 3:14:06 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION PASSWORD_CORRECT 
+May 15, 2015 3:14:06 AM commLayer.ClientComms recieveMessage
+INFO: Recieve USER_DELIVERY entities.User@7e36ab02 
+May 15, 2015 3:14:08 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@61fd202a 
+May 15, 2015 3:14:08 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:14:09 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@19caeab4 
+May 15, 2015 3:14:09 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:14:10 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@5671ffd3 
+May 15, 2015 3:14:10 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:14:11 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@4d86f5d5 
+May 15, 2015 3:14:11 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:14:11 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:14:11 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5adb85c5 
+May 15, 2015 3:14:15 AM commLayer.ClientComms sendMessage
+INFO: Send BID_DELIVERY entities.Bid@e1c68fc 
+May 15, 2015 3:14:15 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION BID_RECIEVED 
+May 15, 2015 3:14:16 AM commLayer.ClientComms recieveMessage
+INFO: Recieve BID_DELIVERY entities.Bid@1186ea1b 
+May 15, 2015 3:14:24 AM commLayer.ClientComms sendMessage
+INFO: Send BID_DELIVERY entities.Bid@573295f5 
+May 15, 2015 3:14:24 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION BID_RECIEVED 
+May 15, 2015 3:14:25 AM commLayer.ClientComms recieveMessage
+INFO: Recieve BID_DELIVERY entities.Bid@398a1b64 
+May 15, 2015 3:14:29 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@374abd83 
+May 15, 2015 3:14:29 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:14:29 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:14:29 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5adb85c5 
+May 15, 2015 3:16:08 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@2222b921 
+May 15, 2015 3:16:08 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:16:09 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@209cce24 
+May 15, 2015 3:16:09 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:16:10 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@7a152ee6 
+May 15, 2015 3:16:10 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:16:10 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:16:10 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5adb85c5 
+May 15, 2015 3:16:16 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@5dd9dff6 
+May 15, 2015 3:16:16 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:16:16 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:16:16 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5adb85c5 
+May 15, 2015 3:16:18 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@273af94c 
+May 15, 2015 3:16:18 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:16:19 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@7fe98f16 
+May 15, 2015 3:16:19 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:16:19 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:16:19 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5adb85c5 
+May 15, 2015 3:16:23 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@7aabb614 
+May 15, 2015 3:16:23 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:16:23 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@6dd24483 
+May 15, 2015 3:16:28 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@1a8093a1 
+May 15, 2015 3:16:28 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:16:28 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@5adb85c5 
+May 15, 2015 3:16:47 AM commLayer.ClientComms sendMessage
+INFO: Send USER_REQUEST commLayer.Request@7cfe7c20 
+May 15, 2015 3:16:47 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION DATABASE_HAS_USER 
+May 15, 2015 3:16:47 AM commLayer.ClientComms sendMessage
+INFO: Send ITEM_REQUEST commLayer.Request@bf42a0c 
+May 15, 2015 3:16:47 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION ITEM_REQUEST_RECIEVED 
+May 15, 2015 3:16:47 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@7608005d 
+May 15, 2015 3:16:48 AM commLayer.ClientComms recieveMessage
+INFO: Recieve ITEM_DELIVERY entities.Item@4124075c 
+May 15, 2015 3:16:55 AM commLayer.ClientComms sendMessage
+INFO: Send LOGIN_REQUEST entities.User@35f1e7c0 
+May 15, 2015 3:16:55 AM commLayer.ClientComms recieveMessage
+INFO: Recieve NOTIFICATION PASSWORD_CORRECT 
+May 15, 2015 3:16:56 AM commLayer.ClientComms recieveMessage
+INFO: Recieve USER_DELIVERY entities.User@5a7d5fe3 
