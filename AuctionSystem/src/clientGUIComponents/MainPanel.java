@@ -112,9 +112,6 @@ public class MainPanel extends JPanel
 		gbc_scrlAuctionList.gridy = 1;
 		pnlItemList.add(scrlAuctionList, gbc_scrlAuctionList);
 
-		final JPopupMenu popAuctionList = new JPopupMenu();
-		// popAuctionList.add(new JMenuItem("Bid on Item"));
-
 		lstAuctionItems = new JList<>();
 		auctionModel = new DefaultListModel<>();
 		lstAuctionItems.setModel(auctionModel);
